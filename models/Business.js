@@ -1,17 +1,11 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var businessSchema = new mongoose.Schema({
+const businessSchema = new mongoose.Schema({
   name: String,
   owner: String,
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
+  ownerId: String,
   catagory: String,
-  catagoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Catagory'
-  },
+  catagoryId: String,
   details: String,
   staff: [
     {

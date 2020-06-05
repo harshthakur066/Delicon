@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-// require("./models/");
+const businessRoutes = require('./routes/businessRoutes');
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
@@ -10,6 +10,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
   }
 );
 
@@ -23,6 +24,7 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 app.use(bodyParser.json());
+app.use(businessRoutes);
 
 // require("./routes/")(app);
 
