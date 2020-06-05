@@ -2,6 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
+const superAdminRoutes = "./routes/superAdminRoute";
+
+const app = express();
+
+app.use(bodyParser.json());
+
+app.use(superAdminRoutes);
+
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
   {
@@ -17,10 +25,6 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (err) => {
   console.error("Error connenting to mongo", err);
 });
-
-const app = express();
-
-app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
