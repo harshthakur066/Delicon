@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Business = require("../models/Business");
-const ownerAdmin = require("../middlewares/ownerAdmin");
+// const ownerAdmin = require("../middlewares/ownerAdmin");
 
 router.post("/api/v1/business", async (req, res) => {
   const { name, owner, ownerId, catagoryId, details } = req.body;

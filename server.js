@@ -2,13 +2,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const superAdminRoutes = "./routes/superAdminRoute";
+require("./models/Business");
+require("./models/BusinessCategory");
+require("./models/BusinessOwner");
+require("./models/Staff");
+require("./models/SuperAdmin");
+
+const superAdminRoutes = require("./routes/superAdminRoutes");
+const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
+const staffRoutes = require("./routes/staffRoutes");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use(superAdminRoutes);
+app.use(businessOwnerRoutes);
+app.use(staffRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",

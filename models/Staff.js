@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
-const StaffSchema = new Schema({
+const staffSchema = new Schema({
   name: String,
   email: {
     type: String,
@@ -16,7 +16,7 @@ const StaffSchema = new Schema({
   },
 });
 
-StaffSchema.pre("save", function (next) {
+staffSchema.pre("save", function (next) {
   const staff = this;
   if (!staff.isModified("password")) {
     return next();
@@ -35,7 +35,7 @@ StaffSchema.pre("save", function (next) {
   });
 });
 
-StaffSchema.methods.comparePassword = function (candidatePassword) {
+staffSchema.methods.comparePassword = function (candidatePassword) {
   const staff = this;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, staff.password, (err, isMatch) => {
@@ -50,4 +50,4 @@ StaffSchema.methods.comparePassword = function (candidatePassword) {
   });
 };
 
-mongoose.model("Staff", StaffSchema);
+mongoose.model("Staff", staffSchema);
