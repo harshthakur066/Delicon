@@ -1,24 +1,24 @@
-var mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-var businessSchema = new mongoose.Schema({
+const businessSchema = new mongoose.Schema({
   name: String,
   owner: String,
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
   catagory: String,
   catagoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Catagory'
+    ref: "Catagory",
   },
   details: String,
   staff: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Staff'
-    }
-  ]
+      ref: "Staff",
+    },
+  ],
 });
 
-module.exports = mongoose.model('Business', businessSchema);
+mongoose.model("Business", businessSchema);

@@ -2,8 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-// require("./models/");
-
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
   {
@@ -23,8 +21,6 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 app.use(bodyParser.json());
-
-// require("./routes/")(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
