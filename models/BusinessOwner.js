@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
-const BuisnessOwnerSchema = new Schema({
+const BusinessOwnerSchema = new Schema({
   name: String,
   email: {
     type: String,
@@ -16,7 +16,7 @@ const BuisnessOwnerSchema = new Schema({
   },
 });
 
-BuisnessOwnerSchema.pre("save", function (next) {
+BusinessOwnerSchema.pre("save", function (next) {
   const owner = this;
   if (!owner.isModified("password")) {
     return next();
@@ -35,7 +35,7 @@ BuisnessOwnerSchema.pre("save", function (next) {
   });
 });
 
-BuisnessOwnerSchema.methods.comparePassword = function (candidatePassword) {
+BusinessOwnerSchema.methods.comparePassword = function (candidatePassword) {
   const owner = this;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, owner.password, (err, isMatch) => {
@@ -50,4 +50,4 @@ BuisnessOwnerSchema.methods.comparePassword = function (candidatePassword) {
   });
 };
 
-mongoose.model("BuisnessOwner", BuisnessOwnerSchema);
+mongoose.model("BusinessOwner", BusinessOwnerSchema);
