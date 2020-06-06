@@ -7,9 +7,9 @@ const StaffSchema = mongoose.model("Staff");
 const router = express.Router();
 
 router.post("/api/v1/staff/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    const staff = new StaffSchema({ email, password });
+    const staff = new StaffSchema({ name, email, password });
     await staff.save();
     const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
     res.send({ token });

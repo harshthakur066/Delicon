@@ -7,9 +7,9 @@ const BusinessOwnerSchema = mongoose.model("BusinessOwner");
 const router = express.Router();
 
 router.post("/api/v1/business/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    const business = new BusinessOwnerSchema({ email, password });
+    const business = new BusinessOwnerSchema({ name, email, password });
     await business.save();
     const token = jwt.sign(
       { businessId: business._id },

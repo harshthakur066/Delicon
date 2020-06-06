@@ -7,9 +7,9 @@ const SuperAdminSchema = mongoose.model("SuperAdmin");
 const router = express.Router();
 
 router.post("/api/v1/admin/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    const admin = new SuperAdminSchema({ email, password });
+    const admin = new SuperAdminSchema({ name, email, password });
     await admin.save();
     const token = jwt.sign({ adminId: admin._id }, "ADMIN SECRETE KEY");
     res.send({ token });
