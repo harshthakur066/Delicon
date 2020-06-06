@@ -50,4 +50,4 @@ staffSchema.methods.comparePassword = function (candidatePassword) {
   });
 };
 
-mongoose.model("Staff", staffSchema);
+module.exports = mongoose.model("Staff", staffSchema);

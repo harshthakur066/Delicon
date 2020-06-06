@@ -1,15 +1,14 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-const StaffSchema = mongoose.model("Staff");
+const Staff = require('../models/Staff');
 
 const router = express.Router();
 
 router.post("/api/v1/staff/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const staff = new StaffSchema({ name, email, password });
+    const staff = new Staff({ name, email, password });
     await staff.save();
     const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
     res.send({ token });
@@ -23,7 +22,7 @@ router.post("/api/v1/staff/signin", async (req, res) => {
   if (!email || !password) {
     return res.status(404).send({ error: "Must provide email and password." });
   }
-  const staff = await StaffSchema.findOne({ email });
+  const staff = await Staff.findOne({ email });
   if (!staff) {
     return res.status(404).send({ error: "Invalid password or email." });
   }

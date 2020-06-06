@@ -50,4 +50,4 @@ superAdminSchema.methods.comparePassword = function (candidatePassword) {
   });
 };
 
-mongoose.model("SuperAdmin", superAdminSchema);
+module.exports = mongoose.model("SuperAdmin", superAdminSchema);

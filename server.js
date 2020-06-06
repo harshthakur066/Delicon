@@ -2,11 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-require("./models/Business");
-require("./models/BusinessCategory");
-require("./models/BusinessOwner");
-require("./models/Staff");
-require("./models/SuperAdmin");
+const businessRoutes = require('./routes/businessRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
 
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
@@ -19,6 +16,8 @@ app.use(bodyParser.json());
 app.use(superAdminRoutes);
 app.use(businessOwnerRoutes);
 app.use(staffRoutes);
+app.use(businessRoutes);
+app.use(reservationRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
@@ -26,6 +25,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
   }
 );
 

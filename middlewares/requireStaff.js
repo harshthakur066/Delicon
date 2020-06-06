@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const StaffSchema = mongoose.model("Staff");
+const Staff = require("../models/Staff");
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -10,15 +9,21 @@ module.exports = (req, res, next) => {
     }
 
     const token = authorization.replace("Bearer ", "");
-    jwt.verify(token, "STAFF SECRETE KEY", async (err, payload) => {
+    jwt.verify(token, "STAFF SECRETE KEY", (err, payload) => {
       if (err) {
         return res.status(401).send({ error: "You must be logged in." });
       }
 
       const { staffId } = payload;
-      const staff = await StaffSchema.findById(staffId);
-      req.staff = staff;
-      next();
+      Staff.findById(staffId)
+        .then(staff => {
+          req.staff = staff;
+          next();
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).json({ error: 'Staff does not exists!' })
+        })
     });
   } catch (err) {
     res.status(404).send(err.message);

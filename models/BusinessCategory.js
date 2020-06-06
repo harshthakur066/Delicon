@@ -7,4 +7,4 @@ const buisnessCategorySchema = new Schema({
   details: String,
 });
 
-mongoose.model("BuisnessCategory", buisnessCategorySchema);
+module.exports = mongoose.model("BuisnessCategory", buisnessCategorySchema);

@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const BusinessOwnerSchema = mongoose.model("BusinessOwner");
+const BusinessOwner = require('../models/BusinessOwner');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -11,15 +10,21 @@ module.exports = (req, res, next) => {
     }
 
     const token = authorization.replace("Bearer ", "");
-    jwt.verify(token, "BUSINESS SECRETE KEY", async (err, payload) => {
+    jwt.verify(token, "BUSINESS SECRETE KEY", (err, payload) => {
       if (err) {
         return res.status(401).send({ error: "You must be logged in." });
       }
 
-      const { ownerId } = payload;
-      const owner = await BusinessOwnerSchema.findById(ownerId);
-      req.owner = owner;
-      next();
+      const { businessId } = payload;
+      BusinessOwner.findById(businessId)
+        .then(owner => {
+          req.owner = owner;
+          next();
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).json({ error: 'Owner not found!' })
+        })
     });
   } catch (error) {
     res.status(404).send(error.message);
