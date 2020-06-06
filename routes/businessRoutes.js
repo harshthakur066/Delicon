@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express');
 const router = express.Router();
 const Business = require('../models/Business');
@@ -10,12 +11,30 @@ router.post('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
   var dateobj = new Date().toISOString(); 
   try {
     const business = new Business({ name: name, owner: owner, ownerId: ownerId, catagory: catagory, catagoryId: catagoryId, details: details, createdAt: dateobj });
+=======
+const express = require("express");
+const router = express.Router();
+const Business = require("../models/Business");
+// const ownerAdmin = require("../middlewares/ownerAdmin");
+
+router.post("/api/v1/business", async (req, res) => {
+  const { name, owner, ownerId, catagoryId, details } = req.body;
+  try {
+    const business = new Business({
+      name: name,
+      owner: owner,
+      ownerId: ownerId,
+      catagoryId: catagoryId,
+      details: details,
+    });
+>>>>>>> 9d943269dd4e03b5c17e0a597992c9770cb1b788
     await business.save();
     res.json(business);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 });
+<<<<<<< HEAD
 
 //For BusinessOwner and Admin to Show his businesses
 router.get('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
@@ -66,3 +85,5 @@ router.delete('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,
 })
 
 module.exports = router;
+=======
+>>>>>>> 9d943269dd4e03b5c17e0a597992c9770cb1b788

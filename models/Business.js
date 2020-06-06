@@ -11,9 +11,9 @@ const businessSchema = new mongoose.Schema({
   staff: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Staff'
-    }
-  ]
+      ref: "Staff",
+    },
+  ],
 });
 
-module.exports = mongoose.model('Business', businessSchema);
+mongoose.model("Business", businessSchema);
