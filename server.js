@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 
 const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
-
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
 const staffRoutes = require("./routes/staffRoutes");
@@ -14,12 +13,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use(businessCategoryRoutes);
 app.use(superAdminRoutes);
 app.use(businessOwnerRoutes);
 app.use(staffRoutes);
 app.use(businessRoutes);
 app.use(reservationRoutes);
-app.use(businessCategoryRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
