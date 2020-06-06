@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Business = require('../models/Business');
-const ownerAdmin = require('../middlewares/ownerAdmin');
+const isBusinessOwner = require('../middlewares/requiredBusinessOwner');
 
 // For Business owner And Admin to POST new Businesses 
-router.post('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {        
+router.post('/api/v1/businesses', isBusinessOwner, async (req,res) => {        
   const { name, owner, catagory, catagoryId, details } = req.body;
-  const ownerId = req.params.ownerId;
+  const ownerId = req.owner._id;
   var dateobj = new Date().toISOString(); 
   try {
     const business = new Business({ name: name, owner: owner, ownerId: ownerId, catagory: catagory, catagoryId: catagoryId, details: details, createdAt: dateobj });
@@ -18,8 +18,8 @@ router.post('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
 });
 
 //For BusinessOwner and Admin to Show his businesses
-router.get('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
-  const ownerId = req.params.ownerId;
+router.get('/api/v1/businesses', isBusinessOwner, async (req,res) => {
+  const ownerId = req.owner._id;
   try {
     const businesses = await Business.find({ ownerId: ownerId });
     res.json(businesses);
@@ -30,7 +30,7 @@ router.get('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
 });
 
 //For businessOwner and Admin to SHOW a perticular Business
-router.get('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res) => {
+router.get('/api/v1/businesses/:businessId', isBusinessOwner, async (req,res) => {
   try {
     const { businessId } = req.params;
     const business = await Business.findById(businessId);
@@ -42,7 +42,7 @@ router.get('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res
 });
 
 //For businessOwner and Admin to EDIT a perticular Business
-router.put('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res) => {        
+router.put('/api/v1/businesses/:businessId', isBusinessOwner, async (req,res) => {        
   const { name, details } = req.body;
   const { businessId } = req.params;
   try {
@@ -55,7 +55,7 @@ router.put('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res
 });
 
 //For businessOwner and Admin to DELETE a perticular Business
-router.delete('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res) => {
+router.delete('/api/v1/businesses/:businessId', isBusinessOwner, async (req,res) => {
   const { businessId } = req.params;
   try {
     const business = await Business.findByIdAndDelete(businessId);

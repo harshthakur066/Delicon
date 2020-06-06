@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const SuperAdminSchema = mongoose.model("SuperAdmin");
+const SuperAdmin = require('../models/SuperAdmin');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -8,17 +7,21 @@ module.exports = (req, res, next) => {
     if (!authorization) {
       return res.status(401).send({ error: "You must be logged in." });
     }
-
     const token = authorization.replace("Bearer ", "");
-    jwt.verify(token, "ADMIN SECRETE KEY", async (err, payload) => {
+    jwt.verify(token, "ADMIN SECRETE KEY", (err, payload) => {
       if (err) {
         return res.status(401).send({ error: "You must be logged in." });
       }
-
       const { adminId } = payload;
-      const admin = await SuperAdminSchema.findById(adminId);
-      req.admin = admin;
-      next();
+      SuperAdmin.findById(adminId)
+        .then(admin => {
+          req.admin = admin;
+          next();
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).json({ error: 'Admin not found!' });
+        })
     });
   } catch (err) {
     res.status(404).send(err.message);

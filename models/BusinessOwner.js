@@ -50,4 +50,4 @@ businessOwnerSchema.methods.comparePassword = function (candidatePassword) {
   });
 };
 
-mongoose.model("BusinessOwner", businessOwnerSchema);
+module.exports = mongoose.model("BusinessOwner", businessOwnerSchema);

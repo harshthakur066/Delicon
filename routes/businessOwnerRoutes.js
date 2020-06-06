@@ -1,15 +1,13 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-
-const BusinessOwnerSchema = mongoose.model("BusinessOwner");
+const BusinessOwner = require('../models/BusinessOwner');
 
 const router = express.Router();
 
-router.post("/api/v1/business/signup", async (req, res) => {
+router.post("/api/v1/businessowner/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const business = new BusinessOwnerSchema({ name, email, password });
+    const business = new BusinessOwner({ name, email, password });
     await business.save();
     const token = jwt.sign(
       { businessId: business._id },
@@ -21,12 +19,12 @@ router.post("/api/v1/business/signup", async (req, res) => {
   }
 });
 
-router.post("/api/v1/business/signin", async (req, res) => {
+router.post("/api/v1/businessowner/signin", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(404).send({ error: "Must provide email and password." });
   }
-  const business = await BusinessOwnerSchema.findOne({ email });
+  const business = await BusinessOwner.findOne({ email });
   if (!business) {
     return res.status(404).send({ error: "Invalid password or email." });
   }
