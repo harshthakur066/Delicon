@@ -2,12 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const businessRoutes = require('./routes/businessRoutes');
-const reservationRoutes = require('./routes/reservationRoutes');
+const businessRoutes = require("./routes/businessRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
 
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
 const staffRoutes = require("./routes/staffRoutes");
+const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(businessOwnerRoutes);
 app.use(staffRoutes);
 app.use(businessRoutes);
 app.use(reservationRoutes);
+app.use(businessCategoryRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
@@ -25,7 +27,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   }
 );
 
