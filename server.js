@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const businessRoutes = require('./routes/businessRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
@@ -25,6 +26,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(businessRoutes);
+app.use(reservationRoutes);
 
 // require("./routes/")(app);
 

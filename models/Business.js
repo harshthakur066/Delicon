@@ -7,6 +7,7 @@ const businessSchema = new mongoose.Schema({
   catagory: String,
   catagoryId: String,
   details: String,
+  createdAt: String,
   staff: [
     {
       type: mongoose.Schema.Types.ObjectId,

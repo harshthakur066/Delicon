@@ -7,12 +7,13 @@ const ownerAdmin = require('../middlewares/ownerAdmin');
 router.post('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {        
   const { name, owner, catagory, catagoryId, details } = req.body;
   const ownerId = req.params.ownerId;
+  var dateobj = new Date().toISOString(); 
   try {
-    const business = new Business({ name: name, owner: owner, ownerId: ownerId, catagory: catagory, catagoryId: catagoryId, details: details });
+    const business = new Business({ name: name, owner: owner, ownerId: ownerId, catagory: catagory, catagoryId: catagoryId, details: details, createdAt: dateobj });
     await business.save();
-    res.send(business);
+    res.json(business);
   } catch (err) {
-    return res.status(500).send({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 });
 
@@ -31,7 +32,7 @@ router.get('/api/v1/:ownerId/businesses', ownerAdmin, async (req,res) => {
 //For businessOwner and Admin to SHOW a perticular Business
 router.get('/api/v1/:ownerId/businesses/:businessId', ownerAdmin, async (req,res) => {
   try {
-    const { ownerId, businessId } = req.params;
+    const { businessId } = req.params;
     const business = await Business.findById(businessId);
     res.json(business);
   } catch (err) {
