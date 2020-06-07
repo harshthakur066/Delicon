@@ -21,6 +21,12 @@ const staffSchema = new Schema({
   position: String,
   dateOfJoining: String,
   details: String,
+  reservations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Reservation",
+    },
+  ],
 });
 
 staffSchema.pre("save", function (next) {

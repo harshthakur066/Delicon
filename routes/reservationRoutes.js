@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Reservation = require("../models/Reservation");
+const Staff = require("../models/Staff");
 const requireStaff = require("../middlewares/requireStaff");
 
 // For Staff to POST new Reservations
@@ -18,7 +19,18 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
       createdAt: dateobj,
     });
     await reservation.save();
-    res.json(reservation);
+    try {
+      const currentstaff = await Staff.findById(staffId);
+      currentstaff.reservations.push(reservation._id);
+      await Staff.findByIdAndUpdate(staffId, currentstaff);
+      res.json(reservation);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Staff!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -85,7 +97,20 @@ router.delete(
     const { reservationId } = req.params;
     try {
       const reservation = await Reservation.findByIdAndDelete(reservationId);
-      res.json(reservation);
+      try {
+        const currentstaff = await Staff.findById(req.staff._id);
+        currentstaff.reservations = currentstaff.reservations.filter(
+          (id) => id != reservationId
+        );
+        await Staff.findByIdAndUpdate(req.staff._id, currentstaff);
+        res.json(reservation);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({
+          error: err.message,
+          message: "Error while adding id to Business Owner!",
+        });
+      }
     } catch {
       return res.status(500).json({ error: err.message });
     }

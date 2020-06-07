@@ -14,6 +14,14 @@ const businessOwnerSchema = new Schema({
     type: String,
     required: true,
   },
+  category: String,
+  categoryId: String,
+  businesses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Business",
+    },
+  ],
 });
 
 businessOwnerSchema.pre("save", function (next) {

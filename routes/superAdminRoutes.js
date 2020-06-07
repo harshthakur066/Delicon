@@ -1,8 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
-const SuperAdmin = require('../models/SuperAdmin');
-
+const SuperAdmin = require("../models/SuperAdmin");
 const router = express.Router();
 
 router.post("/api/v1/admin/signup", async (req, res) => {
