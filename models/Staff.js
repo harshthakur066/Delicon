@@ -14,6 +14,13 @@ const staffSchema = new Schema({
     type: String,
     required: true,
   },
+  mobno: String,
+  address: String,
+  qualification: String,
+  experience: String,
+  position: String,
+  dateOfJoining: String,
+  details: String,
 });
 
 staffSchema.pre("save", function (next) {

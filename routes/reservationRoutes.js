@@ -59,12 +59,13 @@ router.put(
   async (req, res) => {
     const { name, email, address, mobno } = req.body;
     const { reservationId } = req.params;
-    let update;
-    if (name) update = { name: name };
-    else if (email) update = { email: email };
-    else if (address) update = { address: address };
-    else if (mobno) update = { mobno: mobno };
     try {
+      const update = {
+        name: name,
+        email: email,
+        address: address,
+        mobno: mobno,
+      };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,
         update
