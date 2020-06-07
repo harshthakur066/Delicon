@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Business = require("../models/Business");
+const BusinessOwner = require("../models/BusinessOwner");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
-
-router.use(isBusinessOwner);
-
 // For Business owner And Admin to POST new Businesses
 router.post("/api/v1/businesses", isBusinessOwner, async (req, res) => {
-  const { name, owner, catagory, catagoryId, details } = req.body;
+  const { name, owner, details } = req.body;
   const ownerId = req.owner._id;
   var dateobj = new Date().toISOString();
   try {
@@ -15,19 +13,27 @@ router.post("/api/v1/businesses", isBusinessOwner, async (req, res) => {
       name: name,
       owner: owner,
       ownerId: ownerId,
-      catagory: catagory,
-      catagoryId: catagoryId,
       details: details,
       createdAt: dateobj,
     });
     await business.save();
-    res.json(business);
+    try {
+      const currentowner = await BusinessOwner.findById(ownerId);
+      currentowner.businesses.push(business._id);
+      await BusinessOwner.findByIdAndUpdate(ownerId, currentowner);
+      res.json(business);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Owner!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 });
 
-//For BusinessOwner and Admin to Show his businesses
 router.get("/api/v1/businesses", isBusinessOwner, async (req, res) => {
   const ownerId = req.owner._id;
   try {
@@ -77,11 +83,25 @@ router.delete(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,
   async (req, res) => {
-    const { businessId } = req.params;
+    const businessId = req.params.businessId;
+    const ownerId = req.owner._id;
     try {
       const business = await Business.findByIdAndDelete(businessId);
-      res.json(business);
-    } catch {
+      try {
+        const currentowner = await BusinessOwner.findById(ownerId);
+        currentowner.businesses = currentowner.businesses.filter(
+          (id) => id != businessId
+        );
+        await BusinessOwner.findByIdAndUpdate(ownerId, currentowner);
+        res.json(business);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({
+          error: err.message,
+          message: "Error while adding id to Business Owner!",
+        });
+      }
+    } catch (err) {
       return res.status(500).json({ error: err.message });
     }
   }

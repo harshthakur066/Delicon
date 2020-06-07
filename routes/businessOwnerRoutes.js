@@ -1,19 +1,37 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const BusinessOwner = require('../models/BusinessOwner');
+const BusinessOwner = require("../models/BusinessOwner");
+const BuisnessCategory = require("../models/BusinessCategory");
 
 const router = express.Router();
 
 router.post("/api/v1/businessowner/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, category, categoryId } = req.body;
   try {
-    const business = new BusinessOwner({ name, email, password });
+    const business = new BusinessOwner({
+      name: name,
+      email: email,
+      password: password,
+      category: category,
+      categoryId: categoryId,
+    });
     await business.save();
     const token = jwt.sign(
       { businessId: business._id },
       "BUSINESS SECRETE KEY"
     );
-    res.send({ token });
+    try {
+      const currentcatagory = await BuisnessCategory.findById(categoryId);
+      currentcatagory.businessowners.push(business._id);
+      await BuisnessCategory.findByIdAndUpdate(categoryId, currentcatagory);
+      res.send({ token });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Categories!",
+      });
+    }
   } catch (err) {
     return res.status(422).send(err.message);
   }
