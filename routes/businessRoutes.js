@@ -3,8 +3,6 @@ const router = express.Router();
 const Business = require("../models/Business");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
-router.use(isBusinessOwner);
-
 // For Business owner And Admin to POST new Businesses
 router.post("/api/v1/businesses", isBusinessOwner, async (req, res) => {
   const { name, owner, catagory, catagoryId, details } = req.body;

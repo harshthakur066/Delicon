@@ -2,22 +2,25 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const businessRoutes = require("./routes/businessRoutes");
-const reservationRoutes = require("./routes/reservationRoutes");
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
+const businessRoutes = require("./routes/businessRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use(businessCategoryRoutes);
+// Auth Routes
 app.use(superAdminRoutes);
 app.use(businessOwnerRoutes);
 app.use(staffRoutes);
+
+// Features Routes
 app.use(businessRoutes);
+app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
 
 mongoose.connect(
