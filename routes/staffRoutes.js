@@ -49,7 +49,7 @@ router.post("/api/v1/staff/signin", async (req, res) => {
 });
 
 //Profile Data
-router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
+router.post("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
   const {
     mobno,
@@ -78,7 +78,7 @@ router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
 });
 
 // READ Staff Profile
-router.get("/api/v1/staff/:id", isStaff, async (req, res) => {
+router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
   try {
     const staff = await Staff.findById(id);
@@ -92,8 +92,8 @@ router.get("/api/v1/staff/:id", isStaff, async (req, res) => {
 router.delete("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
   try {
-    await Staff.findByIdAndDelete(id);
-    res.status(200).send("Deleted");
+    const profile = await Staff.findByIdAndDelete(id);
+    res.status(200).json(profile);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
