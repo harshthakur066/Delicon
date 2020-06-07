@@ -49,19 +49,11 @@ router.get("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
 router.put("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   const id = req.params.id;
   const { name, details } = req.body;
-  let update;
-  if (details && name) {
-    update = { name, details };
-  } else if (name) {
-    update = { name };
-  } else if (details) {
-    update = { details };
-  }
+  let update = { name: name, details: details };
   try {
     const businessCategory = await BusinessCategory.findByIdAndUpdate(
       id,
-      update,
-      { new: true }
+      update
     );
     res.status(200).json(businessCategory);
   } catch (err) {

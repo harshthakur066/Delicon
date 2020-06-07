@@ -49,7 +49,7 @@ router.post("/api/v1/staff/signin", async (req, res) => {
 });
 
 //Profile Data
-router.post("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
+router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
   const {
     mobno,
@@ -70,7 +70,7 @@ router.post("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
     details,
   };
   try {
-    const staff = await Staff.findByIdAndUpdate(id, data, { new: true });
+    const staff = await Staff.findByIdAndUpdate(id, data);
     res.status(200).json(staff);
   } catch (err) {
     return res.status(500).json({ error: err.message });
