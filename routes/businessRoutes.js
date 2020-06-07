@@ -3,6 +3,7 @@ const router = express.Router();
 const Business = require("../models/Business");
 const BusinessOwner = require("../models/BusinessOwner");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+
 // For Business owner And Admin to POST new Businesses
 router.post("/api/v1/businesses", isBusinessOwner, async (req, res) => {
   const { name, owner, details } = req.body;
@@ -66,10 +67,12 @@ router.put(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,
   async (req, res) => {
-    const { name, details } = req.body;
     const { businessId } = req.params;
+    let update;
+    req.body.name
+      ? (update = { name: req.body.name })
+      : (update = { details: req.body.details });
     try {
-      const update = { name: name, details: details };
       const business = await Business.findByIdAndUpdate(businessId, update);
       res.json(business);
     } catch (err) {
