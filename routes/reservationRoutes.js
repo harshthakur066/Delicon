@@ -3,8 +3,6 @@ const router = express.Router();
 const Reservation = require("../models/Reservation");
 const requireStaff = require("../middlewares/requireStaff");
 
-router.use(requireStaff);
-
 // For Staff to POST new Reservations
 router.post("/api/v1/reservations", requireStaff, async (req, res) => {
   const { name, email, mobno, address } = req.body;
