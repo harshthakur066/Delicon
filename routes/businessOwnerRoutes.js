@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const BusinessOwner = require("../models/BusinessOwner");
 const BuisnessCategory = require("../models/BusinessCategory");
+const User = require("../models/User");
 
 const router = express.Router();
 
@@ -17,20 +18,30 @@ router.post("/api/v1/businessowner/signup", async (req, res) => {
     });
     await business.save();
     const token = jwt.sign(
-      { businessId: business._id },
+      { userId: business._id, userRole: "Owner" },
       "BUSINESS SECRETE KEY"
     );
     try {
-      const currentcatagory = await BuisnessCategory.findById(categoryId);
-      currentcatagory.businessowners.push(business._id);
-      await BuisnessCategory.findByIdAndUpdate(categoryId, currentcatagory);
-      res.send({ token });
+      await User.create({
+        userId: business._id,
+        userRole: "Owner",
+        email: email,
+      });
+      try {
+        const currentcatagory = await BuisnessCategory.findById(categoryId);
+        currentcatagory.businessowners.push(business._id);
+        await BuisnessCategory.findByIdAndUpdate(categoryId, currentcatagory);
+        res.send({ token });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({
+          error: err.message,
+          message: "Error while adding id to Business Categories!",
+        });
+      }
     } catch (err) {
       console.log(err);
-      res.status(500).json({
-        error: err.message,
-        message: "Error while adding id to Business Categories!",
-      });
+      res.status(500).json({ error: "Error while creating!" });
     }
   } catch (err) {
     return res.status(422).send(err.message);
@@ -49,7 +60,7 @@ router.post("/api/v1/businessowner/signin", async (req, res) => {
   try {
     await business.comparePassword(password);
     const token = jwt.sign(
-      { businessId: business._id },
+      { userId: business._id, userRole: "Owner" },
       "BUSINESS SECRETE KEY"
     );
     res.send({ token });

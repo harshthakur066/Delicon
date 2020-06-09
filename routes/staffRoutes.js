@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const Business = require("../models/Business");
 const Staff = require("../models/Staff");
+const User = require("../models/User");
 const isStaff = require("../middlewares/requireStaff");
 
 const router = express.Router();
@@ -12,18 +13,30 @@ router.post("/api/v1/staff/signup", async (req, res) => {
   try {
     const staff = new Staff({ name, email, password, business, businessId });
     await staff.save();
-    const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
+    const token = jwt.sign(
+      { userId: staff._id, userRole: "Staff" },
+      "STAFF SECRETE KEY"
+    );
     try {
-      const currentbusiness = await Business.findById(businessId);
-      currentbusiness.staff.push(staff._id);
-      await Business.findByIdAndUpdate(businessId, currentbusiness);
-      res.send({ token });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({
-        error: err.message,
-        message: "Error while adding id to Business Categories!",
+      await User.create({
+        userId: staff._id,
+        userRole: "Staff",
+        email: email,
       });
+      try {
+        const currentbusiness = await Business.findById(businessId);
+        currentbusiness.staff.push(staff._id);
+        await Business.findByIdAndUpdate(businessId, currentbusiness);
+        res.send({ token });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({
+          error: err.message,
+          message: "Error while adding id to Business Categories!",
+        });
+      }
+    } catch (err) {
+      return res.status(422).send(err.message);
     }
   } catch (err) {
     return res.status(422).send(err.message);
@@ -41,7 +54,10 @@ router.post("/api/v1/staff/signin", async (req, res) => {
   }
   try {
     await staff.comparePassword(password);
-    const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
+    const token = jwt.sign(
+      { userId: staff._id, userRole: "Staff" },
+      "STAFF SECRETE KEY"
+    );
     res.send({ token });
   } catch (err) {
     return res.status(404).send({ error: "Invalid password or email." });

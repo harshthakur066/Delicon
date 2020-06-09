@@ -8,6 +8,7 @@ const staffRoutes = require("./routes/staffRoutes");
 const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
 const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
+const indexRoutes = require("./routes/indexRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(superAdminRoutes);
 app.use(businessOwnerRoutes);
 app.use(staffRoutes);
+app.use(indexRoutes);
 
 // Features Routes
 app.use(businessRoutes);
