@@ -3,32 +3,63 @@ const jwt = require("jsonwebtoken");
 
 const Business = require("../models/Business");
 const Staff = require("../models/Staff");
+const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const isStaff = require("../middlewares/requireStaff");
 
 const router = express.Router();
 
-router.post("/api/v1/staff/signup", async (req, res) => {
-  const { name, email, password, business, businessId } = req.body;
-  try {
-    const staff = new Staff({ name, email, password, business, businessId });
-    await staff.save();
-    const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
+router.post(
+  "/api/v1/businessowner/staff/signup",
+  isBusinessOwner,
+  async (req, res) => {
+    const {
+      name,
+      email,
+      password,
+      business,
+      businessId,
+      mobno,
+      address,
+      qualification,
+      experience,
+      position,
+      dateOfJoining,
+      details,
+    } = req.body;
     try {
-      const currentbusiness = await Business.findById(businessId);
-      currentbusiness.staff.push(staff._id);
-      await Business.findByIdAndUpdate(businessId, currentbusiness);
-      res.send({ token });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({
-        error: err.message,
-        message: "Error while adding id to Business Categories!",
+      const staff = new Staff({
+        name,
+        email,
+        password,
+        business,
+        businessId,
+        mobno,
+        address,
+        qualification,
+        experience,
+        position,
+        dateOfJoining,
+        details,
       });
+      await staff.save();
+      const token = jwt.sign({ staffId: staff._id }, "STAFF SECRETE KEY");
+      try {
+        const currentbusiness = await Business.findById(businessId);
+        currentbusiness.staff.push(staff._id);
+        await Business.findByIdAndUpdate(businessId, currentbusiness);
+        res.send({ token });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({
+          error: err.message,
+          message: "Error while adding id to Business Categories!",
+        });
+      }
+    } catch (err) {
+      return res.status(422).send(err.message);
     }
-  } catch (err) {
-    return res.status(422).send(err.message);
   }
-});
+);
 
 router.post("/api/v1/staff/signin", async (req, res) => {
   const { email, password } = req.body;
@@ -49,7 +80,7 @@ router.post("/api/v1/staff/signin", async (req, res) => {
 });
 
 //Profile Data
-router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
+router.put("/api/v1/staff/profile/:id", isBusinessOwner, async (req, res) => {
   const id = req.params.id;
   const {
     mobno,
@@ -77,6 +108,16 @@ router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   }
 });
 
+// READ All Staff Profiles
+router.get("/api/v1/staff/profile", isBusinessOwner, async (req, res) => {
+  try {
+    const staff = await Staff.find();
+    res.status(200).json(staff);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // READ Staff Profile
 router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
@@ -89,14 +130,18 @@ router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
 });
 
 // DELETE Staff Profile
-router.delete("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
-  const id = req.params.id;
-  try {
-    const profile = await Staff.findByIdAndDelete(id);
-    res.status(200).json(profile);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.delete(
+  "/api/v1/staff/profile/:id",
+  isBusinessOwner,
+  async (req, res) => {
+    const id = req.params.id;
+    try {
+      const profile = await Staff.findByIdAndDelete(id);
+      res.status(200).json(profile);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 module.exports = router;
