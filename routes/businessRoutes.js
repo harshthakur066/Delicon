@@ -68,10 +68,7 @@ router.put(
   isBusinessOwner,
   async (req, res) => {
     const { businessId } = req.params;
-    let update;
-    req.body.name
-      ? (update = { name: req.body.name })
-      : (update = { details: req.body.details });
+    let update = { name: req.body.name, details: req.body.details };
     try {
       const business = await Business.findByIdAndUpdate(businessId, update);
       res.json(business);
