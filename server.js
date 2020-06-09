@@ -8,6 +8,7 @@ const staffRoutes = require("./routes/staffRoutes");
 const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
 const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
+const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(staffRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
+app.use(requestedBusinessRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",

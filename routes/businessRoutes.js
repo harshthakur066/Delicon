@@ -1,18 +1,22 @@
 const express = require("express");
 const router = express.Router();
+
 const Business = require("../models/Business");
 const BusinessOwner = require("../models/BusinessOwner");
+
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const isSuperAdmin = require("../middlewares/requireSuperAdmin");
 
 // For Business owner And Admin to POST new Businesses
-router.post("/api/v1/businesses", isBusinessOwner, async (req, res) => {
-  const { name, owner, details } = req.body;
+router.post("/api/v1/businesses/approve", isSuperAdmin, async (req, res) => {
+  const { name, owner, address, details } = req.body;
   const ownerId = req.owner._id;
   var dateobj = new Date().toISOString();
   try {
     const business = new Business({
       name: name,
       owner: owner,
+      address: address,
       ownerId: ownerId,
       details: details,
       createdAt: dateobj,
@@ -78,7 +82,7 @@ router.put(
   }
 );
 
-//For businessOwner and Admin to DELETE a perticular Business
+// For businessOwner and Admin to DELETE a perticular Business
 router.delete(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,

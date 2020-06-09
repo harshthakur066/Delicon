@@ -4,6 +4,7 @@ const businessSchema = new mongoose.Schema({
   name: String,
   owner: String,
   ownerId: String,
+  address: String,
   details: String,
   createdAt: String,
   staff: [
