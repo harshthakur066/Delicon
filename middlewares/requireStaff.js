@@ -14,16 +14,16 @@ module.exports = (req, res, next) => {
         return res.status(401).send({ error: "You must be logged in." });
       }
 
-      const { staffId } = payload;
-      Staff.findById(staffId)
-        .then(staff => {
+      const { userId } = payload;
+      Staff.findById(userId)
+        .then((staff) => {
           req.staff = staff;
           next();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
-          res.status(404).json({ error: 'Staff does not exists!' })
-        })
+          res.status(404).json({ error: "Staff does not exists!" });
+        });
     });
   } catch (err) {
     res.status(404).send(err.message);

@@ -20,10 +20,10 @@ app.use(businessOwnerRoutes);
 app.use(staffRoutes);
 
 // Features Routes
+app.use(requestedBusinessRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
-app.use(requestedBusinessRoutes);
 
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",

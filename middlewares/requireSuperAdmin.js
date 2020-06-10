@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
       if (err) {
         return res.status(401).send({ error: "You must be logged in. 2" });
       }
-      const { adminId } = payload;
-      SuperAdmin.findById(adminId)
+      const { userId } = payload;
+      SuperAdmin.findById(userId)
         .then((admin) => {
           req.admin = admin;
           next();

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const BusinessOwner = require('../models/BusinessOwner');
+const BusinessOwner = require("../models/BusinessOwner");
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -15,16 +15,16 @@ module.exports = (req, res, next) => {
         return res.status(401).send({ error: "You must be logged in." });
       }
 
-      const { businessId } = payload;
-      BusinessOwner.findById(businessId)
-        .then(owner => {
+      const { userId } = payload;
+      BusinessOwner.findById(userId)
+        .then((owner) => {
           req.owner = owner;
           next();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
-          res.status(404).json({ error: 'Owner not found!' })
-        })
+          res.status(404).json({ error: "Owner not found!" });
+        });
     });
   } catch (error) {
     res.status(404).send(error.message);
