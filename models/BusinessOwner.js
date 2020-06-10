@@ -22,6 +22,12 @@ const businessOwnerSchema = new Schema({
       ref: "Business",
     },
   ],
+  reqbusinesses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RequestedBusiness",
+    },
+  ],
 });
 
 businessOwnerSchema.pre("save", function (next) {

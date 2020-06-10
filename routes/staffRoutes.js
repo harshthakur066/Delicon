@@ -4,14 +4,41 @@ const jwt = require("jsonwebtoken");
 const Business = require("../models/Business");
 const Staff = require("../models/Staff");
 const User = require("../models/User");
+const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const isStaff = require("../middlewares/requireStaff");
 
 const router = express.Router();
 
-router.post("/api/v1/staff/signup", async (req, res) => {
-  const { name, email, password, business, businessId } = req.body;
+router.post("/api/v1/staff/signup", isBusinessOwner, async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    business,
+    businessId,
+    mobno,
+    address,
+    qualification,
+    experience,
+    position,
+    dateOfJoining,
+    details,
+  } = req.body;
   try {
-    const staff = new Staff({ name, email, password, business, businessId });
+    const staff = new Staff({
+      name,
+      email,
+      password,
+      business,
+      businessId,
+      mobno,
+      address,
+      qualification,
+      experience,
+      position,
+      dateOfJoining,
+      details,
+    });
     await staff.save();
     const token = jwt.sign(
       { userId: staff._id, userRole: "Staff" },
@@ -43,6 +70,7 @@ router.post("/api/v1/staff/signup", async (req, res) => {
   }
 });
 
+//Staff signin
 router.post("/api/v1/staff/signin", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -64,7 +92,7 @@ router.post("/api/v1/staff/signin", async (req, res) => {
   }
 });
 
-//Profile Data
+//Staff edit all Profile Data
 router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
   const {
@@ -93,6 +121,16 @@ router.put("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   }
 });
 
+// READ All Staff Profiles by Owner
+router.get("/api/v1/staff/profile", isBusinessOwner, async (req, res) => {
+  try {
+    const staff = await Staff.find();
+    res.status(200).json(staff);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // READ Staff Profile
 router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   const id = req.params.id;
@@ -105,14 +143,18 @@ router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
 });
 
 // DELETE Staff Profile
-router.delete("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
-  const id = req.params.id;
-  try {
-    const profile = await Staff.findByIdAndDelete(id);
-    res.status(200).json(profile);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.delete(
+  "/api/v1/staff/profile/:id",
+  isBusinessOwner,
+  async (req, res) => {
+    const id = req.params.id;
+    try {
+      const profile = await Staff.findByIdAndDelete(id);
+      res.status(200).json(profile);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 module.exports = router;

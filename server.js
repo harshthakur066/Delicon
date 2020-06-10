@@ -9,6 +9,7 @@ const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
 const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const indexRoutes = require("./routes/indexRoutes");
+const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(staffRoutes);
 app.use(indexRoutes);
 
 // Features Routes
+app.use(requestedBusinessRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
