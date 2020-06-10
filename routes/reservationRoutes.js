@@ -89,7 +89,7 @@ router.put(
   }
 );
 
-//For businessOwner and Admin to DELETE a perticular Reservation
+//For Staff to DELETE a perticular Reservation
 router.delete(
   "/api/v1/reservations/:reservationId",
   requireStaff,

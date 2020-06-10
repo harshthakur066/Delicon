@@ -4,6 +4,7 @@ const SuperAdmin = require("../models/SuperAdmin");
 const User = require("../models/User");
 const router = express.Router();
 
+// Signup for Super Admin
 router.post("/api/v1/admin/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -28,6 +29,8 @@ router.post("/api/v1/admin/signup", async (req, res) => {
   }
 });
 
+// No need Go to indexRoutes.js
+// Signin for Super Admin
 router.post("/api/v1/admin/signin", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {

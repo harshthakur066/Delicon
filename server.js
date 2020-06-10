@@ -34,6 +34,7 @@ app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
 
+// Mongoose Connection
 mongoose.connect(
   "mongodb+srv://admin:delicon@reservation-system-cluster-wccqj.mongodb.net/apiv1?retryWrites=true&w=majority",
   {
@@ -51,6 +52,7 @@ mongoose.connection.on("error", (err) => {
   console.error("Error connenting to mongo", err);
 });
 
+// For Production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 

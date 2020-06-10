@@ -17,7 +17,7 @@ router.get("/api/v1/businesses", isBusinessOwner, async (req, res) => {
   }
 });
 
-//For businessOwner and Admin to SHOW a perticular Business
+//For businessOwner and Admin to SHOW a perticular Business Access to Business Owner
 router.get(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,
@@ -33,7 +33,7 @@ router.get(
   }
 );
 
-//For businessOwner and Admin to EDIT a perticular Business
+//For businessOwner and Admin to EDIT a perticular Business Access to Business Owner
 router.put(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,
@@ -49,7 +49,7 @@ router.put(
   }
 );
 
-// For businessOwner and Admin to DELETE a perticular Business
+// For businessOwner and Admin to DELETE a perticular Business Access to Business Owner
 router.delete(
   "/api/v1/businesses/:businessId",
   isBusinessOwner,

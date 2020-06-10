@@ -6,6 +6,7 @@ const Staff = require("../models/Staff");
 const BusinessOwner = require("../models/BusinessOwner");
 const router = express.Router();
 
+// Signin Route for all 3
 router.post("/api/v1/signin", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {

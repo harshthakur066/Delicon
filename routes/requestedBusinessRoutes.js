@@ -8,7 +8,7 @@ const BusinessOwner = require("../models/BusinessOwner");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const isSuperAdmin = require("../middlewares/requireSuperAdmin");
 
-// To GET all requested business for Admin
+// To GET all requested business for Admin  Access to Super Admin
 router.get("/api/v1/businesses/request/all", isSuperAdmin, async (req, res) => {
   try {
     const requestedBusiness = await RequestedBusiness.find();
@@ -19,7 +19,7 @@ router.get("/api/v1/businesses/request/all", isSuperAdmin, async (req, res) => {
   }
 });
 
-// For Business owner to request new Businesses
+// For Business owner to request new Businesses  Access to Business Owner
 router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   const { name, owner, address, details } = req.body;
   const ownerId = req.owner._id;
@@ -52,7 +52,7 @@ router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   }
 });
 
-// To get all owner reqested businesses of Owner
+// To get all owner reqested businesses of Owner Access to Business Owner
 router.get("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   try {
     const requestedBusiness = await RequestedBusiness.find({
@@ -65,7 +65,7 @@ router.get("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   }
 });
 
-//TO delete a single request for owner
+//TO delete a single request for owner Access to Business Owner
 router.delete(
   "/api/v1/businesses/request/:businessId",
   isBusinessOwner,

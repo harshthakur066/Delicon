@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 const router = express.Router();
 
+// Signup for Business Owner
 router.post("/api/v1/businessowner/signup", async (req, res) => {
   const { name, email, password, category, categoryId } = req.body;
   try {
@@ -48,6 +49,8 @@ router.post("/api/v1/businessowner/signup", async (req, res) => {
   }
 });
 
+// No need to use Go to indexRoutes.js
+// SignIp for Business Owner
 router.post("/api/v1/businessowner/signin", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {

@@ -5,7 +5,7 @@ const isSuperAdmin = require("../middlewares/requireSuperAdmin");
 
 const router = express.Router();
 
-// CREATE CATEGORY OF BUSINESS
+// CREATE CATEGORY OF BUSINESS Access to Super Admin
 router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
   const { name, details } = req.body;
   const adminId = req.admin._id;
@@ -24,7 +24,7 @@ router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
   }
 });
 
-// READ ALL CATEGORIES OF BUSINESS
+// READ ALL CATEGORIES OF BUSINESS Access to Super Admin
 router.get("/api/v1/categories", isSuperAdmin, async (req, res) => {
   try {
     const businessCategory = await BusinessCategory.find({});
@@ -34,7 +34,7 @@ router.get("/api/v1/categories", isSuperAdmin, async (req, res) => {
   }
 });
 
-// READ PARTICULAR CATEGORY OF BUSINESS
+// READ PARTICULAR CATEGORY OF BUSINESS Access to Super Admin
 router.get("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   const id = req.params.id;
   try {
@@ -45,7 +45,7 @@ router.get("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   }
 });
 
-// UPDATE CATEGORY OF BUSINESS
+// UPDATE CATEGORY OF BUSINESS Access to Super Admin
 router.put("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   const id = req.params.id;
   const { name, details } = req.body;
@@ -61,7 +61,7 @@ router.put("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   }
 });
 
-// DELETE CATEGORY OF BUSINESS
+// DELETE CATEGORY OF BUSINESS Access to Super Admin
 router.delete("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   const id = req.params.id;
   try {
