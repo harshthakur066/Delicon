@@ -27,8 +27,6 @@ router.post(
       position,
       dateOfJoining,
       details,
-      business,
-      businessId,
     } = req.body;
     try {
       const staff = new Staff({
@@ -44,8 +42,6 @@ router.post(
         position,
         dateOfJoining,
         details,
-        business,
-        businessId,
       });
       await staff.save();
       const token = jwt.sign(
