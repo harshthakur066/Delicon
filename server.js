@@ -11,6 +11,7 @@ const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const indexRoutes = require("./routes/indexRoutes");
 const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
+const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
 
 const app = express();
 
@@ -36,6 +37,9 @@ app.use(requestedBusinessRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
+
+//AnalyticRoutes
+app.use(reservationAnalyticsRoutes);
 
 // Mongoose Connection
 mongoose.connect(
