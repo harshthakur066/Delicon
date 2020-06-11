@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
   res.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+app.use(cors());
+
 app.use(bodyParser.json());
 
 // Auth Routes
