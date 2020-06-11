@@ -6,6 +6,7 @@ const BusinessOwner = require("../models/BusinessOwner");
 
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
+// Get all businesses of perticular owner
 router.get("/api/v1/businesses", isBusinessOwner, async (req, res) => {
   const ownerId = req.owner._id;
   try {

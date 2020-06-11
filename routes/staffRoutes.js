@@ -27,6 +27,8 @@ router.post(
       position,
       dateOfJoining,
       details,
+      business,
+      businessId,
     } = req.body;
     try {
       const staff = new Staff({
@@ -42,6 +44,8 @@ router.post(
         position,
         dateOfJoining,
         details,
+        business,
+        businessId,
       });
       await staff.save();
       const token = jwt.sign(
@@ -112,6 +116,8 @@ router.put(
       position,
       dateOfJoining,
       details,
+      business,
+      businessId,
     } = req.body;
     data = {
       mobno,
@@ -121,6 +127,8 @@ router.put(
       position,
       dateOfJoining,
       details,
+      business,
+      businessId,
     };
     try {
       const staff = await Staff.findByIdAndUpdate(id, data);
@@ -137,7 +145,7 @@ router.get(
   isBusinessOwner,
   async (req, res) => {
     try {
-      const staff = await Staff.find();
+      const staff = await Staff.find({ ownerId: req.owner._id });
       res.status(200).json(staff);
     } catch (err) {
       return res.status(500).json({ error: err.message });
@@ -179,7 +187,25 @@ router.delete(
     const id = req.params.id;
     try {
       const profile = await Staff.findByIdAndDelete(id);
-      res.status(200).json(profile);
+      try {
+        await User.findOneAndDelete({ email: profile.email });
+        try {
+          const currentbusiness = await Business.findById(businessId);
+          currentbusiness.staff = currentbusiness.staff.filter(
+            (Id) => Id !== staff._id
+          );
+          await Business.findByIdAndUpdate(profile.businessId, currentbusiness);
+          res.status(200).json(profile);
+        } catch (err) {
+          console.log(err);
+          res.status(500).json({
+            error: err.message,
+            message: "Error while adding id to Business Categories!",
+          });
+        }
+      } catch (err) {
+        return res.status(422).send(err.message);
+      }
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
