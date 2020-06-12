@@ -6,9 +6,18 @@ const requireStaff = require("../middlewares/requireStaff");
 
 // For Staff to POST new Reservations
 router.post("/api/v1/reservations", requireStaff, async (req, res) => {
-  const { name, email, mobno, address, dateOfBirth, seats } = req.body;
+  const {
+    name,
+    email,
+    mobno,
+    address,
+    dateOfBirth,
+    seats,
+    ownerId,
+    businessId,
+  } = req.body;
   const staffId = req.staff._id;
-  var dateobj = new Date().toISOString();
+  var dateobj = new Date().toLocaleDateString().split("/").reverse().join("-");
   try {
     const reservation = new Reservation({
       name: name,
@@ -19,6 +28,8 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
       createdAt: dateobj,
       dateOfBirth: dateOfBirth,
       seats: seats,
+      ownerId,
+      businessId,
     });
     await reservation.save();
     try {

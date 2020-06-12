@@ -6,7 +6,7 @@ const businessSchema = new mongoose.Schema({
   ownerId: String,
   address: String,
   details: String,
-  createdAt: String,
+  createdAt: Date,
   staff: [
     {
       type: mongoose.Schema.Types.ObjectId,

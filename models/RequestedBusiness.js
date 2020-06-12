@@ -7,7 +7,7 @@ const requestedBusinessSchema = new mongoose.Schema({
   ownerId: String,
   address: String,
   details: String,
-  createdAt: String,
+  createdAt: Date,
 });
 
 module.exports = mongoose.model("RequestedBusiness", requestedBusinessSchema);

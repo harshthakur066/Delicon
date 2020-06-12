@@ -8,7 +8,7 @@ const reservationSchema = new mongoose.Schema({
   staffId: String,
   dateOfBirth: String,
   seats: { type: String, default: 1, min: 1 },
-  createdAt: String,
+  createdAt: Date,
 });
 
 module.exports = mongoose.model("Reservation", reservationSchema);

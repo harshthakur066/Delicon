@@ -23,7 +23,7 @@ router.get("/api/v1/businesses/request/all", isSuperAdmin, async (req, res) => {
 router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   const { name, owner, address, details } = req.body;
   const ownerId = req.owner._id;
-  var dateobj = new Date().toISOString();
+  var dateobj = new Date().toLocaleDateString().split("/").reverse().join("-");
   try {
     const requestBusiness = new RequestedBusiness({
       name: name,

@@ -6,7 +6,7 @@ const buisnessCategorySchema = new Schema({
   name: String,
   details: String,
   adminId: String,
-  createdAt: String,
+  createdAt: Date,
   businessowners: [
     {
       type: mongoose.Schema.Types.ObjectId,
