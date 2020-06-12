@@ -26,7 +26,16 @@ router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
 });
 
 // READ ALL CATEGORIES OF BUSINESS Access to Super Admin
-router.get("/api/v1/categories", isBusinessOwner, async (req, res) => {
+router.get("/api/v1/owner/categories", isBusinessOwner, async (req, res) => {
+  try {
+    const businessCategory = await BusinessCategory.find({});
+    res.status(200).json(businessCategory);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/api/v1/categories", isSuperAdmin, async (req, res) => {
   try {
     const businessCategory = await BusinessCategory.find({});
     res.status(200).json(businessCategory);
