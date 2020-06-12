@@ -6,7 +6,7 @@ const requireStaff = require("../middlewares/requireStaff");
 
 // For Staff to POST new Reservations
 router.post("/api/v1/reservations", requireStaff, async (req, res) => {
-  const { name, email, mobno, address } = req.body;
+  const { name, email, mobno, address, dateOfBirth, seats } = req.body;
   const staffId = req.staff._id;
   var dateobj = new Date().toISOString();
   try {
@@ -17,6 +17,8 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
       mobno: mobno,
       address: address,
       createdAt: dateobj,
+      dateOfBirth: dateOfBirth,
+      seats: seats,
     });
     await reservation.save();
     try {
@@ -69,7 +71,7 @@ router.put(
   "/api/v1/reservations/:reservationId",
   requireStaff,
   async (req, res) => {
-    const { name, email, address, mobno } = req.body;
+    const { name, email, address, mobno, dateOfBirth, seats } = req.body;
     const { reservationId } = req.params;
     try {
       const update = {
@@ -77,6 +79,8 @@ router.put(
         email: email,
         address: address,
         mobno: mobno,
+        dateOfBirth: dateOfBirth,
+        seats: seats,
       };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,

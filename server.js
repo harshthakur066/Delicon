@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
@@ -10,6 +11,7 @@ const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const indexRoutes = require("./routes/indexRoutes");
 const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
+const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use((req, res, next) => {
   res.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+app.use(cors());
+
 app.use(bodyParser.json());
 
 // Auth Routes
@@ -33,6 +37,9 @@ app.use(requestedBusinessRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
+
+//AnalyticRoutes
+app.use(reservationAnalyticsRoutes);
 
 // Mongoose Connection
 mongoose.connect(
