@@ -17,7 +17,7 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
     businessId,
   } = req.body;
   const staffId = req.staff._id;
-  var dateobj = new Date().toLocaleDateString();
+  const date = new Date().toLocaleDateString().split("/").reverse();
   try {
     const reservation = new Reservation({
       name: name,
@@ -25,7 +25,7 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
       staffId: staffId,
       mobno: mobno,
       address: address,
-      createdAt: dateobj,
+      createdAt: new Date(date[0], date[2], date[1]),
       dateOfBirth: dateOfBirth,
       seats: seats,
       ownerId,

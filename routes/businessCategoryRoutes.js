@@ -10,13 +10,13 @@ const router = express.Router();
 router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
   const { name, details } = req.body;
   const adminId = req.admin._id;
-  const date = new Date().toLocaleDateString();
+  const date = new Date().toLocaleDateString().split("/").reverse();
   try {
     const businessCategory = new BusinessCategory({
       name: name,
       details: details,
       adminId: adminId,
-      createdAt: date,
+      createdAt: new Date(date[0], date[2], date[1]),
     });
     await businessCategory.save();
     res.status(200).json(businessCategory);

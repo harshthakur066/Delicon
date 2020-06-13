@@ -73,9 +73,10 @@ router.get(
   "/api/v1/analytics/date/:datestring",
   requireBusinessOwner,
   async (req, res) => {
+    const date = req.params.datestring.split("-");
     try {
       const reservations = await Reservation.find({
-        createdAt: new Date(req.params.datestring),
+        createdAt: new Date(date[0], date[1], date[2]),
       });
       res.json(reservations);
     } catch (err) {
@@ -90,9 +91,14 @@ router.get(
   "/api/v1/analytics/daterange/:datefrom/:dateto",
   requireBusinessOwner,
   async (req, res) => {
+    const fromdate = req.params.datefrom.split("-");
+    const todate = req.params.dateto.split("-");
     try {
       const reservations = await Reservation.find({
-        createdAt: { $gte: req.params.datefrom, $lte: req.params.dateto },
+        createdAt: {
+          $gte: new Date(fromdate[0], fromdate[1], fromdate[2]),
+          $lte: new Date(todate[0], todate[1], todate[2]),
+        },
       }).sort({ createdAt: 1 });
       res.json(reservations);
     } catch (err) {

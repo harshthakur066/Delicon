@@ -23,7 +23,7 @@ router.get("/api/v1/businesses/request/all", isSuperAdmin, async (req, res) => {
 router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   const { name, owner, address, details } = req.body;
   const ownerId = req.owner._id;
-  var dateobj = new Date().toLocaleDateString();
+  const date = new Date().toLocaleDateString().split("/").reverse();
   try {
     const requestBusiness = new RequestedBusiness({
       name: name,
@@ -31,7 +31,7 @@ router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
       address: address,
       ownerId: ownerId,
       details: details,
-      createdAt: dateobj,
+      createdAt: new Date(date[0], date[2], date[1]),
       status: "Pending",
     });
     await requestBusiness.save();

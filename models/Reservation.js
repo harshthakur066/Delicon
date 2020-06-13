@@ -7,6 +7,8 @@ const reservationSchema = new mongoose.Schema({
   address: String,
   staffId: String,
   dateOfBirth: String,
+  businessId: String,
+  ownerId: String,
   seats: { type: String, default: 1, min: 1 },
   createdAt: Date,
 });
