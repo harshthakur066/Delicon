@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
   const { name, details } = req.body;
   const adminId = req.admin._id;
-  const date = new Date().toLocaleDateString().split("/").reverse().join("-");
+  const date = new Date().toLocaleDateString();
   try {
     const businessCategory = new BusinessCategory({
       name: name,
