@@ -23,6 +23,7 @@ const staffSchema = new Schema({
   details: String,
   business: String,
   businessId: String,
+  ownerId: String,
   reservations: [
     {
       type: mongoose.Schema.Types.ObjectId,
