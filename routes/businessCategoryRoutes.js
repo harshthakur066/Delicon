@@ -3,6 +3,7 @@ const express = require("express");
 const BusinessCategory = require("../models/BusinessCategory");
 const isSuperAdmin = require("../middlewares/requireSuperAdmin");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const BusinessOwner = require("../models/BusinessOwner");
 
 const router = express.Router();
 
@@ -77,6 +78,21 @@ router.delete("/api/v1/categories/:id", isSuperAdmin, async (req, res) => {
   try {
     const businessCategory = await BusinessCategory.findByIdAndDelete(id);
     res.status(200).send("Deleted");
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/api/v1/categories/:id/owners", isSuperAdmin, async (req, res) => {
+  try {
+    const owners = await BusinessOwner.find({ categoryId: req.params.id });
+    const ownersdata = owners.map((own) => ({
+      businesses: own.businesses,
+      reqbusinesses: own.reqbusinesses,
+      name: own.name,
+      email: own.email,
+    }));
+    res.send(ownersdata);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

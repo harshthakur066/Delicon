@@ -30,6 +30,12 @@ const staffSchema = new Schema({
       ref: "Reservation",
     },
   ],
+  valets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Valet",
+    },
+  ],
 });
 
 staffSchema.pre("save", function (next) {
