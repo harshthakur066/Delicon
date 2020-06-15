@@ -70,11 +70,13 @@ router.get("/api/v1/valets/:id", requireStaff, async (req, res) => {
 router.put("/api/v1/valets/:id", requireStaff, async (req, res) => {
   const { carNumber, ownerName, driverName } = req.body;
   const valetId = req.params.id;
+  const timeOut = new Date().toISOString();
   try {
     const update = {
       carNumber: carNumber,
       ownerName: ownerName,
       driverName: driverName,
+      timeOut: timeOut,
     };
     const valet = await Valet.findByIdAndUpdate(valetId, update);
     res.send(valet);
