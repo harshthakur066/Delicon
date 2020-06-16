@@ -25,6 +25,7 @@ router.put(
   }
 );
 
+// For checkout
 router.put(
   "/api/v1/reservation/checkout/:id",
   requireStaff,

@@ -18,7 +18,7 @@ router.get(
   }
 );
 
-////For Business Owner to Show reservations of a business
+//For Business Owner to Show reservations of a business
 router.get(
   "/api/v1/analytics/business/:id",
   requireBusinessOwner,
