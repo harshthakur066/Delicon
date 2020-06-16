@@ -13,6 +13,7 @@ const indexRoutes = require("./routes/indexRoutes");
 const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
 const valetRoutes = require("./routes/valetRoutes");
+const walkInRoutes = require("./routes/walkInRoutes");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
 app.use(valetRoutes);
+app.use(walkInRoutes);
 
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);

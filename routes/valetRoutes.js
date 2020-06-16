@@ -5,6 +5,7 @@ const Staff = require("../models/Staff");
 const requireStaff = require("../middlewares/requireStaff");
 const requireOwner = require("../middlewares/requiredBusinessOwner");
 
+// To post valet
 router.post("/api/v1/valets", requireStaff, async (req, res) => {
   const timeIn = new Date().toISOString();
   const { carNumber, ownerName, driverName, ownerId, businessId } = req.body;
@@ -37,6 +38,7 @@ router.post("/api/v1/valets", requireStaff, async (req, res) => {
   }
 });
 
+// To get all valets for Business Owner
 router.get("/api/v1/owner/valets", requireOwner, async (req, res) => {
   const ownerId = req.owner._id;
   try {
@@ -47,6 +49,7 @@ router.get("/api/v1/owner/valets", requireOwner, async (req, res) => {
   }
 });
 
+// To get all valets for Staff
 router.get("/api/v1/valets", requireStaff, async (req, res) => {
   const staffId = req.staff._id;
   try {
@@ -57,6 +60,7 @@ router.get("/api/v1/valets", requireStaff, async (req, res) => {
   }
 });
 
+// To get particular valets for Staff
 router.get("/api/v1/valets/:id", requireStaff, async (req, res) => {
   const valetId = req.params.id;
   try {
@@ -67,16 +71,49 @@ router.get("/api/v1/valets/:id", requireStaff, async (req, res) => {
   }
 });
 
-router.put("/api/v1/valets/:id", requireStaff, async (req, res) => {
-  const { carNumber, ownerName, driverName } = req.body;
+// To update timeout
+router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
   const valetId = req.params.id;
   const timeOut = new Date().toISOString();
+  try {
+    const update = {
+      timeOut: timeOut,
+    };
+    const valet = await Valet.findByIdAndUpdate(valetId, update);
+    res.send(valet);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// To update any other info
+router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
+  const { carNumber, ownerName, driverName } = req.body;
+  const valetId = req.params.id;
+  // const timeOut = new Date().toISOString();
   try {
     const update = {
       carNumber: carNumber,
       ownerName: ownerName,
       driverName: driverName,
-      timeOut: timeOut,
+    };
+    const valet = await Valet.findByIdAndUpdate(valetId, update);
+    res.send(valet);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+//To delete a particular valet
+router.put("/api/v1/valets/:id", requireStaff, async (req, res) => {
+  const { carNumber, ownerName, driverName } = req.body;
+  const valetId = req.params.id;
+  // const timeOut = new Date().toISOString();
+  try {
+    const update = {
+      carNumber: carNumber,
+      ownerName: ownerName,
+      driverName: driverName,
     };
     const valet = await Valet.findByIdAndUpdate(valetId, update);
     res.send(valet);
