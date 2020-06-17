@@ -132,4 +132,46 @@ router.delete(
   }
 );
 
+router.put(
+  "/api/v1/reservations/:reservationId/checkin",
+  requireStaff,
+  async (req, res) => {
+    const { reservationId } = req.params;
+    const checkIn = new Date().toISOString();
+    try {
+      const update = {
+        checkIn,
+      };
+      const reservation = await Reservation.findByIdAndUpdate(
+        reservationId,
+        update
+      );
+      res.json(reservation);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+router.put(
+  "/api/v1/reservations/:reservationId/checkout",
+  requireStaff,
+  async (req, res) => {
+    const { reservationId } = req.params;
+    const checkOut = new Date().toISOString();
+    try {
+      const update = {
+        checkOut,
+      };
+      const reservation = await Reservation.findByIdAndUpdate(
+        reservationId,
+        update
+      );
+      res.json(reservation);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 module.exports = router;

@@ -112,7 +112,20 @@ router.delete("/api/v1/walkin/:id", requireStaff, async (req, res) => {
   const walkInId = req.params.id;
   try {
     const walkIn = await WalkIn.findByIdAndDelete(walkInId);
-    res.send(walkIn);
+    try {
+      const currentstaff = await Staff.findById(req.staff._id);
+      currentstaff.walkIns = currentstaff.walkIns.filter(
+        (id) => id != walkInId
+      );
+      await Staff.findByIdAndUpdate(req.staff._id, currentstaff);
+      res.send(walkIn);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Owner!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

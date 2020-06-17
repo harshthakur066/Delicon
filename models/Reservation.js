@@ -11,6 +11,8 @@ const reservationSchema = new mongoose.Schema({
   ownerId: String,
   seats: { type: String, default: 1, min: 1 },
   createdAt: Date,
+  checkIn: String,
+  checkOut: String,
 });
 
 module.exports = mongoose.model("Reservation", reservationSchema);

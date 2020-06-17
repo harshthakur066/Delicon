@@ -108,7 +108,18 @@ router.delete("/api/v1/valets/:id", requireStaff, async (req, res) => {
   const valetId = req.params.id;
   try {
     const valet = await Valet.findByIdAndDelete(valetId);
-    res.send(valet);
+    try {
+      const currentstaff = await Staff.findById(req.staff._id);
+      currentstaff.valets = currentstaff.valets.filter((id) => id != valetId);
+      await Staff.findByIdAndUpdate(req.staff._id, currentstaff);
+      res.send(valet);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Owner!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
