@@ -15,7 +15,6 @@ const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
 const valetRoutes = require("./routes/valetRoutes");
 const walkInRoutes = require("./routes/walkInRoutes");
-const adminBusinessAccessRoutes = require("./routes/adminBusinessAccessRoutes");
 
 const app = express();
 
@@ -44,7 +43,6 @@ app.use(reservationRoutes);
 app.use(reservationCheckinRoutes);
 app.use(valetRoutes);
 app.use(walkInRoutes);
-app.use(adminBusinessAccessRoutes);
 
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);
