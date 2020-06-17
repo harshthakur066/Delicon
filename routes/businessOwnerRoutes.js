@@ -3,16 +3,26 @@ const jwt = require("jsonwebtoken");
 const BusinessOwner = require("../models/BusinessOwner");
 const BuisnessCategory = require("../models/BusinessCategory");
 const User = require("../models/User");
-const isSuperAdmin = require("../middlewares/requireSuperAdmin");
+const requireAdmin = require("../middlewares/requireSuperAdmin");
 
 const router = express.Router();
 
 // Signup for Business Owner
-router.post(
-  "/api/v1/admin/businessowner/signup",
-  isSuperAdmin,
-  async (req, res) => {
-    const { name, email, password, category, categoryId } = req.body;
+router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
+  const { name, email, password, category, categoryId } = req.body;
+  try {
+    const business = new BusinessOwner({
+      name: name,
+      email: email,
+      password: password,
+      category: category,
+      categoryId: categoryId,
+    });
+    await business.save();
+    const token = jwt.sign(
+      { userId: business._id, userRole: "Owner" },
+      "BUSINESS SECRETE KEY"
+    );
     try {
       const business = new BusinessOwner({
         name: name,

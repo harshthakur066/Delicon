@@ -72,7 +72,7 @@ router.get("/api/v1/valets/:id", requireStaff, async (req, res) => {
 });
 
 // To update timeout
-router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
+router.put("/api/v1/valets/:id/timeout", requireStaff, async (req, res) => {
   const valetId = req.params.id;
   const timeOut = new Date().toISOString();
   try {
@@ -87,10 +87,9 @@ router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
 });
 
 // To update any other info
-router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
+router.put("/api/v1/valets/:id", requireStaff, async (req, res) => {
   const { carNumber, ownerName, driverName } = req.body;
   const valetId = req.params.id;
-  // const timeOut = new Date().toISOString();
   try {
     const update = {
       carNumber: carNumber,
@@ -105,28 +104,22 @@ router.put("/api/v1/valets/timeout/:id", requireStaff, async (req, res) => {
 });
 
 //To delete a particular valet
-router.put("/api/v1/valets/:id", requireStaff, async (req, res) => {
-  const { carNumber, ownerName, driverName } = req.body;
-  const valetId = req.params.id;
-  // const timeOut = new Date().toISOString();
-  try {
-    const update = {
-      carNumber: carNumber,
-      ownerName: ownerName,
-      driverName: driverName,
-    };
-    const valet = await Valet.findByIdAndUpdate(valetId, update);
-    res.send(valet);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
 router.delete("/api/v1/valets/:id", requireStaff, async (req, res) => {
   const valetId = req.params.id;
   try {
     const valet = await Valet.findByIdAndDelete(valetId);
-    res.send(valet);
+    try {
+      const currentstaff = await Staff.findById(req.staff._id);
+      currentstaff.valets = currentstaff.valets.filter((id) => id != valetId);
+      await Staff.findByIdAndUpdate(req.staff._id, currentstaff);
+      res.send(valet);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Owner!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

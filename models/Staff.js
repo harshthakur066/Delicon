@@ -36,6 +36,12 @@ const staffSchema = new Schema({
       ref: "Valet",
     },
   ],
+  walkIns: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "WalkIn",
+    },
+  ],
 });
 
 staffSchema.pre("save", function (next) {

@@ -7,26 +7,27 @@ const requireOwner = require("../middlewares/requiredBusinessOwner");
 
 // To post the walkin
 router.post("/api/v1/walkin", requireStaff, async (req, res) => {
-  const TimeIn = new Date().toISOString();
-  const { Name, Phone, Email, DOB, Address, businessId } = req.body;
+  const walkIn = new Date().toISOString();
+  const { name, mobno, email, dob, address, businessId, ownerId } = req.body;
   const staffId = req.staff._id;
   try {
-    const walkIn = new WalkIn({
-      Name,
-      Phone,
-      Email,
-      DOB,
-      Address,
+    const walk = new WalkIn({
+      name,
+      mobno,
+      email,
+      dob,
+      address,
       businessId,
-      TimeIn,
+      ownerId,
       staffId,
+      walkIn,
     });
-    await walkIn.save();
+    await walk.save();
     try {
       const currentstaff = await Staff.findById(staffId);
-      currentstaff.WalkIn.push(WalkIn._id);
+      currentstaff.walkIns.push(walk._id);
       await Staff.findByIdAndUpdate(staffId, currentstaff);
-      res.json(WalkIn);
+      res.json(walk);
     } catch (err) {
       console.log(err);
       res.status(500).json({
@@ -73,12 +74,12 @@ router.get("/api/v1/walkin/:id", requireStaff, async (req, res) => {
 });
 
 // For timeOut
-router.put("/api/v1/walkin/timeout/:id", requireStaff, async (req, res) => {
+router.put("/api/v1/walkin/:id/walkout", requireStaff, async (req, res) => {
   const walkInId = req.params.id;
-  const TimeOut = new Date().toISOString();
+  const walkOut = new Date().toISOString();
   try {
     const update = {
-      TimeOut: TimeOut,
+      walkOut: walkOut,
     };
     const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
     res.send(walkIn);
@@ -89,15 +90,15 @@ router.put("/api/v1/walkin/timeout/:id", requireStaff, async (req, res) => {
 
 // To update particular walkin
 router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
-  const { Name, Phone, Email, DOB, Address } = req.body;
+  const { name, mobno, email, dob, address } = req.body;
   const walkInId = req.params.id;
   try {
     const update = {
-      Name: Name,
-      Phone: Phone,
-      Email: Email,
-      DOB: DOB,
-      Address: Address,
+      name,
+      mobno,
+      email,
+      dob,
+      address,
     };
     const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
     res.send(walkIn);
@@ -111,7 +112,20 @@ router.delete("/api/v1/walkin/:id", requireStaff, async (req, res) => {
   const walkInId = req.params.id;
   try {
     const walkIn = await WalkIn.findByIdAndDelete(walkInId);
-    res.send(walkIn);
+    try {
+      const currentstaff = await Staff.findById(req.staff._id);
+      currentstaff.walkIns = currentstaff.walkIns.filter(
+        (id) => id != walkInId
+      );
+      await Staff.findByIdAndUpdate(req.staff._id, currentstaff);
+      res.send(walkIn);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: err.message,
+        message: "Error while adding id to Business Owner!",
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
