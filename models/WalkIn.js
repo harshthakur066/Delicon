@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const walkInSchema = new mongoose.Schema({
-  Name: { type: String, required: true },
-  Phone: { type: String, required: true },
-  Email: String,
-  DOB: String,
-  Address: String,
-  TimeIn: String,
-  TimeOut: String,
+  name: { type: String, required: true },
+  mobno: { type: String, required: true },
+  email: String,
+  dob: String,
+  address: String,
+  walkIn: String,
+  walkOut: String,
   staffId: String,
   ownerId: String,
   businessId: String,
