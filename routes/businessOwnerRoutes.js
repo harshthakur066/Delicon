@@ -3,11 +3,12 @@ const jwt = require("jsonwebtoken");
 const BusinessOwner = require("../models/BusinessOwner");
 const BuisnessCategory = require("../models/BusinessCategory");
 const User = require("../models/User");
+const requireAdmin = require("../middlewares/requireSuperAdmin");
 
 const router = express.Router();
 
 // Signup for Business Owner
-router.post("/api/v1/businessowner/signup", async (req, res) => {
+router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
   const { name, email, password, category, categoryId } = req.body;
   try {
     const business = new BusinessOwner({
