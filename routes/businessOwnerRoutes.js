@@ -50,7 +50,6 @@ router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
   }
 });
 
-// No need to use Go to indexRoutes.js
 // SignIp for Business Owner
 router.post("/api/v1/businessowner/signin", async (req, res) => {
   const { email, password } = req.body;
@@ -72,5 +71,52 @@ router.post("/api/v1/businessowner/signin", async (req, res) => {
     return res.status(404).send({ error: "Invalid password or email." });
   }
 });
+
+//Get Owner details for admin
+router.get("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
+  const { ownerId } = req.params;
+  try {
+    const own = await BusinessOwner.findById(ownerId);
+    const ownerdata = {
+      businesses: own.businesses,
+      reqbusinesses: own.reqbusinesses,
+      name: own.name,
+      email: own.email,
+      category: own.category,
+      categoryId: own.categoryId,
+    };
+    res.send(ownerdata);
+  } catch (err) {
+    return res.status(404).send({ error: err.message });
+  }
+});
+
+// Update details for admin
+router.put("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
+  const { ownerId } = req.params;
+  const { name, category, categoryId } = req.body;
+  try {
+    const update = { name, categoryId, category };
+    const owner = await BusinessOwner.findByIdAndUpdate(ownerId, update);
+    res.send(owner);
+  } catch (err) {
+    return res.status(404).send({ error: err.message });
+  }
+});
+
+// Delete owner for admin
+router.delete(
+  "/api/v1/businessowner/:ownerId",
+  requireAdmin,
+  async (req, res) => {
+    const { ownerId } = req.params;
+    try {
+      const owner = await BusinessOwner.findByIdAndDelete(ownerId);
+      res.send(owner);
+    } catch (err) {
+      return res.status(404).send({ error: err.message });
+    }
+  }
+);
 
 module.exports = router;

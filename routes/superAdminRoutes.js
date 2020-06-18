@@ -29,7 +29,6 @@ router.post("/api/v1/admin/signup", async (req, res) => {
   }
 });
 
-// No need Go to indexRoutes.js
 // Signin for Super Admin
 router.post("/api/v1/admin/signin", async (req, res) => {
   const { email, password } = req.body;

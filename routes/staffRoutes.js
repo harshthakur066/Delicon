@@ -75,7 +75,6 @@ router.post(
   }
 );
 
-// No need Go to indexRoutes.js
 //Staff signin
 router.post("/api/v1/staff/signin", async (req, res) => {
   const { email, password } = req.body;

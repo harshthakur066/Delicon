@@ -92,6 +92,8 @@ router.get("/api/v1/categories/:id/owners", isSuperAdmin, async (req, res) => {
       reqbusinesses: own.reqbusinesses,
       name: own.name,
       email: own.email,
+      category: own.category,
+      categoryId: own.categoryId,
     }));
     res.send(ownersdata);
   } catch (err) {
