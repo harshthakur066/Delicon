@@ -75,7 +75,26 @@ router.post("/api/v1/businessowner/signin", async (req, res) => {
 //Get All Owner details for admin
 router.get("/api/v1/businessowner", requireAdmin, async (req, res) => {
   try {
-    const own = await BusinessOwner.find();
+    const owners = await BusinessOwner.find({});
+    const ownersdata = owners.map((own) => ({
+      businesses: own.businesses,
+      reqbusinesses: own.reqbusinesses,
+      name: own.name,
+      email: own.email,
+      category: own.category,
+      categoryId: own.categoryId,
+    }));
+    res.send(ownersdata);
+  } catch (err) {
+    return res.status(404).send({ error: err.message });
+  }
+});
+
+//Get Owner details for admin
+router.get("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
+  const { ownerId } = req.params;
+  try {
+    const own = await BusinessOwner.findById(ownerId);
     const ownerdata = {
       businesses: own.businesses,
       reqbusinesses: own.reqbusinesses,
