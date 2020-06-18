@@ -72,11 +72,10 @@ router.post("/api/v1/businessowner/signin", async (req, res) => {
   }
 });
 
-//Get Owner details for admin
-router.get("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
-  const { ownerId } = req.params;
+//Get All Owner details for admin
+router.get("/api/v1/businessowner", requireAdmin, async (req, res) => {
   try {
-    const own = await BusinessOwner.findById(ownerId);
+    const own = await BusinessOwner.find();
     const ownerdata = {
       businesses: own.businesses,
       reqbusinesses: own.reqbusinesses,

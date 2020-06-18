@@ -15,18 +15,6 @@ router.post("/api/v1/signin", async (req, res) => {
   const user = await User.findOne({ email: email });
   if (!user) {
     return res.status(404).send({ error: "Invalid password or email." });
-  } else if (user.userRole === "Admin") {
-    try {
-      const admin = await SuperAdmin.findById(user.userId);
-      await admin.comparePassword(password);
-      const token = jwt.sign(
-        { userId: admin._id, userRole: user.userRole },
-        "ADMIN SECRETE KEY"
-      );
-      res.send({ token });
-    } catch (err) {
-      return res.status(404).send({ error: "Invalid password or email." });
-    }
   } else if (user.userRole === "Staff") {
     try {
       const staff = await Staff.findById(user.userId);
