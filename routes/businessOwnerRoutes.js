@@ -83,6 +83,7 @@ router.get("/api/v1/businessowner", requireAdmin, async (req, res) => {
       email: own.email,
       category: own.category,
       categoryId: own.categoryId,
+      id: own._id,
     }));
     res.send(ownersdata);
   } catch (err) {
@@ -102,6 +103,7 @@ router.get("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
       email: own.email,
       category: own.category,
       categoryId: own.categoryId,
+      id: own._id,
     };
     res.send(ownerdata);
   } catch (err) {
