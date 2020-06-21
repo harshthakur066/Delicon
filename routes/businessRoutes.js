@@ -3,6 +3,10 @@ const router = express.Router();
 
 const Business = require("../models/Business");
 const BusinessOwner = require("../models/BusinessOwner");
+const Staff = require("../models/Staff");
+const Reservation = require("../models/Reservation");
+const Valet = require("../models/Valets");
+const WalkIn = require("../models/WalkIn");
 
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const isSuperAdmin = require("../middlewares/requireSuperAdmin");
@@ -66,13 +70,17 @@ router.delete(
           (id) => id != businessId
         );
         await BusinessOwner.findByIdAndUpdate(ownerId, currentowner);
-        res.json(business);
+        try {
+          await Staff.deleteMany({ businessId: businessId });
+          await Reservation.deleteMany({ businessId: businessId });
+          await Valet.deleteMany({ businessId: businessId });
+          await WalkIn.deleteMany({ businessId: businessId });
+          res.json(business);
+        } catch {
+          return res.status(500).json({ error: err.message });
+        }
       } catch (err) {
-        console.log(err);
-        res.status(500).json({
-          error: err.message,
-          message: "Error while adding id to Business Owner!",
-        });
+        return res.status(500).json({ error: err.message });
       }
     } catch (err) {
       return res.status(500).json({ error: err.message });
@@ -162,7 +170,15 @@ router.delete(
           (id) => id != businessId
         );
         await BusinessOwner.findByIdAndUpdate(business.ownerId, currentowner);
-        res.json(business);
+        try {
+          await Staff.deleteMany({ businessId: businessId });
+          await Reservation.deleteMany({ businessId: businessId });
+          await Valet.deleteMany({ businessId: businessId });
+          await WalkIn.deleteMany({ businessId: businessId });
+          res.json(business);
+        } catch {
+          return res.status(500).json({ error: err.message });
+        }
       } catch (err) {
         console.log(err);
         res.status(500).json({

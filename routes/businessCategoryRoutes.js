@@ -2,7 +2,7 @@ const express = require("express");
 
 const BusinessCategory = require("../models/BusinessCategory");
 const isSuperAdmin = require("../middlewares/requireSuperAdmin");
-// const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const BusinessOwner = require("../models/BusinessOwner");
 
 const router = express.Router();
@@ -26,15 +26,15 @@ router.post("/api/v1/categories", isSuperAdmin, async (req, res) => {
   }
 });
 
-// // READ ALL CATEGORIES OF BUSINESS Access to Business Owner
-// router.get("/api/v1/owner/categories", isBusinessOwner, async (req, res) => {
-//   try {
-//     const businessCategory = await BusinessCategory.find({});
-//     res.status(200).json(businessCategory);
-//   } catch (err) {
-//     return res.status(500).json({ error: err.message });
-//   }
-// });
+// READ ALL CATEGORIES OF BUSINESS Access to Business Owner
+router.get("/api/v1/owner/categories", isBusinessOwner, async (req, res) => {
+  try {
+    const businessCategory = await BusinessCategory.find({});
+    res.status(200).json(businessCategory);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
 
 // READ ALL CATEGORIES OF BUSINESS Access to Super Admin
 router.get("/api/v1/categories", isSuperAdmin, async (req, res) => {

@@ -1,9 +1,14 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const BusinessOwner = require("../models/BusinessOwner");
-const BuisnessCategory = require("../models/BusinessCategory");
 const User = require("../models/User");
 const requireAdmin = require("../middlewares/requireSuperAdmin");
+const BusinessCategory = require("../models/BusinessCategory");
+const Business = require("../models/Business");
+const BusinessOwner = require("../models/BusinessOwner");
+const Staff = require("../models/Staff");
+const Reservation = require("../models/Reservation");
+const Valet = require("../models/Valets");
+const WalkIn = require("../models/WalkIn");
 
 const router = express.Router();
 
@@ -132,7 +137,28 @@ router.delete(
     const { ownerId } = req.params;
     try {
       const owner = await BusinessOwner.findByIdAndDelete(ownerId);
-      res.send(owner);
+      try {
+        const currentcategory = await BusinessCategory.findById(
+          owner.categoryId
+        );
+        currentcategory.businessowners = currentcategory.businessowners.filter(
+          (id) => id != ownerId
+        );
+        await BusinessCategory.findByIdAndUpdate(
+          owner.categoryId,
+          currentcategory
+        );
+        try {
+          await Business.deleteMany({ ownerId: ownerId });
+          await Staff.deleteMany({ ownerId: ownerId });
+          await Reservation.deleteMany({ ownerId: ownerId });
+          await Valet.deleteMany({ ownerId: ownerId });
+          await WalkIn.deleteMany({ ownerId: ownerId });
+          res.send(owner);
+        } catch {
+          return res.status(500).json({ error: err.message });
+        }
+      } catch (err) {}
     } catch (err) {
       return res.status(404).send({ error: err.message });
     }
