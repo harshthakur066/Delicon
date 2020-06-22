@@ -45,7 +45,12 @@ router.put(
   isBusinessOwner,
   async (req, res) => {
     const { businessId } = req.params;
-    let update = { name: req.body.name, details: req.body.details };
+    let update = {
+      name: req.body.name,
+      owner: req.body.owner,
+      details: req.body.details,
+      address: req.body.address,
+    };
     try {
       const business = await Business.findByIdAndUpdate(businessId, update);
       res.json(business);
@@ -146,7 +151,12 @@ router.put(
   isSuperAdmin,
   async (req, res) => {
     const { businessId } = req.params;
-    let update = { name: req.body.name, details: req.body.details };
+    let update = {
+      name: req.body.name,
+      owner: req.body.owner,
+      details: req.body.details,
+      address: req.body.address,
+    };
     try {
       const business = await Business.findByIdAndUpdate(businessId, update);
       res.json(business);
