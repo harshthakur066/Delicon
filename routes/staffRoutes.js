@@ -179,8 +179,8 @@ router.get(
 );
 
 // READ Staff Profile access to Staff
-router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
-  const id = req.params.id;
+router.get("/api/v1/staff/profile", isStaff, async (req, res) => {
+  const id = req.staff._id;
   try {
     const staff = await Staff.findById(id);
     res.status(200).json(staff);
