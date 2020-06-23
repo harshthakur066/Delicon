@@ -24,6 +24,7 @@ const staffSchema = new Schema({
   business: String,
   businessId: String,
   ownerId: String,
+  working: { type: Boolean, default: true, required: true },
   reservations: [
     {
       type: mongoose.Schema.Types.ObjectId,

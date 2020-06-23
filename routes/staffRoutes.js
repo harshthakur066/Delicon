@@ -148,6 +148,21 @@ router.get(
   }
 );
 
+// READ All Staff Profiles of a particular business by Owner
+router.get(
+  "/api/v1/business/staff/profile/:businessid",
+  isBusinessOwner,
+  async (req, res) => {
+    const businessId = req.params;
+    try {
+      const staff = await Staff.find({ businessId: businessId });
+      res.status(200).json(staff);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 // READ Staff Profile access to Business Owner
 router.get(
   "/api/v1/business/staff/profile/:id",
@@ -174,37 +189,93 @@ router.get("/api/v1/staff/profile/:id", isStaff, async (req, res) => {
   }
 });
 
-// DELETE Staff Profile aceess to Business Owner
-router.delete(
-  "/api/v1/business/staff/profile/:id",
+// SET working false by business owner
+
+router.put(
+  "/api/v1/business/staff/profile/working/:id",
   isBusinessOwner,
   async (req, res) => {
     const id = req.params.id;
+    data = {
+      working: false,
+    };
     try {
-      const profile = await Staff.findByIdAndDelete(id);
-      try {
-        await User.findOneAndDelete({ email: profile.email });
-        try {
-          const currentbusiness = await Business.findById(businessId);
-          currentbusiness.staff = currentbusiness.staff.filter(
-            (Id) => Id !== staff._id
-          );
-          await Business.findByIdAndUpdate(profile.businessId, currentbusiness);
-          res.status(200).json(profile);
-        } catch (err) {
-          console.log(err);
-          res.status(500).json({
-            error: err.message,
-            message: "Error while adding id to Business Categories!",
-          });
-        }
-      } catch (err) {
-        return res.status(422).send(err.message);
-      }
+      const staff = await Staff.findByIdAndUpdate(id, data);
+      res.status(200).json(staff);
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
   }
 );
+
+// To get as per working true by business owner
+router.get(
+  "/api/v1/staff/profile/working/true/:businessid",
+  isBusinessOwner,
+  async (req, res) => {
+    const businesssId = req.params;
+    data = {
+      businessId: businesssId,
+      working: true,
+    };
+    try {
+      const staff = await Staff.find(data);
+      res.status(200).json(staff);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+// To get as per working false by business owner
+router.get(
+  "/api/v1/staff/profile/working/false/:businessid",
+  isBusinessOwner,
+  async (req, res) => {
+    const businesssID = req.params;
+    data = {
+      businessId: businesssId,
+      working: false,
+    };
+    try {
+      const staff = await Staff.find(data);
+      res.status(200).json(staff);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+// // DELETE Staff Profile aceess to Business Owner
+// router.delete(
+//   "/api/v1/business/staff/profile/:id",
+//   isBusinessOwner,
+//   async (req, res) => {
+//     const id = req.params.id;
+//     try {
+//       const profile = await Staff.findByIdAndDelete(id);
+//       try {
+//         await User.findOneAndDelete({ email: profile.email });
+//         try {
+//           const currentbusiness = await Business.findById(businessId);
+//           currentbusiness.staff = currentbusiness.staff.filter(
+//             (Id) => Id !== staff._id
+//           );
+//           await Business.findByIdAndUpdate(profile.businessId, currentbusiness);
+//           res.status(200).json(profile);
+//         } catch (err) {
+//           console.log(err);
+//           res.status(500).json({
+//             error: err.message,
+//             message: "Error while adding id to Business Categories!",
+//           });
+//         }
+//       } catch (err) {
+//         return res.status(422).send(err.message);
+//       }
+//     } catch (err) {
+//       return res.status(500).json({ error: err.message });
+//     }
+//   }
+// );
 
 module.exports = router;
