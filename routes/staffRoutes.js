@@ -153,9 +153,9 @@ router.get(
   "/api/v1/business/staff/profile/:businessid",
   isBusinessOwner,
   async (req, res) => {
-    const businessId = req.params;
+    const businessid = req.params;
     try {
-      const staff = await Staff.find({ businessId: businessId });
+      const staff = await Staff.find({ businessId: businessid });
       res.status(200).json(staff);
     } catch (err) {
       return res.status(500).json({ error: err.message });
