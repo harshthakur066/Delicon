@@ -14,14 +14,13 @@ const router = express.Router();
 
 // Signup for Business Owner
 router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
-  const { name, email, password, category, categoryId } = req.body;
+  const { name, email, password, category } = req.body;
   try {
     const business = new BusinessOwner({
       name: name,
       email: email,
       password: password,
       category: category,
-      categoryId: categoryId,
     });
     await business.save();
     const token = jwt.sign(
@@ -35,9 +34,14 @@ router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
         email: email,
       });
       try {
-        const currentcatagory = await BuisnessCategory.findById(categoryId);
+        const currentcatagory = await BusinessCategory.findOne({
+          name: category,
+        });
         currentcatagory.businessowners.push(business._id);
-        await BuisnessCategory.findByIdAndUpdate(categoryId, currentcatagory);
+        await BusinessCategory.findOneAndUpdate(
+          { name: category },
+          currentcatagory
+        );
         res.send({ token });
       } catch (err) {
         console.log(err);
@@ -48,7 +52,7 @@ router.post("/api/v1/businessowner/signup", requireAdmin, async (req, res) => {
       }
     } catch (err) {
       console.log(err);
-      res.status(500).json({ error: "Error while creating!" });
+      res.status(500).json({ error: err.message });
     }
   } catch (err) {
     return res.status(422).send(err.message);
