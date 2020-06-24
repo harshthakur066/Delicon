@@ -15,6 +15,10 @@ const reducers = combineReducers({
   UI: uiReducer,
 });
 
-const store = createStore(reducers, initalstate);
+const store = createStore(
+  reducers,
+  initalstate,
+  compose(applyMiddleware(...middleware))
+);
 
 export default store;
