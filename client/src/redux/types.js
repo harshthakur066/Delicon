@@ -1,0 +1,43 @@
+export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
+
+export const SET_UNAUTHENTICATED = "SET_UNAUTHENTICATED";
+
+export const SET_USER = "SET_USER";
+
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+export const SET_ERRORS = "SET_ERRORS";
+
+export const SET_BUSINESSES = "SET_BUSINESSES";
+
+export const SET_RESERVATIONS = "SET_RESERVATIONS";
+
+export const SET_VALETS = "SET_VALETS";
+
+export const SET_WALKINS = "SET_WALKINS";
+
+export const SET_STAFFS = "SET_STAFFS";
+
+export const DELET_BUSINESSES = "DELET_BUSINESSES";
+
+export const DELETE_RESERVATIONS = "DELETE_RESERVATIONS";
+
+export const DELETE_VALETS = "DELETE_VALETS";
+
+export const DELETE_WALKINS = "DELETE_WALKINS";
+
+export const POST_BUSINESS = "POST_BUSINESS";
+
+export const POST_RESERVATION = "POST_RESERVATION";
+
+export const POST_WALKINS = "POST_WALKINS";
+
+export const POST_VALETS = "POST_VALETS";
+
+export const EDIT_BUSINESS = "EDIT_BUSINESS";
+
+export const EDIT_RESERVATION = "EDIT_RESERVATION";
+
+export const EDIT_VALET = "EDIT_VALET";
+
+export const EDIT_WALKIN = "EDIT_WALKIN";

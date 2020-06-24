@@ -1,0 +1,345 @@
+import * as ActionTypes from "../types";
+import axios from "axios";
+import { setErrors, clearErrors } from "./uiActions";
+
+///////////////////////////////////////   FOR BUSINESS OWNER /////////////////////////////////////////////////
+
+//BUSINESS ACTIONS ..............................................
+
+export const getbusinesses = () => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get("/api/v1/businesses")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_BUSINESSES,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deletebusiness = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/businesses/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELET_BUSINESSES,
+        payload: businessId,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postbusiness = (formdata, setloading) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/businesses/request`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_BUSINESS,
+        payload: res.data,
+      });
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editbusiness = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/businesses/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/businesses/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_BUSINESS,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+//Staff Actions .................................................................
+
+export const getstaffs = (businessId, setdone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/business/staff/profile/${businessId}`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.SET_STAFFS,
+        payload: res.data,
+      });
+      setdone();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+///////////////////////////////////////   FOR STAFF   /////////////////////////////////////////////////
+
+//RESERVATION ACTIONS ...........................................
+
+export const getreservations = () => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get("/api/v1/reservations")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_RESERVATIONS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+export const deletereservation = (reservationId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/reservations/${reservationId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_RESERVATIONS,
+        payload: reservationId,
+      });
+    })
+    .then(alert("Reservation Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postreservation = (formdata, hanldeDone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/reservations`, formdata)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.POST_RESERVATION,
+        payload: res.data,
+      });
+      hanldeDone();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editreservation = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/reservations/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/reservations/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_RESERVATION,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+//Valets Actions ................................................
+
+export const getvalets = () => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get("/api/v1/valets")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_VALETS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+export const deletevalet = (valetID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/valets/${valetID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_VALETS,
+        payload: valetID,
+      });
+    })
+    .then(alert("Valet Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postvalets = (formdata, handleDone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/valets`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_VALETS,
+        payload: res.data,
+      });
+      handleDone();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editvalets = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/valets/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/valets/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_VALET,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+//WalkIN Actions ...............................................................................
+
+export const getwalkins = () => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get("/api/v1/walkin")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_WALKINS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+export const deletewalkin = (walkinID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/walkin/${walkinID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_WALKINS,
+        payload: walkinID,
+      });
+    })
+    .then(alert("Walkin Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postwalkins = (formdata, handleDone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/walkin`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_WALKINS,
+        payload: res.data,
+      });
+      handleDone();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editwalkin = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/walkin/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/walkin/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_WALKIN,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
