@@ -100,18 +100,21 @@ class ButtonAppBar extends Component {
           })}
         >
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.handleDrawerOpen}
-              edge="start"
-              className={clsx(
-                classes.menuButton,
-                this.state.open && classes.hide
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
+            {this.props.user.userRole ? (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={this.handleDrawerOpen}
+                edge="start"
+                className={clsx(
+                  classes.menuButton,
+                  this.state.open && classes.hide
+                )}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : null}
+
             <Link to="/" className={classes.title}>
               <Typography variant="h6" className={classes.title}>
                 Delicon Assist
