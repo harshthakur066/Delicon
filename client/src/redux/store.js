@@ -15,15 +15,6 @@ const reducers = combineReducers({
   UI: uiReducer,
 });
 
-const store = createStore(
-  reducers,
-  initalstate,
-  compose(
-    applyMiddleware(...middleware),
-    process.env.NODE_ENV !== "production" && window.devToolsExtension
-      ? window.devToolsExtension()
-      : (f) => f
-  )
-);
+const store = createStore(reducers, initalstate);
 
 export default store;
