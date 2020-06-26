@@ -58,7 +58,7 @@ router.post(
           const currentbusiness = await Business.findById(businessId);
           currentbusiness.staff.push(staff._id);
           await Business.findByIdAndUpdate(businessId, currentbusiness);
-          res.send(req.body);
+          res.json(staff);
         } catch (err) {
           console.log(err);
           res.status(500).json({
