@@ -16,6 +16,7 @@ const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes"
 const valetRoutes = require("./routes/valetRoutes");
 const walkInRoutes = require("./routes/walkInRoutes");
 const valetAnalyticsRoutes = require("./routes/valetAnalyticsRoutes");
+const walkInAnalyticsRoutes = require("./routes/walkinAnalyticsRoutes");
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(walkInRoutes);
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);
 app.use(valetAnalyticsRoutes);
+app.use(walkInAnalyticsRoutes);
 
 // Mongoose Connection
 mongoose.connect(
