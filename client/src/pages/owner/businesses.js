@@ -15,7 +15,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Modal, TextField, CircularProgress } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+
+import { RiEdit2Line } from "react-icons/ri";
+
+
+
 
 //Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
@@ -38,7 +42,25 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
+    backgroundColor:"#8BC34A", //card-bg-color
+    boxShadow : "0px 2px 4px 0px grey",
+    '&:hover': {
+      transition : "(0.4s)",
+      boxShadow : "0px 6px 8px 2px grey"
+   },
+
   },
+
+  actions:{
+    margin: "auto",
+    width: "50%",
+    ['@media (min-width:780px)']: { // eslint-disable-line no-useless-computed-key
+      margin: "auto",
+      width: "15%",
+    }
+    
+  },
+
   root: {
     height: "175px",
     width: "250px",
@@ -49,7 +71,7 @@ const styles = {
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 18,
   },
   pos: {
     marginBottom: 12,
@@ -80,12 +102,15 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "15%",
-    left: "30%",
+    left: "10%",
+    right: "10%",
     backgroundColor: "white",
     borderRadius: "40px",
     border: "0px",
-    width: "40%",
+    width: "80%",
     outline: "none",
+    padding: "20px 40px",
+    
   },
 };
 
@@ -202,64 +227,85 @@ class Businesses extends Component {
       <p>Loading</p>
     ) : (
       this.props.data.owner.businesses.map((business, index) => (
-        <div key={index} className="col-12 mb-4">
+        <div key={index} className="col-12 mb-4 ">
+        
+          
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
+              <Typography  variant="h5" component="h5"
+                // className={classes.title}
+                color="#070707"
                 gutterBottom
               >
                 {business.name}
               </Typography>
-              <Typography variant="h5" component="h2">
+              <Typography variant="h6" component="h6" color="#455A64"
+              >
                 {business.details}
               </Typography>
-              <EditIcon
+              <RiEdit2Line
+                size = "25"
                 onClick={() => this.editbusiness(business)}
                 className={classes.edit}
-              ></EditIcon>
+
+              />
               <DeleteIcon
+               size = "25"
                 onClick={() => deletebusiness(business._id)}
                 className={classes.delete}
               />
+            
             </CardContent>
-            <CardActions>
+        
+            <CardActions className={classes.actions}>
+              
               <Button
                 component={Link}
                 variant="contained"
                 size="small"
-                color="inherit"
+                color="#BDBDBD"
                 to={`/businesses/${business._id}`}
               >
-                <Button size="small">Details</Button>
+                 Details
               </Button>
               <Button
                 component={Link}
                 variant="contained"
-                color="inherit"
+                color="#BDBDBD"
                 size="small"
                 to={`/staffs/${business._id}`}
+               
               >
-                <Button size="small">Staffs</Button>
+               Staffs
               </Button>
+             
             </CardActions>
+          
           </Card>
+     
+        
         </div>
       ))
     );
     return (
       <div className="container">
+         
         <h1 className="text-center mt-4">
-          Your businesses
+          Your Businesses
+          </h1>
+          <div className="row mt-4">
           <Button
             variant="contained"
-            className="float-right mt-3"
+            className =" mt-3 mb-3 ml-auto"
             onClick={this.handlePost}
           >
             Request business
           </Button>
-        </h1>
+
+         
+          </div>
+        
+
 
         <Modal
           open={this.state.postmodal}
@@ -268,7 +314,7 @@ class Businesses extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "50px 100px" }}>
+            <div className="container" >
               {modlemode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Request a New Business
@@ -339,9 +385,10 @@ class Businesses extends Component {
             </div>
           </div>
         </Modal>
-        <div className="container">
-          <div className="row mt-4">{markup}</div>
-        </div>
+
+       
+        <div className="row mt-4 text-center ">{markup}</div>
+          
       </div>
     );
   }

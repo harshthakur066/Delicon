@@ -9,6 +9,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { NavLink, withRouter, Link } from "react-router-dom";
 import { logOutUser } from "../redux/actions/userActions";
 import { connect } from "react-redux";
+import { MdBusiness } from 'react-icons/md';
+import { GiEgyptianWalk } from 'react-icons/gi';
+import { RiReservedLine } from 'react-icons/ri';
+import logo from "../assets/img/logo.png";
+import { GrLogout } from "react-icons/gr";
+import { GrLogin } from "react-icons/gr";
+import { AiFillDashboard } from "react-icons/ai";
+
 import {
   CssBaseline,
   Drawer,
@@ -33,13 +41,19 @@ const styles = {
     display: "none",
   },
   drawer: {
+    fontFamily :" Arial, Helvetica, sans-serif",
+    fontSize: "20px",
     width: drawerWidth,
     flexShrink: 0,
+    
   },
   drawerPaper: {
+    boxShadow:" 2px 2px 2px 2px rgba(0, 0, 0, .2)",
+    backgroundColor:"#BDBDBD", // bg for drawer
     width: drawerWidth,
   },
   drawerHeader: {
+    backgroundColor:"#9E9E9E",// bg for drawerHeader
     display: "flex",
     alignItems: "center",
   },
@@ -99,7 +113,8 @@ class ButtonAppBar extends Component {
             [classes.appBarShift]: this.state.open,
           })}
         >
-          <Toolbar>
+          {/* bg color for navBar */}
+          <Toolbar style = {{backgroundColor:"#777170"}}> 
             {this.props.user.userRole ? (
               <IconButton
                 color="inherit"
@@ -114,15 +129,19 @@ class ButtonAppBar extends Component {
                 <MenuIcon />
               </IconButton>
             ) : null}
-
             <Link to="/" className={classes.title}>
               <Typography variant="h6" className={classes.title}>
-                Delicon Assist
+              <img
+               src= {logo}
+               style={{ height:70, width: 170 }}
+               alt="Delicon"
+            />
+                {/* Delicon Assist */}
               </Typography>
             </Link>
             {this.props.user.authenticated ? (
               <Button onClick={this.handlelogout} color="inherit">
-                Logout
+                <GrLogout size ={30}/>
               </Button>
             ) : (
               <Button
@@ -131,7 +150,7 @@ class ButtonAppBar extends Component {
                 to="/login"
                 color="inherit"
               >
-                LOGIN
+                <GrLogin size={30} />
               </Button>
             )}
           </Toolbar>
@@ -153,16 +172,23 @@ class ButtonAppBar extends Component {
           <Divider />
           {this.props.user.userRole === "Owner" ? (
             <List>
+                <ListItem button component={NavLink} to="/ownerDash">
+                <AiFillDashboard/>
+                Dashboard
+              </ListItem>
               <ListItem button component={NavLink} to="/businesses">
+                <MdBusiness/>
                 Businesses
               </ListItem>
             </List>
           ) : (
             <List>
               <ListItem button component={NavLink} to="/reservations">
+              <RiReservedLine/>
                 Reservations
               </ListItem>
               <ListItem button component={NavLink} to="/walkins">
+                <GiEgyptianWalk/>
                 Walkins
               </ListItem>
               <ListItem button component={NavLink} to="/valets">

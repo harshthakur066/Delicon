@@ -99,7 +99,7 @@ const mapDispatchToProps = {
 
 class Valets extends Component {
   state = {
-    modalmode: null,
+    modalmode: "",
     _id: "",
     carNumber: "",
     ownerName: "",
@@ -131,13 +131,6 @@ class Valets extends Component {
   handlePost = () => {
     this.setState({
       modalmode: "Post",
-      postmodal: true,
-    });
-  };
-
-  handleOpen = () => {
-    this.setState({
-      modalmode: "Edit",
       postmodal: true,
     });
   };
@@ -189,15 +182,28 @@ class Valets extends Component {
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Edit",
+      postmodal: true,
       _id: business._id,
     });
-    this.handleOpen();
+  };
+
+  openbusiness = (business) => {
+    this.setState({
+      carNumber: business.carNumber,
+      ownerName: business.ownerName,
+      driverName: business.driverName,
+      ownerId: this.props.user.profile.ownerId,
+      businessId: this.props.user.profile.businessId,
+      modalmode: "Open",
+      _id: business._id,
+      postmodal: true,
+    });
   };
 
   render() {
     const loading = this.state.loading;
     const btnload = this.state.btnload;
-    const modlemode = this.state.modalmode;
+    const modalmode = this.state.modalmode;
 
     const { classes, deletevalet } = this.props; //WithStyles Material Thing
 
@@ -222,6 +228,14 @@ class Valets extends Component {
                 onClick={() => deletevalet(vallet._id)}
                 className={classes.delete}
               />
+              <Button
+                onClick={() => this.openbusiness(vallet)}
+                variant="constained"
+                size="small"
+                className={classes.delete}
+              >
+                Details
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -250,60 +264,81 @@ class Valets extends Component {
         >
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "50px 100px" }}>
-              {modlemode === "Post" ? (
+              {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Add a New Valet
                 </Typography>
-              ) : (
+              ) : modalmode === "Edit" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Edit a Valet
                 </Typography>
+              ) : modalmode === "Open" ? (
+                <Typography variant="h4" className={classes.pageTitle}>
+                  Your Valet
+                </Typography>
+              ) : null}
+              {modalmode === "Open" ? (
+                <>
+                  <Typography variant="h6" className="mt-2 ">
+                    Car Number - {this.state.carNumber}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Owner Name - {this.state.ownerName}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Driver Name - {this.state.driverName}
+                  </Typography>
+                </>
+              ) : (
+                <form onSubmit={this.handleSubmit}>
+                  <TextField
+                    name="carNumber"
+                    type="carNumber"
+                    label="Car Licence Number"
+                    className={classes.TextField}
+                    value={this.state.carNumber}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="ownerName"
+                    type="ownerName"
+                    label="Name of the owner"
+                    className={classes.TextField}
+                    value={this.state.ownerName}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="driverName"
+                    type="driverName"
+                    label="Name of the driver"
+                    className={classes.TextField}
+                    value={this.state.driverName}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={btnload}
+                    className={classes.button}
+                  >
+                    Submit
+                    {btnload && (
+                      <CircularProgress
+                        size={30}
+                        className={classes.progress}
+                      />
+                    )}
+                  </Button>
+                </form>
               )}
-              <form onSubmit={this.handleSubmit}>
-                <TextField
-                  name="carNumber"
-                  type="carNumber"
-                  label="Car Licence Number"
-                  className={classes.TextField}
-                  value={this.state.carNumber}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="ownerName"
-                  type="ownerName"
-                  label="Name of the owner"
-                  className={classes.TextField}
-                  value={this.state.ownerName}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="driverName"
-                  type="driverName"
-                  label="Name of the driver"
-                  className={classes.TextField}
-                  value={this.state.driverName}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={btnload}
-                  className={classes.button}
-                >
-                  Submit
-                  {btnload && (
-                    <CircularProgress size={30} className={classes.progress} />
-                  )}
-                </Button>
-              </form>
             </div>
           </div>
         </Modal>

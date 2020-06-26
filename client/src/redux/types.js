@@ -18,6 +18,14 @@ export const SET_WALKINS = "SET_WALKINS";
 
 export const SET_STAFFS = "SET_STAFFS";
 
+export const POST_STAFF = "POST_STAFF";
+
+export const STAFF_NOTWORKING = "STAFF_NOTWORKING";
+
+export const STAFF_WORKING = "STAFF_WORKING";
+
+export const EDIT_STAFF = "EDIT_STAFF";
+
 export const DELET_BUSINESSES = "DELET_BUSINESSES";
 
 export const DELETE_RESERVATIONS = "DELETE_RESERVATIONS";

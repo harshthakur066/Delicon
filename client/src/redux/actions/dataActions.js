@@ -105,6 +105,107 @@ export const getstaffs = (businessId, setdone) => (dispatch) => {
     });
 };
 
+export const poststaff = (formdata, setDone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/business/staff/signup`, formdata)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.POST_STAFF,
+        payload: res.data,
+      });
+      setDone();
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const editstaff = (formdata, setDone, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/business/staff/profile/${ID}`, formdata)
+    .then((res) => {
+      axios
+        .put(`/api/v1/business/staff/profile/${ID}`, formdata)
+        .then((res) => {
+          console.log(res.data, "HERE MOW");
+          dispatch({
+            type: ActionTypes.EDIT_STAFF,
+            payload: res.data,
+          });
+          setDone();
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const setnotworking = (Id) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/business/staff/profile/notworking/${Id}`)
+    .then((res) => {
+      axios
+        .put(`/api/v1/business/staff/profile/notworking/${Id}`)
+        .then((res) => {
+          console.log(res.data);
+          dispatch({
+            type: ActionTypes.STAFF_NOTWORKING,
+            payload: res.data,
+          });
+          alert("Not Working");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const setworking = (Id) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/business/staff/profile/working/${Id}`)
+    .then((res) => {
+      axios
+        .put(`/api/v1/business/staff/profile/working/${Id}`)
+        .then((res) => {
+          console.log(res.data);
+          dispatch({
+            type: ActionTypes.STAFF_WORKING,
+            payload: res.data,
+          });
+          alert("Working");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
 ///////////////////////////////////////   FOR STAFF   /////////////////////////////////////////////////
 
 //RESERVATION ACTIONS ...........................................

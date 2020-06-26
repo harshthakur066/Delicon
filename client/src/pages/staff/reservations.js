@@ -99,7 +99,7 @@ const styles = {
 
 class Reservations extends Component {
   state = {
-    modalmode: null,
+    modalmode: "",
     _id: "",
     name: "",
     email: "",
@@ -132,13 +132,6 @@ class Reservations extends Component {
   handlePost = () => {
     this.setState({
       modalmode: "Post",
-      postmodal: true,
-    });
-  };
-
-  handleOpen = () => {
-    this.setState({
-      modalmode: "Edit",
       postmodal: true,
     });
   };
@@ -195,14 +188,31 @@ class Reservations extends Component {
       businessId: this.props.user.profile.businessId,
       modalmode: "Edit",
       _id: business._id,
+      postmodal: true,
     });
-    this.handleOpen();
+  };
+
+  openbusiness = (business) => {
+    this.setState({
+      name: business.name,
+      email: business.email,
+      address: business.address,
+      mobno: business.mobno,
+      seat: business.seat,
+      ownerId: this.props.user.profile.ownerId,
+      businessId: this.props.user.profile.businessId,
+      modalmode: "Open",
+      _id: business._id,
+      postmodal: true,
+    });
+    console.log(this.state.modalmode);
   };
 
   render() {
     const loading = this.state.loading;
     const btnload = this.state.btnload;
-    const modlemode = this.state.modalmode;
+    const modalmode = this.state.modalmode;
+    console.log(modalmode);
 
     const { classes, deletereservation } = this.props;
 
@@ -235,6 +245,14 @@ class Reservations extends Component {
               onClick={() => deletereservation(reservation._id)}
               className={classes.delete}
             />
+            <Button
+              onClick={() => this.openbusiness(reservation)}
+              variant="constained"
+              size="small"
+              className={classes.delete}
+            >
+              Details
+            </Button>
           </Card>
         </div>
       ))
@@ -260,81 +278,107 @@ class Reservations extends Component {
         >
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "50px 100px" }}>
-              {modlemode === "Post" ? (
+              {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Add a New Reservation
                 </Typography>
-              ) : (
+              ) : modalmode === "Edit" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Edit a Reservation
                 </Typography>
+              ) : modalmode === "Open" ? (
+                <Typography variant="h4" className={classes.pageTitle}>
+                  Your Reservation
+                </Typography>
+              ) : null}
+              {modalmode === "Open" ? (
+                <>
+                  <Typography variant="h6" className="mt-2 ">
+                    Name - {this.state.name}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Mobile No. - {this.state.mobno}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Email - {this.state.email}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Address - {this.state.address}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Seats - {this.state.seat}
+                  </Typography>
+                </>
+              ) : (
+                <form onSubmit={this.handleSubmit}>
+                  <TextField
+                    name="name"
+                    type="name"
+                    label="Name of the customer"
+                    className={classes.TextField}
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="mobno"
+                    type="mobno"
+                    label="Mobile Number of the customer"
+                    className={classes.TextField}
+                    value={this.state.mobno}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="address"
+                    type="address"
+                    label="Location of the customer"
+                    className={classes.TextField}
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="email"
+                    type="email"
+                    label="Email of the customer"
+                    className={classes.TextField}
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="seat"
+                    type="text"
+                    label="No of Seats"
+                    className={classes.TextField}
+                    value={this.state.seat}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={btnload}
+                    className={classes.button}
+                  >
+                    Submit
+                    {btnload && (
+                      <CircularProgress
+                        size={30}
+                        className={classes.progress}
+                      />
+                    )}
+                  </Button>
+                </form>
               )}
-
-              <form onSubmit={this.handleSubmit}>
-                <TextField
-                  name="name"
-                  type="name"
-                  label="Name of the customer"
-                  className={classes.TextField}
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="mobno"
-                  type="mobno"
-                  label="Mobile Number of the customer"
-                  className={classes.TextField}
-                  value={this.state.mobno}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="address"
-                  type="address"
-                  label="Location of the customer"
-                  className={classes.TextField}
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="email"
-                  type="email"
-                  label="Email of the customer"
-                  className={classes.TextField}
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="seat"
-                  type="text"
-                  label="No of Seats"
-                  className={classes.TextField}
-                  value={this.state.seat}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={btnload}
-                  className={classes.button}
-                >
-                  Submit
-                  {btnload && (
-                    <CircularProgress size={30} className={classes.progress} />
-                  )}
-                </Button>
-              </form>
             </div>
           </div>
         </Modal>

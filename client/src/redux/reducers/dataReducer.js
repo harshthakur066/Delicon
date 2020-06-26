@@ -83,7 +83,44 @@ export default function (state = initialState, action) {
           ),
         },
       };
-
+    case ActionTypes.POST_STAFF:
+      return {
+        ...state,
+        owner: {
+          staffs: state.owner.staffs.push(action.payload),
+          ...state.owner,
+        },
+      };
+    case ActionTypes.EDIT_STAFF:
+      var newstaffs = state.owner.staffs.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      var newowner = state.owner;
+      newowner.staffs = newstaffs;
+      return {
+        ...state,
+        owner: newowner,
+      };
+    case ActionTypes.STAFF_NOTWORKING:
+      newstaffs = state.owner.staffs.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      newowner = state.owner;
+      newowner.staffs = newstaffs;
+      return {
+        ...state,
+        owner: newowner,
+      };
+    case ActionTypes.STAFF_WORKING:
+      newstaffs = state.owner.staffs.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      newowner = state.owner;
+      newowner.staffs = newstaffs;
+      return {
+        ...state,
+        owner: newowner,
+      };
     case ActionTypes.SET_VALETS:
       return {
         ...state,
