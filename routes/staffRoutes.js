@@ -207,6 +207,23 @@ router.put(
   }
 );
 
+router.put(
+  "/api/v1/business/staff/profile/notworking/:id",
+  isBusinessOwner,
+  async (req, res) => {
+    const id = req.params.id;
+    data = {
+      working: true,
+    };
+    try {
+      const staff = await Staff.findByIdAndUpdate(id, data);
+      res.status(200).json(staff);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 // To get as per working true by business owner
 router.get(
   "/api/v1/staff/profile/working/true/:businessid",
