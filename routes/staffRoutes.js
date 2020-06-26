@@ -196,7 +196,7 @@ router.put(
   async (req, res) => {
     const id = req.params.id;
     data = {
-      working: false,
+      working: true,
     };
     try {
       const staff = await Staff.findByIdAndUpdate(id, data);
@@ -213,7 +213,7 @@ router.put(
   async (req, res) => {
     const id = req.params.id;
     data = {
-      working: true,
+      working: false,
     };
     try {
       const staff = await Staff.findByIdAndUpdate(id, data);
