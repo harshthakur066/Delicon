@@ -22,6 +22,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
+import { RiEdit2Line } from "react-icons/ri";
 
 const styles = {
   cardStyle: {
@@ -29,6 +30,12 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
+    backgroundColor:"#8BC34A", //card-bg-color
+    boxShadow : "0px 2px 4px 0px grey",
+    '&:hover': {
+      transition : "(0.4s)",
+      boxShadow : "0px 6px 8px 2px grey"
+   },
   },
   root: {
     height: "175px",
@@ -68,6 +75,8 @@ const styles = {
     color: "red",
     cursor: "pointer",
     marginBottom: "1rem",
+    paddingRight:"2px",
+
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -85,11 +94,12 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "5%",
-    left: "30%",
+    left: "10%",
+    right:"10%",
     backgroundColor: "white",
-    borderRadius: "40px",
+    borderRadius: "20px",
     border: "0px",
-    width: "40%",
+    width: "auto",
     outline: "none",
     height: "90%",
     overflowY: "scroll",
@@ -248,40 +258,46 @@ class Staffs extends Component {
         <div key={index} className="col-12 mb-4">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography
-                className={classes.title}
+              <Typography 
+                // className={classes.title}
                 color="textSecondary"
                 gutterBottom
+                variant="h4" component="h4"
               >
-                {staff.name}
+               {staff.name}
               </Typography>
               <Typography variant="body1" component="h4">
                 {staff.position}
                 {staff.working ? (
-                  <span className={classes.fr}>Currently Working </span>
+                  <span className={classes.fr}> Currently Working </span>
                 ) : (
-                  <span className={classes.fr}>Currently Not working </span>
+                  <span className={classes.fr}> Currently Not working </span>
                 )}
+                
               </Typography>
-              <Typography variant="body1" component="h4">
-                {staff.experience}
-              </Typography>
-              <Typography variant="body1" component="h4">
-                {staff.mobno}
-              </Typography>
-            </CardContent>
-            <EditIcon
-              onClick={() => this.editbusiness(staff)}
-              className={classes.edit}
-            ></EditIcon>
-            <ClearIcon
+              <ClearIcon
+              size = {25}
               onClick={() => setnotworking(staff._id)}
               className={classes.delete}
             />
-            <CheckIcon
+            <CheckIcon   
+              size = {25}
               onClick={() => setworking(staff._id)}
               className={classes.delete}
             />
+              <Typography variant="body2" component="h3">
+                {staff.experience}
+              </Typography>
+              <Typography variant="body2" component="h3">
+                {staff.mobno}
+              </Typography>
+            </CardContent>
+            <RiEdit2Line
+              size = {25}
+              onClick={() => this.editbusiness(staff)}
+              className={classes.edit}
+            ></RiEdit2Line>
+           
           </Card>
         </div>
       ))
@@ -291,14 +307,17 @@ class Staffs extends Component {
       <div className="container">
         <h1 className="text-center mt-4">
           Your Staff{" "}
+          </h1>
+          <div className = "row mt-4" >
           <Button
             variant="contained"
-            className="float-right mt-3"
+            className="ml-auto mt-3"
             onClick={this.handlePost}
           >
             Add Staff
           </Button>
-        </h1>
+          </div>
+        
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -306,7 +325,7 @@ class Staffs extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "50px 100px" }}>
+            <div className="container" style={{ padding: "20px 20px" }}>
               {modlemode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Add a New Staff
@@ -320,7 +339,7 @@ class Staffs extends Component {
                 <TextField
                   name="name"
                   type="name"
-                  label="Name of the Staff"
+                  label="Name"
                   className={classes.TextField}
                   value={this.state.name}
                   onChange={this.handleChange}
@@ -330,7 +349,7 @@ class Staffs extends Component {
                 <TextField
                   name="mobno"
                   type="mobno"
-                  label="Mobile Number of the Staff"
+                  label="Mobile Number"
                   className={classes.TextField}
                   value={this.state.mobno}
                   onChange={this.handleChange}
@@ -340,7 +359,7 @@ class Staffs extends Component {
                 <TextField
                   name="address"
                   type="address"
-                  label="Location of the Staff"
+                  label="Location"
                   className={classes.TextField}
                   value={this.state.address}
                   onChange={this.handleChange}
@@ -350,7 +369,7 @@ class Staffs extends Component {
                 <TextField
                   name="email"
                   type="email"
-                  label="Email of the Staff"
+                  label="Email"
                   className={classes.TextField}
                   value={this.state.email}
                   onChange={this.handleChange}
@@ -360,7 +379,7 @@ class Staffs extends Component {
                 <TextField
                   name="password"
                   type="password"
-                  label="Password for the Staff"
+                  label="Password"
                   className={classes.TextField}
                   value={this.state.password}
                   onChange={this.handleChange}
@@ -370,7 +389,7 @@ class Staffs extends Component {
                 <TextField
                   name="qualification"
                   type="qualification"
-                  label="Qualification of the Staff"
+                  label="Qualification"
                   className={classes.TextField}
                   value={this.state.qualification}
                   onChange={this.handleChange}
@@ -380,7 +399,7 @@ class Staffs extends Component {
                 <TextField
                   name="experience"
                   type="experience"
-                  label="Experience of the staff"
+                  label="Experience"
                   className={classes.TextField}
                   value={this.state.experience}
                   onChange={this.handleChange}
@@ -390,7 +409,7 @@ class Staffs extends Component {
                 <TextField
                   name="position"
                   type="position"
-                  label="Position of the Staff"
+                  label="Position"
                   className={classes.TextField}
                   value={this.state.position}
                   onChange={this.handleChange}
@@ -400,7 +419,7 @@ class Staffs extends Component {
                 <TextField
                   name="dateOfJoining"
                   type="dateOfJoining"
-                  label="dateOfJoining of the Staff"
+                  label="DateOfJoining"
                   className={classes.TextField}
                   value={this.state.dateOfJoining}
                   onChange={this.handleChange}
@@ -410,7 +429,7 @@ class Staffs extends Component {
                 <TextField
                   name="details"
                   type="details"
-                  label="details of the Staff"
+                  label="Details"
                   className={classes.TextField}
                   value={this.state.details}
                   onChange={this.handleChange}
@@ -434,9 +453,9 @@ class Staffs extends Component {
             </div>
           </div>
         </Modal>
-        <div className="container">
+      
           <div className="row mt-4">{markup}</div>
-        </div>
+        
       </div>
     );
   }

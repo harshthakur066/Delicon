@@ -109,7 +109,7 @@ const styles = {
     border: "0px",
     width: "80%",
     outline: "none",
-    padding: "20px 40px",
+    padding: "20px 25px",
     
   },
 };
