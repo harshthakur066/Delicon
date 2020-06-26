@@ -101,6 +101,9 @@ router.put(
   async (req, res) => {
     const id = req.params.id;
     const {
+      name,
+      email,
+      password,
       mobno,
       address,
       qualification,
@@ -108,10 +111,11 @@ router.put(
       position,
       dateOfJoining,
       details,
-      business,
-      businessId,
     } = req.body;
     data = {
+      name,
+      email,
+      password,
       mobno,
       address,
       qualification,
@@ -119,8 +123,6 @@ router.put(
       position,
       dateOfJoining,
       details,
-      business,
-      businessId,
     };
     try {
       const staff = await Staff.findByIdAndUpdate(id, data);
