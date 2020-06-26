@@ -61,16 +61,13 @@ router.post(
           res.json(staff);
         } catch (err) {
           console.log(err);
-          res.status(500).json({
-            error: err.message,
-            message: "Error while adding id to Business Categories!",
-          });
+          return res.status(500).json({ error: err.message });
         }
       } catch (err) {
-        return res.status(422).send(err.message);
+        return res.status(500).json({ error: err.message });
       }
     } catch (err) {
-      return res.status(422).send(err.message);
+      return res.status(500).json({ error: err.message });
     }
   }
 );
