@@ -9,6 +9,7 @@ import {
   Modal,
   TextField,
   CircularProgress,
+  Backdrop,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
@@ -17,14 +18,20 @@ import {
   postwalkins,
   editwalkin,
 } from "../../redux/actions/dataActions";
-import EditIcon from "@material-ui/icons/Edit";
+import { RiEdit2Line } from "react-icons/ri";
 
 const styles = {
   bodycard: {
     margin: 5,
-    marginBottom: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
+    marginBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#8BC34A", //card-bg-color
+    boxShadow: "0px 2px 4px 0px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      boxShadow: "0px 6px 8px 2px grey",
+    },
   },
   fr: {
     float: "right",
@@ -75,11 +82,12 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "15%",
-    left: "30%",
+    left: "10%",
+    right: "10%",
     backgroundColor: "white",
-    borderRadius: "40px",
+    borderRadius: "20px",
     border: "0px",
-    width: "40%",
+    width: "auto%",
     outline: "none",
   },
 };
@@ -133,6 +141,12 @@ class Walkins extends Component {
     this.setState({
       modalmode: "Post",
       postmodal: true,
+      name: "",
+      email: "",
+      address: "",
+      mobno: "",
+      ownerId: "",
+      businessId: "",
     });
   };
 
@@ -212,38 +226,42 @@ class Walkins extends Component {
     const { classes, deletewalkin } = this.props; //WithStyles Material Thing
 
     const markup = loading ? (
-      <p>Loading</p>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     ) : (
       this.props.data.staff.walkins.map((walkin, index) => (
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography>
-                Name - {walkin.name}{" "}
-                <span className={classes.fr}>Mobile No - {walkin.mobno}</span>{" "}
+              <Typography variant="h6" component="h6">
+                {walkin.name} <div>{walkin.mobno}</div>{" "}
               </Typography>
               <br className={classes.breaker} />
-              <Typography>
-                Email - {walkin.email}{" "}
-                <span className={classes.fr}>Address - {walkin.address}</span>
+              <Typography variant="h6" component="h6">
+                {walkin.email} <div>{walkin.address}</div>
               </Typography>
+              <div className="text-center ">
+                <Button
+                  style={{ color: "#616161" }}
+                  onClick={() => this.openbusiness(walkin)}
+                  variant="constained"
+                  size="small"
+                >
+                  Details
+                </Button>
+              </div>
             </CardContent>
-            <EditIcon
+            <RiEdit2Line
+              size={25}
               onClick={() => this.editbusiness(walkin)}
               className={classes.edit}
-            ></EditIcon>
+            ></RiEdit2Line>
             <DeleteIcon
+              size={25}
               onClick={() => deletewalkin(walkin._id)}
               className={classes.delete}
             />
-            <Button
-              onClick={() => this.openbusiness(walkin)}
-              variant="constained"
-              size="small"
-              className={classes.delete}
-            >
-              Details
-            </Button>
           </Card>
         </div>
       ))
@@ -252,16 +270,18 @@ class Walkins extends Component {
     console.log(this.props.data);
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
-          Walkins{" "}
-          <Button
-            variant="contained"
-            className="float-right mt-3"
-            onClick={this.handlePost}
-          >
-            Add Walkin
-          </Button>
+          Walkins
+          {loading ? null : (
+            <Button
+              variant="contained"
+              className=" mt-3 mb-3 float-right"
+              onClick={this.handlePost}
+            >
+              Add Walkin
+            </Button>
+          )}
         </h1>
         <Modal
           open={this.state.postmodal}
@@ -270,7 +290,10 @@ class Walkins extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "50px 100px" }}>
+            <div
+              className="container"
+              style={{ padding: "20px 25px", textAlign: "center" }}
+            >
               {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Add a New Walkin
@@ -304,7 +327,7 @@ class Walkins extends Component {
                   <TextField
                     name="name"
                     type="name"
-                    label="Name of the customer"
+                    label="Name.."
                     className={classes.TextField}
                     value={this.state.name}
                     onChange={this.handleChange}
@@ -314,7 +337,7 @@ class Walkins extends Component {
                   <TextField
                     name="mobno"
                     type="mobno"
-                    label="Mobile Number of the customer"
+                    label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
                     onChange={this.handleChange}
@@ -324,7 +347,7 @@ class Walkins extends Component {
                   <TextField
                     name="address"
                     type="address"
-                    label="Location of the customer"
+                    label="Location.."
                     className={classes.TextField}
                     value={this.state.address}
                     onChange={this.handleChange}
@@ -334,7 +357,7 @@ class Walkins extends Component {
                   <TextField
                     name="email"
                     type="email"
-                    label="Email of the customer"
+                    label="Email.."
                     className={classes.TextField}
                     value={this.state.email}
                     onChange={this.handleChange}

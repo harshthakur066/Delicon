@@ -26,6 +26,7 @@ import {
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
+import { RiParkingBoxLine } from "react-icons/ri";
 
 const drawerWidth = 240;
 
@@ -129,16 +130,18 @@ class ButtonAppBar extends Component {
                 <MenuIcon />
               </IconButton>
             ) : null}
-            <Link to="/" className={classes.title}>
+            
               <Typography variant="h6" className={classes.title}>
+              <Link to="/" className={classes.title}>
               <img
                src= {logo}
                style={{ height:70, width: 170 }}
                alt="Delicon"
             />
                 {/* Delicon Assist */}
+                </Link>
               </Typography>
-            </Link>
+         
             {this.props.user.authenticated ? (
               <Button onClick={this.handlelogout} color="inherit">
                 <GrLogout size ={30}/>
@@ -183,6 +186,10 @@ class ButtonAppBar extends Component {
             </List>
           ) : (
             <List>
+              <ListItem button component={NavLink} to="/staffDash">
+                <AiFillDashboard/>
+                Dashboard
+              </ListItem>
               <ListItem button component={NavLink} to="/reservations">
               <RiReservedLine/>
                 Reservations
@@ -192,6 +199,7 @@ class ButtonAppBar extends Component {
                 Walkins
               </ListItem>
               <ListItem button component={NavLink} to="/valets">
+                <RiParkingBoxLine/>
                 Valets
               </ListItem>
             </List>

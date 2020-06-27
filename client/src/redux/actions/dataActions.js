@@ -84,6 +84,25 @@ export const editbusiness = (formdata, setloading, ID) => (dispatch) => {
     });
 };
 
+export const getbusiness = (setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/businesses/${ID}`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.GET_BUSINESS,
+        payload: res.data,
+      });
+      setloading();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
 //Staff Actions .................................................................
 
 export const getstaffs = (businessId, setdone) => (dispatch) => {

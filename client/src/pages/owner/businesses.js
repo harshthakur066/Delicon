@@ -14,12 +14,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Modal, TextField, CircularProgress } from "@material-ui/core";
+import {
+  Modal,
+  TextField,
+  CircularProgress,
+  Backdrop,
+} from "@material-ui/core";
 
 import { RiEdit2Line } from "react-icons/ri";
-
-
-
 
 //Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
@@ -42,23 +44,21 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor:"#8BC34A", //card-bg-color
-    boxShadow : "0px 2px 4px 0px grey",
-    '&:hover': {
-      transition : "(0.4s)",
-      boxShadow : "0px 6px 8px 2px grey"
-   },
-
+    backgroundColor: "#8BC34A", //card-bg-color
+    boxShadow: "0px 2px 4px 0px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      boxShadow: "0px 6px 8px 2px grey",
+    },
   },
 
-  actions:{
+  actions: {
     margin: "auto",
     width: "50%",
-    ['@media (min-width:780px)']: { // eslint-disable-line no-useless-computed-key
+    "@media (min-width:780px)": {
       margin: "auto",
       width: "15%",
-    }
-    
+    },
   },
 
   root: {
@@ -109,8 +109,7 @@ const styles = {
     border: "0px",
     width: "80%",
     outline: "none",
-    padding: "20px 40px",
-    
+    padding: "20px 25px",
   },
 };
 
@@ -153,6 +152,10 @@ class Businesses extends Component {
     this.setState({
       modalmode: "Post",
       postmodal: true,
+      name: "",
+      owner: "",
+      address: "",
+      details: "",
     });
   };
 
@@ -224,41 +227,38 @@ class Businesses extends Component {
 
     //Agar load hora to loading componenet ya fir aya hua data print krenge
     const markup = loading ? (
-      <p>Loading</p>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     ) : (
       this.props.data.owner.businesses.map((business, index) => (
         <div key={index} className="col-12 mb-4 ">
-        
-          
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography  variant="h5" component="h5"
-                // className={classes.title}
+              <Typography
+                variant="h5"
+                component="h5"
                 color="#070707"
                 gutterBottom
               >
                 {business.name}
               </Typography>
-              <Typography variant="h6" component="h6" color="#455A64"
-              >
+              <Typography variant="h6" component="h6" color="#455A64">
                 {business.details}
               </Typography>
               <RiEdit2Line
-                size = "25"
+                size="25"
                 onClick={() => this.editbusiness(business)}
                 className={classes.edit}
-
               />
               <DeleteIcon
-               size = "25"
+                size="25"
                 onClick={() => deletebusiness(business._id)}
                 className={classes.delete}
               />
-            
             </CardContent>
-        
+
             <CardActions className={classes.actions}>
-              
               <Button
                 component={Link}
                 variant="contained"
@@ -266,7 +266,7 @@ class Businesses extends Component {
                 color="#BDBDBD"
                 to={`/businesses/${business._id}`}
               >
-                 Details
+                Details
               </Button>
               <Button
                 component={Link}
@@ -274,38 +274,28 @@ class Businesses extends Component {
                 color="#BDBDBD"
                 size="small"
                 to={`/staffs/${business._id}`}
-               
               >
-               Staffs
+                Staffs
               </Button>
-             
             </CardActions>
-          
           </Card>
-     
-        
         </div>
       ))
     );
     return (
-      <div className="container">
-         
+      <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
-          Your Businesses
-          </h1>
-          <div className="row mt-4">
-          <Button
-            variant="contained"
-            className =" mt-3 mb-3 ml-auto"
-            onClick={this.handlePost}
-          >
-            Request business
-          </Button>
-
-         
-          </div>
-        
-
+          Your Businesses{" "}
+          {loading ? null : (
+            <Button
+              variant="contained"
+              className=" mt-3 mb-3 float-right"
+              onClick={this.handlePost}
+            >
+              Request business
+            </Button>
+          )}
+        </h1>
 
         <Modal
           open={this.state.postmodal}
@@ -314,7 +304,7 @@ class Businesses extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" >
+            <div className="container">
               {modlemode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Request a New Business
@@ -386,9 +376,7 @@ class Businesses extends Component {
           </div>
         </Modal>
 
-       
         <div className="row mt-4 text-center ">{markup}</div>
-          
       </div>
     );
   }

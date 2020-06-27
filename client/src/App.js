@@ -47,26 +47,21 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Navbar />
-          <div className="container" style={{ marginTop: 90 }}>
-            <ErrorBoundry>
-              <Switch>
-                <Route exact path="/" component={home} />
-                <Route exact path="/login" component={login} />
-                <Route exact path="/businesses" component={businesses} />
-                <Route
-                  exact
-                  path="/businesses/:busiId"
-                  component={busiDetails}
-                />
-                <Route exact path="/reservations" component={reservations} />
-                <Route exact path="/valets" component={valets} />
-                <Route exact path="/walkins" component={walkins} />
-                <Route exact path="/staffs/:businessid" component={staffs} />
-                <Route exact path="/ownerDash" component={ownerDash} />
-                <Route exact path="/staffDash" component={staffDash} />
-              </Switch>
-            </ErrorBoundry>
-          </div>
+
+          <ErrorBoundry>
+            <Switch>
+              <Route exact path="/" component={home} />
+              <Route exact path="/login" component={login} />
+              <Route exact path="/businesses" component={businesses} />
+              <Route exact path="/businesses/:busiId" component={busiDetails} />
+              <Route exact path="/reservations" component={reservations} />
+              <Route exact path="/valets" component={valets} />
+              <Route exact path="/walkins" component={walkins} />
+              <Route exact path="/staffs/:businessid" component={staffs} />
+              <Route exact path="/ownerDash" component={ownerDash} />
+              <Route exact path="/staffDash" component={staffDash} />
+            </Switch>
+          </ErrorBoundry>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

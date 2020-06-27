@@ -49,3 +49,5 @@ export const EDIT_RESERVATION = "EDIT_RESERVATION";
 export const EDIT_VALET = "EDIT_VALET";
 
 export const EDIT_WALKIN = "EDIT_WALKIN";
+
+export const GET_BUSINESS = "GET_BUSINESS";

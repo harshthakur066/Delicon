@@ -82,7 +82,7 @@ export class signup extends Component {
     } = this.props;
     const { errors } = this.state;
     return (
-      <Grid container className={classes.form}>
+      <Grid container className={classes.form} style={{ marginTop: 90 }}>
         <Grid item sm />
         <Grid item sm>
           <Typography variant="h3" className={classes.pageTitle}>

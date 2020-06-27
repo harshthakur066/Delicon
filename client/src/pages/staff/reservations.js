@@ -9,6 +9,7 @@ import {
   Modal,
   TextField,
   CircularProgress,
+  Backdrop,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
@@ -17,7 +18,8 @@ import {
   postreservation,
   editreservation,
 } from "../../redux/actions/dataActions";
-import EditIcon from "@material-ui/icons/Edit";
+
+import { RiEdit2Line } from "react-icons/ri";
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -34,10 +36,16 @@ const mapDispatchToProps = {
 
 const styles = {
   bodycard: {
-    margin: 5,
+    margin: 2,
     marginBottom: "2rem",
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: "#8BC34A", //card-bg-color
+    boxShadow: "0px 2px 4px 0px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      boxShadow: "0px 6px 8px 2px grey",
+    },
   },
   edit: {
     float: "left",
@@ -57,6 +65,7 @@ const styles = {
     cursor: "pointer",
     marginBottom: "1rem",
   },
+
   root: {
     height: "175px",
     width: "250px",
@@ -87,12 +96,13 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
-    left: "30%",
+    top: "13%",
+    left: "10%",
+    right: "10%",
     backgroundColor: "white",
     borderRadius: "40px",
     border: "0px",
-    width: "40%",
+    width: "auto",
     outline: "none",
   },
 }; // Styles here
@@ -105,7 +115,7 @@ class Reservations extends Component {
     email: "",
     mobno: "",
     address: "",
-    seat: "",
+    seats: "",
     loading: true,
     btnload: false,
     postmodal: false,
@@ -133,6 +143,13 @@ class Reservations extends Component {
     this.setState({
       modalmode: "Post",
       postmodal: true,
+      name: "",
+      email: "",
+      address: "",
+      mobno: "",
+      seats: "",
+      ownerId: "",
+      businessId: "",
     });
   };
 
@@ -153,7 +170,7 @@ class Reservations extends Component {
       email: this.state.email,
       address: this.state.address,
       mobno: this.state.mobno,
-      seat: this.state.seat,
+      seats: this.state.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
     };
@@ -183,7 +200,7 @@ class Reservations extends Component {
       email: business.email,
       address: business.address,
       mobno: business.mobno,
-      seat: business.seat,
+      seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Edit",
@@ -198,7 +215,7 @@ class Reservations extends Component {
       email: business.email,
       address: business.address,
       mobno: business.mobno,
-      seat: business.seat,
+      seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Open",
@@ -217,37 +234,50 @@ class Reservations extends Component {
     const { classes, deletereservation } = this.props;
 
     const markup = loading ? (
-      <p>Loading</p>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     ) : (
       this.props.data.staff.reservations.map((reservation, index) => (
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
               <Typography>
-                Name - {reservation.name}{" "}
-                <span className={classes.fr}>
-                  Mobile No - {reservation.mobno}
-                </span>{" "}
+                {reservation.name}{" "}
+                <span className={classes.fr}>{reservation.mobno}</span>{" "}
               </Typography>
               <br className={classes.breaker} />
+
               <Typography>
-                Email - {reservation.email}{" "}
-                <span className={classes.fr}>
-                  Address - {reservation.address}
-                </span>
+                {reservation.email}{" "}
+                <span className={classes.fr}>{reservation.address}</span>
               </Typography>
+              <div className="text-center ">
+                <Button
+                  style={{ color: "#616161" }}
+                  onClick={() => this.openbusiness(reservation)}
+                  variant="constained"
+                  size="small"
+                >
+                  Details
+                </Button>
+              </div>
             </CardContent>
-            <EditIcon
+
+            <RiEdit2Line
+              size={25}
               onClick={() => this.editbusiness(reservation)}
               className={classes.edit}
-            ></EditIcon>
+            ></RiEdit2Line>
+
             <DeleteIcon
+              size={25}
               onClick={() => deletereservation(reservation._id)}
               className={classes.delete}
             />
             <Button
               onClick={() => this.openbusiness(reservation)}
-              variant="constained"
+              variant="contained"
               size="small"
               className={classes.delete}
             >
@@ -259,16 +289,18 @@ class Reservations extends Component {
     );
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
-          Reservations{" "}
-          <Button
-            variant="contained"
-            className="float-right mt-3"
-            onClick={this.handlePost}
-          >
-            Add Reservation
-          </Button>
+          Reservations
+          {loading ? null : (
+            <Button
+              variant="contained"
+              className=" mt-3 mb-3 float-right"
+              onClick={this.handlePost}
+            >
+              Add Reservation
+            </Button>
+          )}
         </h1>
         <Modal
           open={this.state.postmodal}
@@ -277,10 +309,13 @@ class Reservations extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "50px 100px" }}>
+            <div
+              className="container"
+              style={{ padding: "20px 25px", textAlign: "center" }}
+            >
               {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
-                  Add a New Reservation
+                  Add a Reservation
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
@@ -306,7 +341,7 @@ class Reservations extends Component {
                     Address - {this.state.address}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                    Seats - {this.state.seat}
+                    Seats - {this.state.seats}
                   </Typography>
                 </>
               ) : (
@@ -314,7 +349,7 @@ class Reservations extends Component {
                   <TextField
                     name="name"
                     type="name"
-                    label="Name of the customer"
+                    label="Name.."
                     className={classes.TextField}
                     value={this.state.name}
                     onChange={this.handleChange}
@@ -324,7 +359,7 @@ class Reservations extends Component {
                   <TextField
                     name="mobno"
                     type="mobno"
-                    label="Mobile Number of the customer"
+                    label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
                     onChange={this.handleChange}
@@ -334,7 +369,7 @@ class Reservations extends Component {
                   <TextField
                     name="address"
                     type="address"
-                    label="Location of the customer"
+                    label="Address.."
                     className={classes.TextField}
                     value={this.state.address}
                     onChange={this.handleChange}
@@ -344,7 +379,7 @@ class Reservations extends Component {
                   <TextField
                     name="email"
                     type="email"
-                    label="Email of the customer"
+                    label="Email.."
                     className={classes.TextField}
                     value={this.state.email}
                     onChange={this.handleChange}
@@ -352,11 +387,11 @@ class Reservations extends Component {
                     required={true}
                   />
                   <TextField
-                    name="seat"
+                    name="seats"
                     type="text"
-                    label="No of Seats"
+                    label="No. of Seats.."
                     className={classes.TextField}
-                    value={this.state.seat}
+                    value={this.state.seats}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
@@ -382,9 +417,8 @@ class Reservations extends Component {
             </div>
           </div>
         </Modal>
-        <div className="container">
-          <div className="row mt-4">{markup}</div>
-        </div>
+
+        <div className="row mt-4">{markup}</div>
       </div>
     ); //Render Data here
   }
