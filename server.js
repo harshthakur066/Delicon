@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const compression = require("compression");
 
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const businessOwnerRoutes = require("./routes/businessOwnerRoutes");
@@ -15,8 +16,13 @@ const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
 const valetRoutes = require("./routes/valetRoutes");
 const walkInRoutes = require("./routes/walkInRoutes");
+const valetAnalyticsRoutes = require("./routes/valetAnalyticsRoutes");
+const walkInAnalyticsRoutes = require("./routes/walkinAnalyticsRoutes");
 
 const app = express();
+
+// COMPRESSION --> GZIP
+app.use(compression());
 
 //CORS
 app.use((req, res, next) => {
@@ -46,6 +52,8 @@ app.use(walkInRoutes);
 
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);
+app.use(valetAnalyticsRoutes);
+app.use(walkInAnalyticsRoutes);
 
 // Mongoose Connection
 mongoose.connect(

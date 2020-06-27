@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const Reservation = require("../models/Reservation");
+const WalkIn = require("../models/WalkIn");
 const requireBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
-//For Business Owner to Show all reservations
+//For Business Owner to Show all walkIns
 router.get(
-  "/api/v1/analytics/reservations/owner",
+  "/api/v1/analytics/walkins/owner",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({ ownerId: req.owner._id });
-      res.json(reservations);
+      const walkIns = await WalkIn.find({ ownerId: req.owner._id });
+      res.json(walkIns);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -18,16 +18,16 @@ router.get(
   }
 );
 
-//For Business Owner to Show reservations of a business
+//For Business Owner to Show walkIns of a business
 router.get(
-  "/api/v1/analytics/reservations/business/:id",
+  "/api/v1/analytics/walkins/business/:id",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({
+      const walkIns = await WalkIn.find({
         businessId: req.params.id,
       });
-      res.json(reservations);
+      res.json(walkIns);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -35,16 +35,16 @@ router.get(
   }
 );
 
-////For Business Owner to Show reservations of a Staff
+////For Business Owner to Show walkIns of a Staff
 router.get(
-  "/api/v1/analytics/reservations/staff/:id",
+  "/api/v1/analytics/walkins/staff/:id",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({
+      const walkIns = await WalkIn.find({
         staffId: req.params.id,
       });
-      res.json(reservations);
+      res.json(walkIns);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -52,15 +52,15 @@ router.get(
   }
 );
 
-//For Business Owner to SHOW a perticular Reservation
+//For Business Owner to SHOW a perticular WalkIn
 router.get(
-  "/api/v1/analytics/reservations/:reservationId",
+  "/api/v1/analytics/walkins/:WalkInId",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const { reservationId } = req.params;
-      const reservation = await Reservation.findById(reservationId);
-      res.json(reservation);
+      const { WalkInId } = req.params;
+      const WalkIn = await WalkIn.findById(WalkInId);
+      res.json(WalkIn);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -68,17 +68,17 @@ router.get(
   }
 );
 
-//For Business Owner to get reservations on perticular date
+//For Business Owner to get walkIns on perticular date
 router.get(
-  "/api/v1/analytics/reservations/date/:datestring",
+  "/api/v1/analytics/walkins/date/:datestring",
   requireBusinessOwner,
   async (req, res) => {
     const date = req.params.datestring.split("-");
     try {
-      const reservations = await Reservation.find({
+      const walkIns = await WalkIn.find({
         createdAt: new Date(date[0], date[1], date[2]),
       });
-      res.json(reservations);
+      res.json(walkIns);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -86,21 +86,21 @@ router.get(
   }
 );
 
-//For Business Owner to get reservations between date range
+//For Business Owner to get walkIns between date range
 router.get(
-  "/api/v1/analytics/reservations/daterange/:datefrom/:dateto",
+  "/api/v1/analytics/walkins/daterange/:datefrom/:dateto",
   requireBusinessOwner,
   async (req, res) => {
     const fromdate = req.params.datefrom.split("-");
     const todate = req.params.dateto.split("-");
     try {
-      const reservations = await Reservation.find({
+      const walkIns = await WalkIn.find({
         createdAt: {
           $gte: new Date(fromdate[0], fromdate[1], fromdate[2]),
           $lte: new Date(todate[0], todate[1], todate[2]),
         },
       }).sort({ createdAt: 1 });
-      res.json(reservations);
+      res.json(walkIns);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });

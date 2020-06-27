@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const Reservation = require("../models/Reservation");
+const Valets = require("../models/Valets");
 const requireBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
-//For Business Owner to Show all reservations
+//For Business Owner to Show all valets
 router.get(
-  "/api/v1/analytics/reservations/owner",
+  "/api/v1/analytics/valets/owner",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({ ownerId: req.owner._id });
-      res.json(reservations);
+      const valets = await Valets.find({ ownerId: req.owner._id });
+      res.json(valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -18,16 +18,16 @@ router.get(
   }
 );
 
-//For Business Owner to Show reservations of a business
+//For Business Owner to Show valets of a business
 router.get(
-  "/api/v1/analytics/reservations/business/:id",
+  "/api/v1/analytics/valets/business/:id",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({
+      const valets = await Valets.find({
         businessId: req.params.id,
       });
-      res.json(reservations);
+      res.json(valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -35,16 +35,16 @@ router.get(
   }
 );
 
-////For Business Owner to Show reservations of a Staff
+////For Business Owner to Show valets of a Staff
 router.get(
-  "/api/v1/analytics/reservations/staff/:id",
+  "/api/v1/analytics/valets/staff/:id",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const reservations = await Reservation.find({
+      const valets = await Valets.find({
         staffId: req.params.id,
       });
-      res.json(reservations);
+      res.json(valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -52,15 +52,15 @@ router.get(
   }
 );
 
-//For Business Owner to SHOW a perticular Reservation
+//For Business Owner to SHOW a perticular Valets
 router.get(
-  "/api/v1/analytics/reservations/:reservationId",
+  "/api/v1/analytics/valets/valets/:ValetsId",
   requireBusinessOwner,
   async (req, res) => {
     try {
-      const { reservationId } = req.params;
-      const reservation = await Reservation.findById(reservationId);
-      res.json(reservation);
+      const { ValetsId } = req.params;
+      const Valets = await Valets.findById(ValetsId);
+      res.json(Valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -68,17 +68,17 @@ router.get(
   }
 );
 
-//For Business Owner to get reservations on perticular date
+//For Business Owner to get valets on perticular date
 router.get(
-  "/api/v1/analytics/reservations/date/:datestring",
+  "/api/v1/analytics/valets/date/:datestring",
   requireBusinessOwner,
   async (req, res) => {
     const date = req.params.datestring.split("-");
     try {
-      const reservations = await Reservation.find({
+      const valets = await Valets.find({
         createdAt: new Date(date[0], date[1], date[2]),
       });
-      res.json(reservations);
+      res.json(valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
@@ -86,21 +86,21 @@ router.get(
   }
 );
 
-//For Business Owner to get reservations between date range
+//For Business Owner to get valets between date range
 router.get(
-  "/api/v1/analytics/reservations/daterange/:datefrom/:dateto",
+  "/api/v1/analytics/valets/daterange/:datefrom/:dateto",
   requireBusinessOwner,
   async (req, res) => {
     const fromdate = req.params.datefrom.split("-");
     const todate = req.params.dateto.split("-");
     try {
-      const reservations = await Reservation.find({
+      const valets = await Valets.find({
         createdAt: {
           $gte: new Date(fromdate[0], fromdate[1], fromdate[2]),
           $lte: new Date(todate[0], todate[1], todate[2]),
         },
       }).sort({ createdAt: 1 });
-      res.json(reservations);
+      res.json(valets);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });
