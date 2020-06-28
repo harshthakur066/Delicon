@@ -9,6 +9,7 @@ import {
   Modal,
   TextField,
   CircularProgress,
+  Backdrop,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
@@ -19,19 +20,18 @@ import {
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
 
-
 const styles = {
   bodycard: {
     margin: 5,
     marginBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor:"#8BC34A", //card-bg-color
-    boxShadow : "0px 2px 4px 0px grey",
-    '&:hover': {
-      transition : "(0.4s)",
-      boxShadow : "0px 6px 8px 2px grey"
-   },
+    backgroundColor: "#8BC34A", //card-bg-color
+    boxShadow: "0px 2px 4px 0px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      boxShadow: "0px 6px 8px 2px grey",
+    },
   },
   fr: {
     float: "right",
@@ -141,6 +141,12 @@ class Walkins extends Component {
     this.setState({
       modalmode: "Post",
       postmodal: true,
+      name: "",
+      email: "",
+      address: "",
+      mobno: "",
+      ownerId: "",
+      businessId: "",
     });
   };
 
@@ -220,44 +226,42 @@ class Walkins extends Component {
     const { classes, deletewalkin } = this.props; //WithStyles Material Thing
 
     const markup = loading ? (
-      <p>Loading</p>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     ) : (
       this.props.data.staff.walkins.map((walkin, index) => (
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography variant="h6" component="h6" >
-                {walkin.name}{" "}
-                <div >{walkin.mobno}</div>{" "}
+              <Typography variant="h6" component="h6">
+                {walkin.name} <div>{walkin.mobno}</div>{" "}
               </Typography>
               <br className={classes.breaker} />
               <Typography variant="h6" component="h6">
-                {walkin.email}{" "}
-                <div >{walkin.address}</div>
+                {walkin.email} <div>{walkin.address}</div>
               </Typography>
-              <div className = "text-center ">
-              <Button
-              style={{color:"#616161"}} 
-              onClick={() => this.openbusiness(walkin)}
-              variant="constained"
-              size="small"
-            >
-              Details
-            </Button>
-               
-            </div>
+              <div className="text-center ">
+                <Button
+                  style={{ color: "#616161" }}
+                  onClick={() => this.openbusiness(walkin)}
+                  variant="constained"
+                  size="small"
+                >
+                  Details
+                </Button>
+              </div>
             </CardContent>
             <RiEdit2Line
-            size = {25}
+              size={25}
               onClick={() => this.editbusiness(walkin)}
               className={classes.edit}
             ></RiEdit2Line>
             <DeleteIcon
-               size = {25}
+              size={25}
               onClick={() => deletewalkin(walkin._id)}
               className={classes.delete}
             />
-            
           </Card>
         </div>
       ))
@@ -266,20 +270,19 @@ class Walkins extends Component {
     console.log(this.props.data);
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
-          Walkins{" "}
-          </h1>
-          <div className="row mt-4">
-          <Button
-            variant="contained"
-            className="ml-auto mt-3"
-            onClick={this.handlePost}
-          >
-            Add Walkin
-          </Button>
-          </div>
-    
+          Walkins
+          {loading ? null : (
+            <Button
+              variant="contained"
+              className=" mt-3 mb-3 float-right"
+              onClick={this.handlePost}
+            >
+              Add Walkin
+            </Button>
+          )}
+        </h1>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -287,7 +290,10 @@ class Walkins extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "20px 25px",textAlign:"center" }}>
+            <div
+              className="container"
+              style={{ padding: "20px 25px", textAlign: "center" }}
+            >
               {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
                   Add a New Walkin

@@ -2,7 +2,11 @@ import React, { Component } from "react";
 
 class home extends Component {
   render() {
-    return <h1>Home</h1>;
+    return (
+      <div className="container" style={{ marginTop: 90 }}>
+        <h1>Home</h1>
+      </div>
+    );
   }
 }
 

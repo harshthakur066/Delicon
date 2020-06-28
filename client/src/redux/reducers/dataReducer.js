@@ -19,6 +19,7 @@ export default function (state = initialState, action) {
           businesses: state.owner.businesses.filter(
             (business) => business._id !== action.payload
           ),
+          ...state.owner,
         },
       };
     case ActionTypes.EDIT_BUSINESS:
@@ -29,6 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         owner: {
           businesses: newbusinesses,
+          ...state.owner,
         },
       };
     case ActionTypes.EDIT_RESERVATION:
@@ -39,6 +41,7 @@ export default function (state = initialState, action) {
         ...state,
         staff: {
           reservations: newres,
+          ...state.staff,
         },
       };
     case ActionTypes.EDIT_VALET:
@@ -49,6 +52,7 @@ export default function (state = initialState, action) {
         ...state,
         staff: {
           valets: newval,
+          ...state.staff,
         },
       };
     case ActionTypes.EDIT_WALKIN:
@@ -59,6 +63,7 @@ export default function (state = initialState, action) {
         ...state,
         staff: {
           walkins: newwalk,
+          ...state.staff,
         },
       };
     case ActionTypes.SET_STAFFS:
@@ -81,6 +86,7 @@ export default function (state = initialState, action) {
           reservations: state.staff.reservations.filter(
             (reservation) => reservation._id !== action.payload
           ),
+          ...state.staff,
         },
       };
     case ActionTypes.POST_STAFF:
@@ -133,9 +139,17 @@ export default function (state = initialState, action) {
           valets: state.staff.valets.filter(
             (valet) => valet._id !== action.payload
           ),
+          ...state.staff,
         },
       };
-
+    case ActionTypes.GET_BUSINESS:
+      return {
+        ...state,
+        owner: {
+          business: action.payload,
+          ...state.owner,
+        },
+      };
     case ActionTypes.SET_WALKINS:
       return {
         ...state,
@@ -148,6 +162,7 @@ export default function (state = initialState, action) {
           walkins: state.staff.walkins.filter(
             (walkin) => walkin._id !== action.payload
           ),
+          ...state.staff,
         },
       };
     case ActionTypes.POST_WALKINS:

@@ -9,6 +9,7 @@ import {
   Modal,
   TextField,
   CircularProgress,
+  Backdrop,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
@@ -19,21 +20,18 @@ import {
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
 
-
-
-
 const styles = {
   bodycard: {
     margin: 5,
     marginBottom: "2rem",
     paddingLeft: 30,
     paddingRight: 30,
-    backgroundColor:"#8BC34A", //card-bg-color
-    boxShadow : "0px 2px 4px 0px grey",
-    '&:hover': {
-      transition : "(0.4s)",
-      boxShadow : "0px 6px 8px 2px grey"
-   },
+    backgroundColor: "#8BC34A", //card-bg-color
+    boxShadow: "0px 2px 4px 0px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      boxShadow: "0px 6px 8px 2px grey",
+    },
   },
   edit: {
     float: "left",
@@ -91,7 +89,6 @@ const styles = {
     border: "0px",
     width: "auto",
     outline: "none",
-    
   },
 };
 
@@ -143,6 +140,11 @@ class Valets extends Component {
     this.setState({
       modalmode: "Post",
       postmodal: true,
+      carNumber: "",
+      ownerName: "",
+      driverName: "",
+      ownerId: "",
+      businessId: "",
     });
   };
 
@@ -219,35 +221,38 @@ class Valets extends Component {
     const { classes, deletevalet } = this.props; //WithStyles Material Thing
 
     const markup = loading ? (
-      <p>Loading</p>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     ) : (
       this.props.data.staff.valets.map((vallet, index) => (
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography variant="h6" component="h6" >
-                Name - {vallet.ownerName}{" "}
-                <div >Car No - {vallet.carNumber}</div>{" "}
-              </Typography  >
+              <Typography variant="h6" component="h6">
+                Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
+              </Typography>
               <br className={classes.breaker} />
-              <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
-              <div className = "text-center ">
-              <Button
-                style = {{color:"#616161"}}
-                onClick={() => this.openbusiness(vallet)}
-                variant="constained"
-                size="small"
-              >
-                Details
-              </Button>
+              <Typography variant="h6" component="h6">
+                Driver Name - {vallet.driverName}{" "}
+              </Typography>
+              <div className="text-center ">
+                <Button
+                  style={{ color: "#616161" }}
+                  onClick={() => this.openbusiness(vallet)}
+                  variant="constained"
+                  size="small"
+                >
+                  Details
+                </Button>
               </div>
               <RiEdit2Line
-              size = {25}
+                size={25}
                 onClick={() => this.editbusiness(vallet)}
                 className={classes.edit}
               ></RiEdit2Line>
               <DeleteIcon
-                size = {25}
+                size={25}
                 onClick={() => deletevalet(vallet._id)}
                 className={classes.delete}
               />
@@ -260,20 +265,19 @@ class Valets extends Component {
     console.log(this.props.data);
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
-          Valets{" "}
-          </h1>
-          <div className="row mt-4">
-          <Button
-            variant="contained"
-            className="ml-auto mt-3"
-            onClick={this.handlePost}
-          >
-            Add Valet
-          </Button>
-          </div>
-       
+          Valets
+          {loading ? null : (
+            <Button
+              variant="contained"
+              className=" mt-3 mb-3 float-right"
+              onClick={this.handlePost}
+            >
+              Add Valet
+            </Button>
+          )}
+        </h1>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -360,9 +364,8 @@ class Valets extends Component {
             </div>
           </div>
         </Modal>
-      
-          <div className="row mt-4">{markup}</div>
-        
+
+        <div className="row mt-4">{markup}</div>
       </div>
     );
   }
