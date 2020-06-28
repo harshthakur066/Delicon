@@ -9,7 +9,7 @@ const reservationSchema = new mongoose.Schema({
   dateOfBirth: String,
   businessId: String,
   ownerId: String,
-  seats: { type: String, default: 1, min: 1 },
+  seats: String,
   createdAt: Date,
   checkIn: String,
   checkOut: String,
