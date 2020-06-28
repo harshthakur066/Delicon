@@ -8,7 +8,16 @@ const requireOwner = require("../middlewares/requiredBusinessOwner");
 // To post the walkin
 router.post("/api/v1/walkin", requireStaff, async (req, res) => {
   const walkIn = new Date().toISOString();
-  const { name, mobno, email, dob, address, businessId, ownerId } = req.body;
+  const {
+    name,
+    mobno,
+    email,
+    dob,
+    address,
+    businessId,
+    ownerId,
+    seats,
+  } = req.body;
   const staffId = req.staff._id;
   try {
     const walk = new WalkIn({
@@ -21,6 +30,7 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
       ownerId,
       staffId,
       walkIn,
+      seats,
     });
     await walk.save();
     try {

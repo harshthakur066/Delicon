@@ -6,6 +6,7 @@ const walkInSchema = new mongoose.Schema({
   email: String,
   dob: String,
   address: String,
+  seats: String,
   walkIn: String,
   walkOut: String,
   staffId: String,
