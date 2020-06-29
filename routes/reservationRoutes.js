@@ -144,7 +144,8 @@ router.put(
       };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,
-        update
+        update,
+        { new: true }
       );
       res.json(reservation);
     } catch (err) {
@@ -165,7 +166,8 @@ router.put(
       };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,
-        update
+        update,
+        { new: true }
       );
       res.json(reservation);
     } catch (err) {

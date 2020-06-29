@@ -10,7 +10,6 @@ const staffRoutes = require("./routes/staffRoutes");
 const businessCategoryRoutes = require("./routes/businessCategoryRoutes");
 const businessRoutes = require("./routes/businessRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
-const reservationCheckinRoutes = require("./routes/reservationCheckIn");
 const indexRoutes = require("./routes/indexRoutes");
 const requestedBusinessRoutes = require("./routes/requestedBusinessRoutes");
 const reservationAnalyticsRoutes = require("./routes/reservationAnalyticsRoutes");
@@ -46,7 +45,6 @@ app.use(requestedBusinessRoutes);
 app.use(businessRoutes);
 app.use(businessCategoryRoutes);
 app.use(reservationRoutes);
-app.use(reservationCheckinRoutes);
 app.use(valetRoutes);
 app.use(walkInRoutes);
 

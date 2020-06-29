@@ -79,7 +79,7 @@ router.put("/api/v1/valets/:id/timeout", requireStaff, async (req, res) => {
     const update = {
       timeOut: timeOut,
     };
-    const valet = await Valet.findByIdAndUpdate(valetId, update);
+    const valet = await Valet.findByIdAndUpdate(valetId, update, { new: true });
     res.send(valet);
   } catch (err) {
     return res.status(500).json({ error: err.message });

@@ -91,7 +91,9 @@ router.put("/api/v1/walkin/:id/walkout", requireStaff, async (req, res) => {
     const update = {
       walkOut: walkOut,
     };
-    const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
+    const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update, {
+      new: true,
+    });
     res.send(walkIn);
   } catch (err) {
     return res.status(500).json({ error: err.message });
