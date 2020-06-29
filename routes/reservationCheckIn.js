@@ -12,11 +12,12 @@ router.put(
     const timeIn = new Date().toISOString();
     try {
       const update = {
-        checkIn: { status: true, timeIn: timeIn },
+        checkIn: timeIn,
       };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,
-        update
+        update,
+        { new: true }
       );
       res.send(reservation);
     } catch (err) {
@@ -34,11 +35,12 @@ router.put(
     const timeOut = new Date().toISOString();
     try {
       const update = {
-        checkOut: { status: true, timeOut: timeOut },
+        checkOut: timeOut,
       };
       const reservation = await Reservation.findByIdAndUpdate(
         reservationId,
-        update
+        update,
+        { new: true }
       );
       res.send(reservation);
     } catch (err) {
