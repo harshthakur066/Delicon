@@ -7,7 +7,7 @@ const requireOwner = require("../middlewares/requiredBusinessOwner");
 
 // To post valet
 router.post("/api/v1/valets", requireStaff, async (req, res) => {
-  const timeIn = new Date().toISOString();
+  const date = new Date().toLocaleDateString().split("/").reverse();
   const { carNumber, ownerName, driverName, ownerId, businessId } = req.body;
   const staffId = req.staff._id;
   try {
@@ -17,7 +17,7 @@ router.post("/api/v1/valets", requireStaff, async (req, res) => {
       driverName,
       ownerId,
       businessId,
-      timeIn,
+      timeIn: new Date(date[0], date[2], date[1]),
       staffId,
     });
     await valet.save();
