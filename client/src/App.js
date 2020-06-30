@@ -19,6 +19,7 @@ import staffs from "./pages/owner/staffs";
 import ownerDash from "./pages/owner/ownerDashboard";
 import staffDash from "./pages/staff/staffDashboard";
 import busiDetails from "./pages/owner/businessDetails";
+import reqbusiness from "./pages/owner/reqbusiness";
 // import signup from "./pages/signup";
 
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -53,6 +54,7 @@ function App() {
               <Route exact path="/" component={home} />
               <Route exact path="/login" component={login} />
               <Route exact path="/businesses" component={businesses} />
+              <Route exact path="/reqbusinesses" component={reqbusiness} />
               <Route exact path="/businesses/:busiId" component={busiDetails} />
               <Route exact path="/reservations" component={reservations} />
               <Route exact path="/valets" component={valets} />

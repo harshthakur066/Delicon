@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   getbusinesses,
   deletebusiness,
-  postbusiness,
   editbusiness,
 } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
@@ -33,7 +32,6 @@ const mapStatetoprops = (state) => ({
 const mapDispatchtoProps = {
   getbusinesses,
   deletebusiness,
-  postbusiness,
   editbusiness,
 };
 
@@ -44,11 +42,11 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#8BC34A", //card-bg-color
+    backgroundColor: "#F5F5F5", //card-bg-color
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "0px 4px 6px 2px grey",
     },
   },
 
@@ -64,6 +62,7 @@ const styles = {
   root: {
     height: "175px",
     width: "250px",
+    background: "F6F7FE",
   },
   bullet: {
     display: "inline-block",
@@ -101,15 +100,18 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
+    top: "5%",
     left: "10%",
     right: "10%",
+    bottom: "5%",
     backgroundColor: "white",
-    borderRadius: "40px",
+    borderRadius: "20px",
     border: "0px",
-    width: "80%",
+    width: "auto",
     outline: "none",
-    padding: "20px 25px",
+    height: "90%",
+    padding: "20px 20px",
+    overflowY: "scroll",
   },
 };
 
@@ -128,11 +130,10 @@ class Businesses extends Component {
     details: "",
   };
 
-  //Componenet did mount me se wo action ko call krenge
   componentDidMount() {
     this.props.getbusinesses();
   }
-  //Data fetch honeke bad component will recive props trigger hoga. Agar data aya hai nextprops mai to fir loading ko false krdenge
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.data.owner.businesses !== undefined) {
       this.setState({
@@ -147,17 +148,6 @@ class Businesses extends Component {
       });
     }
   }
-
-  handlePost = () => {
-    this.setState({
-      modalmode: "Post",
-      postmodal: true,
-      name: "",
-      owner: "",
-      address: "",
-      details: "",
-    });
-  };
 
   handleOpen = () => {
     this.setState({
@@ -217,33 +207,35 @@ class Businesses extends Component {
   };
 
   render() {
-    //Ye Inline styles ke liye hai Withstyles deta hai props mai
     const { classes, deletebusiness } = this.props;
 
-    //Loaing form state
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    //Agar load hora to loading componenet ya fir aya hua data print krenge
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
       this.props.data.owner.businesses.map((business, index) => (
-        <div key={index} className="col-12 mb-4 ">
+        <div key={index} className="col-12 text-center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
                 variant="h5"
                 component="h5"
-                color="#070707"
+                // className={classes.title}
+                style={{ color: "#070707" }}
                 gutterBottom
               >
                 {business.name}
               </Typography>
-              <Typography variant="h6" component="h6" color="#455A64">
+              <Typography
+                variant="h6"
+                component="h6"
+                style={{ color: "#455A64" }}
+              >
                 {business.details}
               </Typography>
               <RiEdit2Line
@@ -263,7 +255,7 @@ class Businesses extends Component {
                 component={Link}
                 variant="contained"
                 size="small"
-                color="#BDBDBD"
+                color="inherit"
                 to={`/businesses/${business._id}`}
               >
                 Details
@@ -271,7 +263,7 @@ class Businesses extends Component {
               <Button
                 component={Link}
                 variant="contained"
-                color="#BDBDBD"
+                color="inherit"
                 size="small"
                 to={`/staffs/${business._id}`}
               >
@@ -284,19 +276,7 @@ class Businesses extends Component {
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">
-          Your Businesses{" "}
-          {loading ? null : (
-            <Button
-              variant="contained"
-              className=" mt-3 mb-3 float-right"
-              onClick={this.handlePost}
-            >
-              Request business
-            </Button>
-          )}
-        </h1>
-
+        <h1 className="text-center mt-4">Your Businesses</h1>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -306,15 +286,22 @@ class Businesses extends Component {
           <div className={classes.modlebox}>
             <div className="container">
               {modlemode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography
+                  variant="h4"
+                  className={classes.pageTitle}
+                  style={{ textAlign: "center" }}
+                >
                   Request a New Business
                 </Typography>
               ) : (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography
+                  variant="h4"
+                  className={classes.pageTitle}
+                  style={{ textAlign: "center" }}
+                >
                   Edit a Business
                 </Typography>
               )}
-
               <form onSubmit={this.handleSubmit}>
                 <TextField
                   name="name"
@@ -375,13 +362,12 @@ class Businesses extends Component {
             </div>
           </div>
         </Modal>
-
         <div className="row mt-4 text-center ">{markup}</div>
       </div>
     );
   }
 }
-//Ye thoda Ajib hai copy paste krle. With styles material UI ka hai yaha component mai hi styles likhne ke liye
+
 export default connect(
   mapStatetoprops,
   mapDispatchtoProps

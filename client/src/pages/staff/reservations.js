@@ -17,7 +17,14 @@ import {
   deletereservation,
   postreservation,
   editreservation,
+  checkInReservation,
+  checkOutReservation
 } from "../../redux/actions/dataActions";
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 
 import { RiEdit2Line } from "react-icons/ri";
 
@@ -32,6 +39,8 @@ const mapDispatchToProps = {
   deletereservation,
   postreservation,
   editreservation,
+  checkInReservation,
+  checkOutReservation,
 };
 
 const styles = {
@@ -40,7 +49,7 @@ const styles = {
     marginBottom: "2rem",
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "#8BC34A", //card-bg-color
+    backgroundColor: "#F5F5F5", //card-bg-color
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",
@@ -54,6 +63,9 @@ const styles = {
   },
   fr: {
     float: "right",
+     '@media (min-width: 320px) and (max-width: 480px)' : {
+       float:"none"
+     }
   },
   breaker: {
     marginTop: 5,
@@ -67,8 +79,9 @@ const styles = {
   },
 
   root: {
-    height: "175px",
-    width: "250px",
+    margin:"auto",
+    textAlign:"center",
+    flexGrow: 0
   },
   bullet: {
     display: "inline-block",
@@ -99,13 +112,44 @@ const styles = {
     top: "13%",
     left: "10%",
     right: "10%",
+    bottom:"5%",
     backgroundColor: "white",
-    borderRadius: "40px",
+    borderRadius: "30px",
     border: "0px",
     width: "auto",
     outline: "none",
+    overflowY: "scroll",
   },
 }; // Styles here
+
+function TabPanel (props)  {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+      
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 
 class Reservations extends Component {
   state = {
@@ -116,10 +160,17 @@ class Reservations extends Component {
     mobno: "",
     address: "",
     seats: "",
+    checkIn:"",
+    checkOut:"",
     loading: true,
     btnload: false,
     postmodal: false,
+    value: 0
   };
+
+ 
+
+ 
 
   componentDidMount() {
     this.props.getreservations();
@@ -173,6 +224,8 @@ class Reservations extends Component {
       seats: this.state.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
+      checkIn: this.state.checkIn,
+      checkOut: this.state.checkOut,
     };
     if (this.state.modalmode === "Post") {
       this.props.postreservation(userData, this.handleDone);
@@ -188,6 +241,10 @@ class Reservations extends Component {
     });
   };
 
+  /////
+
+
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -195,6 +252,8 @@ class Reservations extends Component {
   };
 
   editbusiness = (business) => {
+    console.log(business)
+
     this.setState({
       name: business.name,
       email: business.email,
@@ -208,14 +267,22 @@ class Reservations extends Component {
       postmodal: true,
     });
   };
+  handleMe = (event, newValue) => {
+    this.setState({
+      value : newValue
+    });   
+   };
 
   openbusiness = (business) => {
+    console.log(business)
     this.setState({
       name: business.name,
       email: business.email,
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
+      checkIn:business.checkIn,
+      checkOut:business.checkOut,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Open",
@@ -231,77 +298,309 @@ class Reservations extends Component {
     const modalmode = this.state.modalmode;
     console.log(modalmode);
 
-    const { classes, deletereservation } = this.props;
+    const { classes, deletereservation ,checkInReservation,checkOutReservation} = this.props;
+    
+    console.log(this.state.value)
+    console.log(this.props.data.staff.reservations)
+// Tab 1
+    const markup1 = loading ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : 
+    
+    (
+      this.props.data.staff.reservations.map((reservation, index) => (
+        
+        (reservation.checkIn !== undefined
+          ?
+          null
+          :
 
-    const markup = loading ? (
+         <div key={index} className="col-12 mb-4">
+        <Card className={classes.bodycard}>
+          <CardContent>
+            <Typography variant="h6" component="h6">
+              {reservation.name}{" "}
+              <div className={classes.fr}>
+                {reservation.mobno}
+              </div>{" "}
+            </Typography>
+            <br className={classes.breaker} />
+            
+            <Typography variant="h6" component="h6">
+              {reservation.email}{" "}
+              <div className={classes.fr}>
+                {reservation.address}
+              </div>
+              
+            </Typography>
+            <div className="text-center mt-1 ">
+              <Button
+              style={{color:"#616161"}} 
+              onClick={() => this.openbusiness(reservation)}
+               variant="contained"
+               size="small"
+              >
+              Details
+             </Button>
+          </div>
+       
+          <div className="text-center mt-2 ">
+          <Button
+          style={{color:"#616161"}} 
+          onClick={() => checkInReservation(reservation._id)}
+           variant="contained"
+           size="small"
+          >
+          CheckIn
+         </Button>
+         </div>
+            
+            
+          </CardContent>
+
+          <RiEdit2Line
+            size={25}
+            onClick={() => this.editbusiness(reservation)}
+            className={classes.edit}
+          ></RiEdit2Line>
+
+          <DeleteIcon
+            size={25}
+            onClick={() => deletereservation(reservation._id)}
+            className={classes.delete}
+          />
+          
+        </Card>
+        </div>
+        )
+      ))
+      
+    
+    
+      
+    );
+
+    // Tab2
+    const markup2 = loading ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : 
+    
+    (
+      this.props.data.staff.reservations.map((reservation, index) => (
+        
+         (reservation.checkOut === undefined && reservation.checkIn !== undefined
+          ?
+
+          <div key={index} className="col-12 mb-4">
+        <Card className={classes.bodycard}>
+          <CardContent>
+            <Typography variant="h6" component="h6">
+              {reservation.name}{" "}
+              <div className={classes.fr}>
+                {reservation.mobno}
+              </div>{" "}
+            </Typography>
+            <br className={classes.breaker} />
+            
+            <Typography variant="h6" component="h6">
+              {reservation.email}{" "}
+              <div className={classes.fr}>
+                {reservation.address}
+              </div>
+              
+            </Typography>
+            <br></br>
+            <Typography variant="h6" component="h6">
+              <div >
+                CheckIn at - {reservation.checkIn.split("T")[0]}
+              </div>
+              
+            </Typography>
+
+            <div className="text-center mt-1 ">
+              <Button
+              style={{color:"#616161"}} 
+              onClick={() => this.openbusiness(reservation)}
+               variant="contained"
+               size="small"
+              >
+              Details
+             </Button>
+          </div>
+       
+          <div className="text-center mt-2 ">
+          <Button
+          style={{color:"#616161"}} 
+          onClick={() => checkOutReservation(reservation._id)}
+           variant="contained"
+           size="small"
+          >
+          CheckOut
+         </Button>
+         </div>
+            
+            
+          </CardContent>
+
+          <RiEdit2Line
+            size={25}
+            onClick={() => this.editbusiness(reservation)}
+            className={classes.edit}
+          ></RiEdit2Line>
+
+          <DeleteIcon
+            size={25}
+            onClick={() => deletereservation(reservation._id)}
+            className={classes.delete}
+          />
+          
+        </Card>
+        </div>
+
+          :
+           null
+         
+         )
+      ))
+    
+    
+      
+    );
+    // Tab 3
+    const markup3 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
       this.props.data.staff.reservations.map((reservation, index) => (
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography>
-                {reservation.name}{" "}
-                <span className={classes.fr}>{reservation.mobno}</span>{" "}
-              </Typography>
-              <br className={classes.breaker} />
-
-              <Typography>
-                {reservation.email}{" "}
-                <span className={classes.fr}>{reservation.address}</span>
-              </Typography>
-              <div className="text-center ">
-                <Button
-                  style={{ color: "#616161" }}
-                  onClick={() => this.openbusiness(reservation)}
-                  variant="constained"
-                  size="small"
-                >
-                  Details
-                </Button>
+        (reservation.checkOut !== undefined && reservation.checkIn !== undefined
+          
+          ?
+        
+         <div key={index} className="col-12 mb-4">
+        <Card className={classes.bodycard}>
+          <CardContent>
+            <Typography variant="h6" component="h6">
+              {reservation.name}{" "}
+              <div className={classes.fr}>
+                {reservation.mobno}
+              </div>{" "}
+            </Typography>
+            <br className={classes.breaker} />
+            
+            <Typography variant="h6" component="h6">
+              {reservation.email}{" "}
+              <div className={classes.fr}>
+                {reservation.address}
               </div>
-            </CardContent>
-
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(reservation)}
-              className={classes.edit}
-            ></RiEdit2Line>
-
-            <DeleteIcon
-              size={25}
-              onClick={() => deletereservation(reservation._id)}
-              className={classes.delete}
-            />
-            <Button
+              
+            </Typography>
+            <br></br>
+            <Typography variant="h6" component="h6">
+              <div >
+                CheckIn at - {reservation.checkIn.split("T")[0]}
+              </div>
+              <div>
+               CheckOut at -  {reservation.checkOut.split("T")[0]}
+              </div>
+              
+            </Typography>
+            <br></br>
+            <div className="text-center mt-1 ">
+              <Button
+              style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
-              variant="contained"
-              size="small"
-              className={classes.delete}
-            >
+               variant="contained"
+               size="small"
+              >
               Details
-            </Button>
-          </Card>
-        </div>
-      ))
-    );
+             </Button>
+          </div>
 
+          </CardContent>
+
+          <RiEdit2Line
+            size={25}
+            onClick={() => this.editbusiness(reservation)}
+            className={classes.edit}
+          ></RiEdit2Line>
+
+          <DeleteIcon
+            size={25}
+            onClick={() => deletereservation(reservation._id)}
+            className={classes.delete}
+          />
+          
+        </Card>
+        </div>
+      
+      : null
+        )
+      ))
+      
+    );
+    
     return (
+      
       <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
           Reservations
+          </h1>
+        
+{/* Tabs */}
+<div  className="row mt-4">
+<div  className={classes.root}>
+<AppBar style = {{backgroundColor:"#757575"}} position="static" >
+      <Tabs style = {{}} TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+          >
+        <Tab label="Pending" {...a11yProps(0)} />
+        <Tab label="CheckIns" {...a11yProps(1)} /> 
+        <Tab label="CheckOuts" {...a11yProps(2)} />
+      </Tabs>
+    </AppBar>
+    </div>
+    </div>
+    
+    {/* add */}
+    <div className="row mt-4">
+            <div className="col-12" >
           {loading ? null : (
-            <Button
+             <Button
+              className=" mb-4 float-right"
               variant="contained"
-              className=" mt-3 mb-3 float-right"
               onClick={this.handlePost}
             >
               Add Reservation
             </Button>
+            
           )}
-        </h1>
+          </div>
+          </div>
+          {/* add */}
+
+<TabPanel value={this.state.value} index={0}>
+<div className="row mt-4">{markup1}</div>
+</TabPanel>
+    <TabPanel value={this.state.value} index={1}>
+    <div className="row mt-4">{markup2}</div>
+
+    </TabPanel>
+    <TabPanel value={this.state.value} index={2}>
+    <div className="row mt-4">{markup3}</div>
+
+    </TabPanel>
+    
+    
+          {/*Tabs*/}
+          
+          
+        
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -343,6 +642,7 @@ class Reservations extends Component {
                   <Typography variant="h6" className="mt-2 ">
                     Seats - {this.state.seats}
                   </Typography>
+                  
                 </>
               ) : (
                 <form onSubmit={this.handleSubmit}>
@@ -418,7 +718,7 @@ class Reservations extends Component {
           </div>
         </Modal>
 
-        <div className="row mt-4">{markup}</div>
+        
       </div>
     ); //Render Data here
   }

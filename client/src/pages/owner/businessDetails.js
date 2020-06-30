@@ -21,7 +21,7 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#8BC34A",
+    backgroundColor: "#F5F5F5",
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",

@@ -28,7 +28,7 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#8BC34A", //card-bg-color
+    backgroundColor: "#F5F5F5", //card-bg-color
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",
@@ -90,9 +90,10 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "5%",
+    top: "6%",
     left: "10%",
-    right: "10%",
+    right:"10%",
+    bottom: "6%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
@@ -100,6 +101,7 @@ const styles = {
     outline: "none",
     height: "90%",
     overflowY: "scroll",
+    
   },
 };
 
@@ -334,16 +336,22 @@ class Staffs extends Component {
       <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
           Your Staff
+          </h1>
+          <div className="row mt-4">
+            <div className="col-12" >
           {loading ? null : (
             <Button
+             style={{ width:"50%" }}
+             className="mb-4 float-right"
               variant="contained"
-              className=" mt-3 mb-3 float-right"
               onClick={this.handlePost}
             >
               Add Staff
             </Button>
           )}
-        </h1>
+          </div>
+          </div>
+       
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -353,11 +361,11 @@ class Staffs extends Component {
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "20px 20px" }}>
               {modalmode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography variant="h4" className={classes.pageTitle} style={{textAlign:"center" }}>
                   Add a New Staff
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography variant="h4" className={classes.pageTitle} style={{ textAlign:"center" }}>
                   Edit a Staff
                 </Typography>
               ) : modalmode === "Open" ? (

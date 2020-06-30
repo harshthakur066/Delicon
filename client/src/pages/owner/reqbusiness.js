@@ -1,62 +1,62 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
-  withStyles,
-  Card,
-  CardContent,
-  Typography,
-  Button,
+  getreqbusinesses,
+  postbusiness,
+  deletereqbusiness,
+} from "../../redux/actions/dataActions";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
+import {
   Modal,
   TextField,
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import {
-  getwalkins,
-  deletewalkin,
-  postwalkins,
-  editwalkin,
-} from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
+
+const mapStatetoprops = (state) => ({
+  UI: state.UI,
+  data: state.data,
+});
+
+const mapDispatchtoProps = {
+  postbusiness,
+  deletereqbusiness,
+  getreqbusinesses,
+};
 
 const styles = {
-  bodycard: {
-    margin: 5,
-    marginBottom: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
+  cardStyle: {
+    display: "block",
+    width: "100%",
+    height: "auto",
+    marginBottom: "2rem",
     backgroundColor: "#F5F5F5", //card-bg-color
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "0px 4px 6px 2px grey",
     },
   },
-  fr: {
-    float: "right",
-    '@media (min-width: 320px) and (max-width: 400px)' : {
-      float: "left",
-    }
+
+  actions: {
+    margin: "auto",
+    width: "50%",
+    "@media (min-width:780px)": {
+      margin: "auto",
+      width: "15%",
+    },
   },
-  breaker: {
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  edit: {
-    float: "left",
-    color: "blue",
-    cursor: "pointer",
-  },
-  delete: {
-    float: "right",
-    color: "red",
-    cursor: "pointer",
-    marginBottom: "1rem",
-  },
+
   root: {
     height: "175px",
     width: "250px",
+    background: "F6F7FE",
   },
   bullet: {
     display: "inline-block",
@@ -64,10 +64,20 @@ const styles = {
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 18,
   },
   pos: {
     marginBottom: 12,
+  },
+  delete: {
+    float: "right",
+    color: "red",
+    cursor: "pointer",
+  },
+  edit: {
+    float: "left",
+    color: "blue",
+    cursor: "pointer",
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -84,59 +94,46 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
+    top: "5%",
     left: "10%",
     right: "10%",
-    bottom:"5%",
+    bottom: "5%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
+    height: "90%",
+    padding: "20px 20px",
     overflowY: "scroll",
   },
 };
 
-const mapStateToProps = (state) => ({
-  UI: state.UI,
-  data: state.data,
-  user: state.user,
-});
-
-const mapDispatchToProps = {
-  getwalkins,
-  deletewalkin,
-  postwalkins,
-  editwalkin,
-};
-
-class Walkins extends Component {
+class Businesses extends Component {
   state = {
     modalmode: null,
     _id: "",
-    name: "",
-    email: "",
-    mobno: "",
-    address: "",
-    seats:"",
-    btnload: false,
     loading: true,
+    btnload: false,
     postmodal: false,
+    name: "",
+    owner: "",
+    address: "",
+    details: "",
   };
 
   componentDidMount() {
-    this.props.getwalkins();
+    this.props.getreqbusinesses();
   }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.data.staff.walkins !== undefined) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.owner.reqbusinesses !== undefined) {
       this.setState({
         loading: false,
       });
     }
-    if (newProps.UI.errors) {
+    if (nextProps.UI.errors) {
       this.setState({
-        errors: newProps.UI.errors,
+        errors: nextProps.UI.errors,
         loading: false,
         btnload: false,
       });
@@ -148,12 +145,9 @@ class Walkins extends Component {
       modalmode: "Post",
       postmodal: true,
       name: "",
-      email: "",
+      owner: "",
       address: "",
-      mobno: "",
-      ownerId: "",
-      businessId: "",
-      seats:""
+      details: "",
     });
   };
 
@@ -171,25 +165,11 @@ class Walkins extends Component {
     });
     const userData = {
       name: this.state.name,
-      email: this.state.email,
+      owner: this.state.owner,
       address: this.state.address,
-      mobno: this.state.mobno,
-      seats:this.state.seats,
-      ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      details: this.state.details,
     };
-    if (this.state.modalmode === "Post") {
-      this.props.postwalkins(userData, this.handleDone);
-    } else {
-      this.props.editwalkin(userData, this.handleDone, this.state._id);
-    }
-  };
-
-  handleDone = () => {
-    this.setState({
-      btnload: false,
-      postmodal: false,
-    });
+    this.props.postbusiness(userData, this.doneLoading);
   };
 
   handleChange = (event) => {
@@ -198,15 +178,19 @@ class Walkins extends Component {
     });
   };
 
+  doneLoading = () => {
+    this.setState({
+      btnload: false,
+      postmodal: false,
+    });
+  };
+
   editbusiness = (business) => {
     this.setState({
       name: business.name,
-      email: business.email,
+      owner: business.owner,
       address: business.address,
-      mobno: business.mobno,
-      seats:business.seats,
-      ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      details: business.details,
       modalmode: "Edit",
       _id: business._id,
       postmodal: true,
@@ -216,12 +200,9 @@ class Walkins extends Component {
   openbusiness = (business) => {
     this.setState({
       name: business.name,
-      email: business.email,
+      owner: business.owner,
       address: business.address,
-      mobno: business.mobno,
-      seats:business.seats,
-      ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      details: business.details,
       modalmode: "Open",
       _id: business._id,
       postmodal: true,
@@ -229,82 +210,81 @@ class Walkins extends Component {
   };
 
   render() {
+    const { classes, deletereqbusiness } = this.props;
+
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
-
-    const { classes, deletewalkin } = this.props; //WithStyles Material Thing
-
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.walkins.map((walkin, index) => (
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
+      this.props.data.owner.reqbusinesses.map((business, index) => (
+        <div key={index} className="col-12 text-center">
+          <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography variant="h6" component="h6" >
-                {walkin.name}{" "}
-                <span className= {classes.fr} >{walkin.mobno}</span>{" "}
+              <Typography
+                variant="h5"
+                component="h5"
+                style={{ color: "#070707" }}
+                gutterBottom
+              >
+                {business.name}
               </Typography>
-              <br className={classes.breaker} />
-              <Typography variant="h6" component="h6">
-                {walkin.email}{" "}
-                <span className= {classes.fr}>{walkin.address}</span>
-                {/* <span className= {classes.fr} >{walkin.seats}</span>{" "} */}
+              <Typography
+                variant="h6"
+                component="h6"
+                style={{ color: "#455A64" }}
+              >
+                {business.details}
               </Typography>
-              <div className = "text-center ">
-              <Button
-              style={{color:"#616161"}} 
-              onClick={() => this.openbusiness(walkin)}
-              variant="contained"
-              size="small"
-            >
-              Details
-            </Button>
-               
-            </div>
+              <Typography
+                variant="h6"
+                component="h6"
+                style={{ color: "#455A64" }}
+              >
+                Status - {business.status}
+              </Typography>
+              <div className="text-center pb-4">
+                <Button
+                  style={{ color: "#616161" }}
+                  onClick={() => this.openbusiness(business)}
+                  variant="contained"
+                  size="small"
+                  className={classes.edit}
+                >
+                  Details
+                </Button>
+                <DeleteIcon
+                  size="25"
+                  onClick={() => deletereqbusiness(business._id)}
+                  className={classes.delete}
+                />
+              </div>
             </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(walkin)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() => deletewalkin(walkin._id)}
-              className={classes.delete}
-            />
           </Card>
         </div>
       ))
     );
-
-    console.log(this.props.data);
-
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">
-          Walkins
-          </h1>
-          <div className="row mt-4">
-            <div className="col-12" >
-          {loading ? null : (
-            <Button
-            className="mb-4 float-right"
-              variant="contained"
-              onClick={this.handlePost}
-            >
-              Add Walkin
-            </Button>
-          )}
+        <h1 className="text-center mt-4">Requested Businesses </h1>
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                className="mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Request business
+              </Button>
+            )}
           </div>
-          </div>
-          <div className="row mt-4">{markup}</div>
+        </div>
 
-       
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -312,39 +292,33 @@ class Walkins extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div
-              className="container"
-              style={{ padding: "20px 25px", textAlign: "center" }}
-            >
+            <div className="container">
               {modalmode === "Post" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
-                  Add a New Walkin
+                  Request a new Business
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
-                  Edit a Walkin
+                  Edit a Business Request
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography variant="h4" className={classes.pageTitle}>
-                  Your Walkin
+                  Your Business
                 </Typography>
               ) : null}
               {modalmode === "Open" ? (
                 <>
                   <Typography variant="h6" className="mt-2 ">
-                    Name - {this.state.name}
+                    Business Name - {this.state.name}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                    Mobile No. - {this.state.mobno}
-                  </Typography>
-                  <Typography variant="h6" className="mt-2 ">
-                    Email - {this.state.email}
+                    Owner Name - {this.state.owner}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
                     Address - {this.state.address}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                    Seats - {this.state.seats}
+                    Details - {this.state.details}
                   </Typography>
                 </>
               ) : (
@@ -352,7 +326,7 @@ class Walkins extends Component {
                   <TextField
                     name="name"
                     type="name"
-                    label="Name.."
+                    label="Name of the business"
                     className={classes.TextField}
                     value={this.state.name}
                     onChange={this.handleChange}
@@ -360,11 +334,11 @@ class Walkins extends Component {
                     required={true}
                   />
                   <TextField
-                    name="mobno"
-                    type="mobno"
-                    label="Mobile Number.."
+                    name="owner"
+                    type="owner"
+                    label="Owner Name"
                     className={classes.TextField}
-                    value={this.state.mobno}
+                    value={this.state.owner}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
@@ -372,7 +346,7 @@ class Walkins extends Component {
                   <TextField
                     name="address"
                     type="address"
-                    label="Location.."
+                    label="Location of the business"
                     className={classes.TextField}
                     value={this.state.address}
                     onChange={this.handleChange}
@@ -380,22 +354,14 @@ class Walkins extends Component {
                     required={true}
                   />
                   <TextField
-                    name="email"
-                    type="email"
-                    label="Email.."
+                    name="details"
+                    type="details"
+                    label="Detailed description of the business"
                     className={classes.TextField}
-                    value={this.state.email}
+                    value={this.state.details}
                     onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="seats"
-                    type="seats"
-                    label="Seats.."
-                    className={classes.TextField}
-                    value={this.state.seats}
-                    onChange={this.handleChange}
+                    multiline
+                    rows={3}
                     fullWidth
                     required={true}
                   />
@@ -420,14 +386,13 @@ class Walkins extends Component {
             </div>
           </div>
         </Modal>
-       
-        
+        <div className="row mt-4 text-center ">{markup}</div>
       </div>
     );
   }
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Walkins));
+  mapStatetoprops,
+  mapDispatchtoProps
+)(withStyles(styles)(Businesses));

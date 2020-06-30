@@ -26,7 +26,7 @@ const styles = {
     marginBottom: "2rem",
     paddingLeft: 30,
     paddingRight: 30,
-    backgroundColor: "#8BC34A", //card-bg-color
+    backgroundColor: "#F5F5F5", //card-bg-color
     boxShadow: "0px 2px 4px 0px grey",
     "&:hover": {
       transition: "(0.4s)",
@@ -84,11 +84,14 @@ const styles = {
     top: "13%",
     left: "10%",
     right: "10%",
+    bottom:"5%",
     backgroundColor: "white",
     borderRadius: "30px",
     border: "0px",
     width: "auto",
     outline: "none",
+    overflowY: "scroll",
+    
   },
 };
 
@@ -233,18 +236,16 @@ class Valets extends Component {
                 Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
               </Typography>
               <br className={classes.breaker} />
-              <Typography variant="h6" component="h6">
-                Driver Name - {vallet.driverName}{" "}
-              </Typography>
-              <div className="text-center ">
-                <Button
-                  style={{ color: "#616161" }}
-                  onClick={() => this.openbusiness(vallet)}
-                  variant="constained"
-                  size="small"
-                >
-                  Details
-                </Button>
+              <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
+              <div className = "text-center ">
+              <Button
+                style = {{color:"#616161"}}
+                onClick={() => this.openbusiness(vallet)}
+                variant="contained"
+                size="small"
+              >
+                Details
+              </Button>
               </div>
               <RiEdit2Line
                 size={25}
@@ -268,16 +269,22 @@ class Valets extends Component {
       <div className="container" style={{ marginTop: 90 }}>
         <h1 className="text-center mt-4">
           Valets
+          </h1>
+          <div className="row mt-4">
+            <div className="col-12" >
           {loading ? null : (
             <Button
+              className=" mb-4 float-right"
               variant="contained"
-              className=" mt-3 mb-3 float-right"
+              
               onClick={this.handlePost}
             >
               Add Valet
             </Button>
           )}
-        </h1>
+          </div>
+          </div>
+     
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}

@@ -13,190 +13,208 @@ export default function (state = initialState, action) {
         owner: { businesses: action.payload, ...state.owner },
       };
     case ActionTypes.DELET_BUSINESSES:
+      var newowner1 = state.owner;
+      newowner1.businesses = state.owner.businesses.filter(
+        (business) => business._id !== action.payload
+      );
       return {
         ...state,
-        owner: {
-          businesses: state.owner.businesses.filter(
-            (business) => business._id !== action.payload
-          ),
-          ...state.owner,
-        },
+        owner: newowner1,
       };
     case ActionTypes.EDIT_BUSINESS:
-      var newbusinesses = state.owner.businesses.map((busi) =>
+      var newowner2 = state.owner;
+      newowner2.businesses = state.owner.businesses.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
       return {
         ...state,
-        owner: {
-          businesses: newbusinesses,
-          ...state.owner,
-        },
+        owner: newowner2,
       };
     case ActionTypes.EDIT_RESERVATION:
-      var newres = state.staff.reservations.map((busi) =>
+      var newstaff1 = state.staff;
+      newstaff1.reservations = state.staff.reservations.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
       return {
         ...state,
-        staff: {
-          reservations: newres,
-          ...state.staff,
-        },
+        staff: newstaff1,
       };
     case ActionTypes.EDIT_VALET:
-      var newval = state.staff.valets.map((busi) =>
+      var newstaff2 = state.staff;
+      newstaff2.valets = state.staff.valets.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
       return {
         ...state,
-        staff: {
-          valets: newval,
-          ...state.staff,
-        },
+        staff: newstaff2,
       };
     case ActionTypes.EDIT_WALKIN:
-      var newwalk = state.staff.walkins.map((busi) =>
+      var newstaff3 = state.staff;
+      newstaff3.walkins = state.staff.walkins.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
       return {
         ...state,
-        staff: {
-          walkins: newwalk,
-          ...state.staff,
-        },
+        staff: newstaff3,
       };
     case ActionTypes.SET_STAFFS:
-      const newOwner = state.owner;
+      var newOwner = state.owner;
       newOwner.staffs = action.payload;
       return {
         ...state,
         owner: newOwner,
       };
-
     case ActionTypes.SET_RESERVATIONS:
+      var newStaff = state.staff;
+      newStaff.reservations = action.payload;
       return {
         ...state,
-        staff: { reservations: action.payload, ...state.staff },
+        staff: newStaff,
       };
     case ActionTypes.DELETE_RESERVATIONS:
+      var newStaff4 = state.staff;
+      newStaff4.reservations = state.staff.reservations.filter(
+        (reservation) => reservation._id !== action.payload
+      );
       return {
         ...state,
-        staff: {
-          reservations: state.staff.reservations.filter(
-            (reservation) => reservation._id !== action.payload
-          ),
-          ...state.staff,
-        },
+        staff: newStaff4,
       };
     case ActionTypes.POST_STAFF:
+      var newOwner3 = state.owner;
+      newOwner3.staffs.push(action.payload);
       return {
         ...state,
-        owner: {
-          staffs: state.owner.staffs.push(action.payload),
-          ...state.owner,
-        },
+        owner: newOwner3,
       };
     case ActionTypes.EDIT_STAFF:
-      var newstaffs = state.owner.staffs.map((busi) =>
+      var newowner4 = state.owner;
+      newowner4.staffs = state.owner.staffs.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
-      var newowner = state.owner;
-      newowner.staffs = newstaffs;
       return {
         ...state,
-        owner: newowner,
+        owner: newowner4,
       };
     case ActionTypes.STAFF_NOTWORKING:
-      newstaffs = state.owner.staffs.map((busi) =>
+      var newowner5 = state.owner;
+      newowner5.staffs = state.owner.staffs.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
-      newowner = state.owner;
-      newowner.staffs = newstaffs;
       return {
         ...state,
-        owner: newowner,
+        owner: newowner5,
       };
     case ActionTypes.STAFF_WORKING:
-      newstaffs = state.owner.staffs.map((busi) =>
+      var newowner6 = state.owner;
+      newowner6.staffs = state.owner.staffs.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
       );
-      newowner = state.owner;
-      newowner.staffs = newstaffs;
       return {
         ...state,
-        owner: newowner,
+        owner: newowner6,
       };
     case ActionTypes.SET_VALETS:
+      var newStaff5 = state.staff;
+      newStaff5.valets = action.payload;
       return {
         ...state,
-        staff: { valets: action.payload, ...state.staff },
+        staff: newStaff5,
       };
     case ActionTypes.DELETE_VALETS:
+      var newStaff6 = state.staff;
+      newStaff6.valets = state.staff.valets.filter(
+        (valet) => valet._id !== action.payload
+      );
       return {
         ...state,
-        staff: {
-          valets: state.staff.valets.filter(
-            (valet) => valet._id !== action.payload
-          ),
-          ...state.staff,
-        },
+        staff: newStaff6,
       };
     case ActionTypes.GET_BUSINESS:
+      var newOwner7 = state.owner;
+      newOwner7.business = action.payload;
       return {
         ...state,
-        owner: {
-          business: action.payload,
-          ...state.owner,
-        },
+        owner: newOwner7,
       };
     case ActionTypes.SET_WALKINS:
+      var newStaff7 = state.staff;
+      newStaff7.walkins = action.payload;
       return {
         ...state,
-        staff: { walkins: action.payload, ...state.staff },
+        staff: newStaff7,
       };
     case ActionTypes.DELETE_WALKINS:
+      var newStaff8 = state.staff;
+      newStaff8.walkins = state.staff.walkins.filter(
+        (walkin) => walkin._id !== action.payload
+      );
       return {
         ...state,
-        staff: {
-          walkins: state.staff.walkins.filter(
-            (walkin) => walkin._id !== action.payload
-          ),
-          ...state.staff,
-        },
+        staff: newStaff8,
       };
     case ActionTypes.POST_WALKINS:
+      var newStaff9 = state.staff;
+      newStaff9.walkins.push(action.payload);
       return {
         ...state,
-        staff: {
-          walkins: state.staff.walkins.push(action.payload),
-          ...state.staff,
-        },
+        staff: newStaff9,
       };
     case ActionTypes.POST_VALETS:
+      var newStaff10 = state.staff;
+      newStaff10.valets.push(action.payload);
       return {
         ...state,
-        staff: {
-          valets: state.staff.valets.push(action.payload),
-          ...state.staff,
-        },
+        staff: newStaff10,
       };
     case ActionTypes.POST_RESERVATION:
+      var newStaff11 = state.staff;
+      newStaff11.reservations.push(action.payload);
       return {
         ...state,
-        staff: {
-          reservations: state.staff.reservations.push(action.payload),
-          ...state.staff,
-        },
+        staff: newStaff11,
       };
     case ActionTypes.POST_BUSINESS:
+      var newOwner8 = state.owner;
+      newOwner8.reqbusinesses.push(action.payload);
       return {
         ...state,
-        owner: {
-          businesses: state.owner.businesses.push(action.payload),
-          ...state.owner,
-        },
+        owner: newOwner8,
       };
+    case ActionTypes.GET_REQBUSINESS:
+      var newOwner9 = state.owner;
+      newOwner9.reqbusinesses = action.payload;
+      return {
+        ...state,
+        owner: newOwner9,
+      };
+    case ActionTypes.DELETE_REQBUSINESS:
+      var newOwner10 = state.owner;
+      newOwner10.reqbusinesses = state.owner.reqbusinesses.filter(
+        (business) => business._id !== action.payload
+      );
+      return {
+        ...state,
+        owner: newOwner10,
+      };
+      case ActionTypes.RESERVATION_CHECKIN:
+      var checkin = state.staff;
+      checkin.reservations = state.staff.reservations.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      return {
+        ...state,
+        staff: checkin,
+      };
+      case ActionTypes.RESERVATION_CHECKOUT:
+        var checkout = state.staff;
+        checkout.reservations = state.staff.reservations.map((busi) =>
+          busi._id === action.payload._id ? action.payload : busi
+        );
+        return {
+          ...state,
+          staff: checkout,
+        };
     default:
       return state;
   }

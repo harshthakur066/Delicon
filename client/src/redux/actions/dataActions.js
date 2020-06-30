@@ -103,6 +103,39 @@ export const getbusiness = (setloading, ID) => (dispatch) => {
     });
 };
 
+//REQ BUSINESS ACTION ..............................................................
+
+export const getreqbusinesses = () => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get("/api/v1/businesses/request")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_REQBUSINESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deletereqbusiness = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/businesses/request/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_REQBUSINESS,
+        payload: businessId,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
 //Staff Actions .................................................................
 
 export const getstaffs = (businessId, setdone) => (dispatch) => {
@@ -238,6 +271,7 @@ export const getreservations = () => (dispatch) => {
         type: ActionTypes.SET_RESERVATIONS,
         payload: res.data,
       });
+      console.log(res.data);
     })
     .catch((err) => {
       if (err.response !== undefined) {
@@ -306,6 +340,46 @@ export const editreservation = (formdata, setloading, ID) => (dispatch) => {
         dispatch(setErrors(err.response.data));
       }
     });
+};
+
+/// Reservation Check Ins/Outs
+
+export const checkInReservation = (ID) => (dispatch) => {
+  console.log(ID)
+  dispatch(clearErrors());
+      axios
+        .put(`/api/v1/reservations/${ID}/checkin`)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.RESERVATION_CHECKIN,
+            payload: res.data,
+          });
+          alert("CheckIn Successfully");
+
+          
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+};
+export const checkOutReservation = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+      axios
+        .put(`/api/v1/reservations/${ID}/checkout`)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.RESERVATION_CHECKOUT,
+            payload: res.data,
+          });
+          alert("Checkout Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
 };
 
 //Valets Actions ................................................
