@@ -124,6 +124,8 @@ class Businesses extends Component {
 
   componentDidMount() {
     this.props.getreqbusinesses();
+    document.body.style.backgroundColor = "#F0F2FE"
+
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.data.owner.reqbusinesses !== undefined) {

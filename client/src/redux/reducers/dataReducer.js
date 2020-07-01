@@ -215,6 +215,24 @@ export default function (state = initialState, action) {
           ...state,
           staff: checkout,
         };
+        case ActionTypes.WALK_OUT:
+          var walkout = state.staff;
+          walkout.walkins = state.staff.walkins.map((busi) =>
+            busi._id === action.payload._id ? action.payload : busi
+          );
+          return {
+            ...state,
+            staff: walkout,
+          };
+          case ActionTypes.VALET_TIMEOUT:
+          var timeout = state.staff;
+          timeout.valets = state.staff.valets.map((busi) =>
+          busi._id === action.payload._id ? action.payload : busi
+          );
+          return {
+          ...state,
+          staff: timeout,
+           };
     default:
       return state;
   }

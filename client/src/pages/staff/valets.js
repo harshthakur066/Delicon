@@ -17,8 +17,15 @@ import {
   deletevalet,
   postvalets,
   editvalets,
+  valetstimeout,
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
+
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 
 const styles = {
   bodycard: {
@@ -52,8 +59,9 @@ const styles = {
     marginBottom: "1rem",
   },
   root: {
-    height: "175px",
-    width: "250px",
+    margin:"auto",
+    textAlign:"center",
+    flexGrow: 0
   },
   bullet: {
     display: "inline-block",
@@ -95,6 +103,35 @@ const styles = {
   },
 };
 
+function TabPanel (props)  {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+      
+    >
+      {value === index && (
+        <Box p={2}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
+
 const mapStateToProps = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -106,6 +143,7 @@ const mapDispatchToProps = {
   deletevalet,
   postvalets,
   editvalets,
+  valetstimeout
 };
 
 class Valets extends Component {
@@ -115,13 +153,25 @@ class Valets extends Component {
     carNumber: "",
     ownerName: "",
     driverName: "",
+    value:0,
+    timeIn:"",
+    timeOut:"",
     loading: true,
     btnload: false,
     postmodal: false,
   };
 
+
+  handleMe = (event, newValue) => { //used in Tabs
+    this.setState({
+      value : newValue
+    });   
+   };
+
   componentDidMount() {
     this.props.getvalets();
+    document.body.style.backgroundColor = "#F0F2FE"
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -221,30 +271,48 @@ class Valets extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const { classes, deletevalet } = this.props; //WithStyles Material Thing
+    const { classes, deletevalet, valetstimeout } = this.props; //WithStyles Material Thing
 
-    const markup = loading ? (
+    const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
       this.props.data.staff.valets.map((vallet, index) => (
+
+        (vallet.timeIn !== undefined && vallet.timeOut === undefined
+          
+          ?
+
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
               <Typography variant="h6" component="h6">
                 Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
               </Typography>
-              <br className={classes.breaker} />
               <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
-              <div className = "text-center ">
-              <Button
+              <br className={classes.breaker} />
+
+              <Typography variant="h6" component="h6" >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
+
+              <div className = "text-center mt-2 ">
+              {/* <Button
                 style = {{color:"#616161"}}
                 onClick={() => this.openbusiness(vallet)}
                 variant="contained"
                 size="small"
               >
                 Details
+              </Button> */}
+              </div>
+              <div className = "text-center mt-2 ">
+              <Button
+                style = {{color:"#616161"}}
+                onClick={() => valetstimeout(vallet._id)}
+                variant="contained"
+                size="small"
+              >
+                TimeOut
               </Button>
               </div>
               <RiEdit2Line
@@ -260,8 +328,60 @@ class Valets extends Component {
             </CardContent>
           </Card>
         </div>
+        : null
       ))
-    );
+    )
+    )
+    const markup2 = loading ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
+      this.props.data.staff.valets.map((vallet, index) => (
+
+        (vallet.timeIn !== undefined && vallet.timeOut !== undefined
+          
+          ?
+
+        <div key={index} className="col-12 mb-4">
+          <Card className={classes.bodycard}>
+            <CardContent>
+              <Typography variant="h6" component="h6">
+                Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
+              </Typography>
+              <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
+              <br className={classes.breaker} />
+
+              <Typography variant="h6" component="h6" >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
+              <Typography variant="h6" component="h6" >Time Out - {new Date(vallet.timeOut).toLocaleString()} </Typography>
+
+              <div className = "text-center ">
+              {/* <Button
+                style = {{color:"#616161"}}
+                onClick={() => this.openbusiness(vallet)}
+                variant="contained"
+                size="small"
+              >
+                Details
+              </Button> */}
+              </div>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(vallet)}
+                className={classes.edit}
+              ></RiEdit2Line>
+              <DeleteIcon
+                size={25}
+                onClick={() => deletevalet(vallet._id)}
+                className={classes.delete}
+              />
+            </CardContent>
+          </Card>
+        </div>
+        : null
+      ))
+    )
+    )
 
     console.log(this.props.data);
 
@@ -270,6 +390,23 @@ class Valets extends Component {
         <h1 className="text-center mt-4">
           Valets
           </h1>
+
+          {/* TABS */}
+
+<div  className="row mt-4">
+<div  className={classes.root}>
+<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
+      <Tabs TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+          >
+        <Tab label="Time In" {...a11yProps(0)} />
+        <Tab label="Time Out" {...a11yProps(1)} /> 
+      </Tabs>
+    </AppBar>
+    </div>
+    </div>
+
           <div className="row mt-4">
             <div className="col-12" >
           {loading ? null : (
@@ -284,6 +421,17 @@ class Valets extends Component {
           )}
           </div>
           </div>
+
+          
+    <TabPanel value={this.state.value} index={0}>
+<div className="row mt-4">{markup1}</div>
+</TabPanel>
+    <TabPanel value={this.state.value} index={1}>
+    <div className="row mt-4">{markup2}</div>
+
+    </TabPanel>
+
+{/* Tabs end */}
      
         <Modal
           open={this.state.postmodal}
@@ -372,7 +520,6 @@ class Valets extends Component {
           </div>
         </Modal>
 
-        <div className="row mt-4">{markup}</div>
       </div>
     );
   }

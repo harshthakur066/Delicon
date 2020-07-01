@@ -52,6 +52,9 @@ const styles = {
   },
   fr: {
     float: "right",
+     '@media (min-width: 320px) and (max-width: 480px)' : {
+       float:"none",
+     }
   },
   bodycard: {
     margin: 5,
@@ -142,6 +145,8 @@ class Staffs extends Component {
   componentDidMount() {
     const { businessid } = this.props.match.params;
     this.props.getstaffs(businessid);
+    document.body.style.backgroundColor = "#F0F2FE"
+
   }
 
   componentWillReceiveProps(newProps) {
@@ -284,41 +289,49 @@ class Staffs extends Component {
             <CardContent>
               <Typography
                 // className={classes.title}
-                color="textSecondary"
-                gutterBottom
-                variant="h4"
-                component="h4"
+                variant="h5"
+                component="h5"
               >
-                {staff.name}
+                Name - {staff.name}
               </Typography>
-              <Typography variant="body1" component="h4">
-                {staff.position}
+              <Typography variant="h6" component="h6">
+                Postion - {staff.position}
+                <br className={classes.breaker} />
+
                 {staff.working ? (
                   <span className={classes.fr}> Currently Working </span>
                 ) : (
                   <span className={classes.fr}> Currently Not working </span>
                 )}
               </Typography>
-              <Typography variant="body2" component="h3">
+
+              <Typography variant="h6" component="h6">
                 {staff.experience}
               </Typography>
-              <Typography variant="body2" component="h3">
-                {staff.mobno}
+              <Typography variant="h6" component="h6">
+                Mobile No. - {staff.mobno}
               </Typography>
+
+              <div className = "text-center mt-2 ">
+              {<Button
+                style = {{color:"#616161"}}
+                onClick={() => this.openbusiness(staff)}
+                variant="contained"
+                size="small"
+              >
+                Details
+              </Button> }
+              </div>
+
+              
+
             </CardContent>
+            
             <RiEdit2Line
               size={25}
               onClick={() => this.editbusiness(staff)}
               className={classes.edit}
             ></RiEdit2Line>
-            <Button
-              onClick={() => this.openbusiness(staff)}
-              variant="constained"
-              size="small"
-              className={classes.delete}
-            >
-              Details
-            </Button>
             <ClearIcon
               onClick={() => setnotworking(staff._id)}
               className={classes.delete}
@@ -341,7 +354,7 @@ class Staffs extends Component {
             <div className="col-12" >
           {loading ? null : (
             <Button
-             style={{ width:"50%" }}
+             style={{ width:"auto" }}
              className="mb-4 float-right"
               variant="contained"
               onClick={this.handlePost}

@@ -48,7 +48,6 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Navbar />
-
           <ErrorBoundry>
             <Switch>
               <Route exact path="/" component={home} />

@@ -64,12 +64,12 @@ const styles = {
   fr: {
     float: "right",
      '@media (min-width: 320px) and (max-width: 480px)' : {
-       float:"none"
+       float:"none",
      }
   },
   breaker: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 1,
+    marginBottom: 1,
   },
   delete: {
     float: "right",
@@ -167,13 +167,11 @@ class Reservations extends Component {
     postmodal: false,
     value: 0
   };
-
- 
-
  
 
   componentDidMount() {
     this.props.getreservations();
+    document.body.style.backgroundColor = "#F0F2FE"
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.data.staff.reservations !== undefined) {
@@ -321,21 +319,25 @@ class Reservations extends Component {
         <Card className={classes.bodycard}>
           <CardContent>
             <Typography variant="h6" component="h6">
-              {reservation.name}{" "}
+              Name - {reservation.name}{" "}
               <div className={classes.fr}>
-                {reservation.mobno}
+              Seats - {reservation.seats}
+
+                
               </div>{" "}
             </Typography>
-            <br className={classes.breaker} />
-            
             <Typography variant="h6" component="h6">
-              {reservation.email}{" "}
+            Email - {reservation.email}{" "}
+            </Typography>
+            <Typography variant="h6" component="h6">
+            Mobile No. - {reservation.mobno}
+              
               <div className={classes.fr}>
-                {reservation.address}
+               Address -  {reservation.address}
               </div>
               
             </Typography>
-            <div className="text-center mt-1 ">
+            {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -345,7 +347,7 @@ class Reservations extends Component {
               Details
              </Button>
           </div>
-       
+        */}
           <div className="text-center mt-2 ">
           <Button
           style={{color:"#616161"}} 
@@ -398,30 +400,36 @@ class Reservations extends Component {
           <div key={index} className="col-12 mb-4">
         <Card className={classes.bodycard}>
           <CardContent>
-            <Typography variant="h6" component="h6">
-              {reservation.name}{" "}
+          <Typography variant="h6" component="h6">
+              Name - {reservation.name}{" "}
               <div className={classes.fr}>
-                {reservation.mobno}
+              Seats - {reservation.seats}
+
+                
               </div>{" "}
             </Typography>
-            <br className={classes.breaker} />
+            <Typography variant="h6" component="h6">
+            Email - {reservation.email}{" "}
+            </Typography>
+
             
             <Typography variant="h6" component="h6">
-              {reservation.email}{" "}
+            Mobile No. - {reservation.mobno}
+              
               <div className={classes.fr}>
-                {reservation.address}
+               Address -  {reservation.address}
               </div>
               
             </Typography>
-            <br></br>
+            <br className={classes.breaker} />
             <Typography variant="h6" component="h6">
               <div >
-                CheckIn at - {reservation.checkIn.split("T")[0]}
+                CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
               </div>
               
             </Typography>
 
-            <div className="text-center mt-1 ">
+            {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -430,7 +438,7 @@ class Reservations extends Component {
               >
               Details
              </Button>
-          </div>
+          </div> */}
        
           <div className="text-center mt-2 ">
           <Button
@@ -484,33 +492,34 @@ class Reservations extends Component {
          <div key={index} className="col-12 mb-4">
         <Card className={classes.bodycard}>
           <CardContent>
-            <Typography variant="h6" component="h6">
-              {reservation.name}{" "}
+          <Typography variant="h6" component="h6">
+              Name - {reservation.name}{" "}
               <div className={classes.fr}>
-                {reservation.mobno}
+              Seats - {reservation.seats}
               </div>{" "}
             </Typography>
-            <br className={classes.breaker} />
-            
             <Typography variant="h6" component="h6">
-              {reservation.email}{" "}
-              <div className={classes.fr}>
-                {reservation.address}
-              </div>
-              
+            Email - {reservation.email}{" "}
             </Typography>
-            <br></br>
+            <Typography variant="h6" component="h6">
+            Mobile No. - {reservation.mobno}
+              <div className={classes.fr}>
+               Address -  {reservation.address}
+              </div>
+            </Typography>
+            <br className={classes.breaker} />
+
             <Typography variant="h6" component="h6">
               <div >
-                CheckIn at - {reservation.checkIn.split("T")[0]}
+               CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
               </div>
               <div>
-               CheckOut at -  {reservation.checkOut.split("T")[0]}
+               CheckOut at -  {new Date(reservation.checkOut).toLocaleString()}
               </div>
               
             </Typography>
             <br></br>
-            <div className="text-center mt-1 ">
+            {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -519,7 +528,7 @@ class Reservations extends Component {
               >
               Details
              </Button>
-          </div>
+          </div> */}
 
           </CardContent>
 
@@ -554,7 +563,7 @@ class Reservations extends Component {
 {/* Tabs */}
 <div  className="row mt-4">
 <div  className={classes.root}>
-<AppBar style = {{backgroundColor:"#757575"}} position="static" >
+<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
       <Tabs style = {{}} TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"

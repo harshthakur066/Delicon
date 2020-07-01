@@ -44,6 +44,8 @@ class BusinessDetails extends Component {
   componentDidMount() {
     const { busiId } = this.props.match.params;
     this.props.getbusiness(this.doneLoading, busiId);
+    document.body.style.backgroundColor = "#F0F2FE"
+
   }
 
   componentWillReceiveProps(nextProps) {

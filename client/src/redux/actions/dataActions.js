@@ -459,6 +459,24 @@ export const editvalets = (formdata, setloading, ID) => (dispatch) => {
       }
     });
 };
+export const valetstimeout = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+        .put(`/api/v1/valets/${ID}/timeout`)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.VALET_TIMEOUT,
+            payload: res.data,
+          });
+          
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    }
 
 //WalkIN Actions ...............................................................................
 
@@ -537,3 +555,21 @@ export const editwalkin = (formdata, setloading, ID) => (dispatch) => {
       }
     });
 };
+
+export const walkout = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+      axios
+        .put(`/api/v1/walkin/${ID}/walkout`)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.WALK_OUT,
+            payload: res.data,
+          });
+          alert("Walkout Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    }

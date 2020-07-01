@@ -17,8 +17,14 @@ import {
   deletewalkin,
   postwalkins,
   editwalkin,
+  walkout
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 
 const styles = {
   bodycard: {
@@ -35,8 +41,8 @@ const styles = {
   },
   fr: {
     float: "right",
-    '@media (min-width: 320px) and (max-width: 400px)' : {
-      float: "left",
+    '@media (min-width: 320px) and (max-width: 480px)' : {
+      float: "none",
     }
   },
   breaker: {
@@ -55,8 +61,9 @@ const styles = {
     marginBottom: "1rem",
   },
   root: {
-    height: "175px",
-    width: "250px",
+    margin:"auto",
+    textAlign:"center",
+    flexGrow: 0
   },
   bullet: {
     display: "inline-block",
@@ -97,6 +104,34 @@ const styles = {
   },
 };
 
+function TabPanel (props)  {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+      
+    >
+      {value === index && (
+        <Box p={2}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 const mapStateToProps = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -108,6 +143,7 @@ const mapDispatchToProps = {
   deletewalkin,
   postwalkins,
   editwalkin,
+  walkout
 };
 
 class Walkins extends Component {
@@ -119,14 +155,23 @@ class Walkins extends Component {
     mobno: "",
     address: "",
     seats:"",
+    walkIn:"",
+    walkOut:"",
+    value: 0, // used in Tabs
     btnload: false,
     loading: true,
     postmodal: false,
   };
 
+  handleMe = (event, newValue) => { //used in Tabs
+    this.setState({
+      value : newValue
+    });   
+   };
+
   componentDidMount() {
     this.props.getwalkins();
-  }
+    }
 
   componentWillReceiveProps(newProps) {
     if (newProps.data.staff.walkins !== undefined) {
@@ -233,37 +278,118 @@ class Walkins extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const { classes, deletewalkin } = this.props; //WithStyles Material Thing
+    const { classes, deletewalkin, walkout } = this.props; //WithStyles Material Thing
 
-
-    const markup = loading ? (
+//Tab 1
+    const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
       this.props.data.staff.walkins.map((walkin, index) => (
+        (walkin.walkIn !== undefined && walkin.walkOut === undefined
+          
+          ?
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
               <Typography variant="h6" component="h6" >
-                {walkin.name}{" "}
-                <span className= {classes.fr} >{walkin.mobno}</span>{" "}
+                Name - {walkin.name}{" "}
+                <div className={classes.fr}>
+                  Seats -  
+                {" " + walkin.seats}
+              </div>{" "}
+              
+                <div> Mobile No. - {walkin.mobno}</div>{" "}
+                <div>  Email - {walkin.email}</div>{" "}
+                <div>  Address - {walkin.address}</div>{" "}
+                <br className={classes.breaker} />
+
+               <div>  Walkin Time -  {new Date(walkin.walkIn).toLocaleString()}</div>
               </Typography>
+              
               <br className={classes.breaker} />
-              <Typography variant="h6" component="h6">
-                {walkin.email}{" "}
-                <span className= {classes.fr}>{walkin.address}</span>
-                {/* <span className= {classes.fr} >{walkin.seats}</span>{" "} */}
-              </Typography>
-              <div className = "text-center ">
+              <div className = "float-left mb-2">
+                  {/* <Button
+                   style={{color:"#616161"}} 
+                    onClick={() => this.openbusiness(walkin)}
+                    variant="contained"
+                  size="small"
+                           >
+                     Details
+                        </Button> */}
+               
+                 </div>
+
+            <div className = "text-center">
               <Button
+              style={{color:"#616161"}} 
+              onClick={() => walkout(walkin._id)}
+              variant="contained"
+              size="small"
+            >
+              WalkOut
+            </Button>
+               
+            </div>
+            <br className={classes.breaker} />
+
+            </CardContent>
+            <RiEdit2Line
+              size={25}
+              onClick={() => this.editbusiness(walkin)}
+              className={classes.edit}
+            ></RiEdit2Line>
+            <DeleteIcon
+              size={25}
+              onClick={() => deletewalkin(walkin._id)}
+              className={classes.delete}
+            />
+          </Card>
+        </div>
+        : null
+        )
+      ))
+    );
+
+    // Tab 2
+    const markup2 = loading ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
+      this.props.data.staff.walkins.map((walkin, index) => (
+        (walkin.walkIn !== undefined && walkin.walkOut !== undefined
+          
+          ?
+
+        <div key={index} className="col-12 mb-4">
+          <Card className={classes.bodycard}>
+            <CardContent>
+            <Typography variant="h6" component="h6" >
+                Name - {walkin.name}{" "}
+                <div className={classes.fr}>
+                  Seats -  
+                {" " + walkin.seats}
+              </div>{" "}
+              <br className={classes.breaker} />
+                <div> Mobile No. - {walkin.mobno}</div>{" "}
+                <div>  Email - {walkin.email}</div>{" "}
+                <div>  Address - {walkin.address}</div>{" "}
+                <br className={classes.breaker} />
+                <div>  Walkin Time -  {new Date(walkin.walkIn).toLocaleString()}</div>
+                <div>  Walkout Time -  {new Date(walkin.walkOut).toLocaleString()}</div>
+              </Typography>
+
+              <div className = "text-center mt-2 ">
+              {/* <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(walkin)}
               variant="contained"
               size="small"
             >
               Details
-            </Button>
+            </Button> */}
                
             </div>
             </CardContent>
@@ -279,6 +405,8 @@ class Walkins extends Component {
             />
           </Card>
         </div>
+        : null
+        )
       ))
     );
 
@@ -289,7 +417,25 @@ class Walkins extends Component {
         <h1 className="text-center mt-4">
           Walkins
           </h1>
-          <div className="row mt-4">
+
+{/* TABS */}
+
+<div  className="row mt-4">
+<div  className={classes.root}>
+<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
+      <Tabs style = {{}} TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+          >
+        <Tab label="WalkIn" {...a11yProps(0)} />
+        <Tab label="WalkOut" {...a11yProps(1)} /> 
+      </Tabs>
+    </AppBar>
+    </div>
+    </div>
+
+{/* ADD */}
+    <div className="row mt-4">
             <div className="col-12" >
           {loading ? null : (
             <Button
@@ -302,7 +448,20 @@ class Walkins extends Component {
           )}
           </div>
           </div>
-          <div className="row mt-4">{markup}</div>
+          {/* ADD */}
+
+    <TabPanel value={this.state.value} index={0}>
+<div className="row mt-4">{markup1}</div>
+</TabPanel>
+    <TabPanel value={this.state.value} index={1}>
+    <div className="row mt-4">{markup2}</div>
+
+    </TabPanel>
+
+{/* Tabs end */}
+
+          
+        
 
        
         <Modal

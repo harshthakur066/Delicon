@@ -132,6 +132,8 @@ class Businesses extends Component {
 
   componentDidMount() {
     this.props.getbusinesses();
+    document.body.style.backgroundColor = "#F0F2FE"
+
   }
 
   componentWillReceiveProps(nextProps) {

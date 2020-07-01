@@ -114,7 +114,7 @@ class ButtonAppBar extends Component {
         >
           {/* */}
           {/* bg color for navBar */}
-          <Toolbar style={{ backgroundColor: "#777170" }}>
+          <Toolbar style={{ backgroundColor: "#3f51b5" }}>
             {this.props.user.userRole ? (
               <IconButton
                 color="inherit"
@@ -193,6 +193,7 @@ class ButtonAppBar extends Component {
                 <AiFillDashboard />
                 Dashboard
               </ListItem>
+              <Divider />
               <ListItem button component={NavLink} to="/reservations">
                 <RiReservedLine />
                 Reservations

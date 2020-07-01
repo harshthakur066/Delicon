@@ -50,6 +50,10 @@ export class signup extends Component {
     };
   }
 
+  componentDidMount() {
+    document.body.style.backgroundColor = "#F0F2FE"
+    }
+    
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
