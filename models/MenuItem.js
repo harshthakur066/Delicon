@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const dishSchema = new Schema({
   name: String,
   details: String,
+  price: String,
   categoryId: String,
   ownerId: String,
   createdAt: Date,

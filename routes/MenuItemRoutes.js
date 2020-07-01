@@ -10,13 +10,14 @@ router.post(
   isBusinessOwner,
   async (req, res) => {
     const date = new Date().toLocaleDateString().split("/").reverse();
-    const { name, details } = req.body;
+    const { name, details, price } = req.body;
     const ownerId = req.owner._id;
     const categoryId = req.params.categoryId;
     try {
       const dish = new MenuItem({
         name,
         details,
+        price,
         ownerId,
         categoryId,
         createdAt: new Date(date[0], date[2], date[1]),
@@ -75,12 +76,13 @@ router.put(
   "/api/v1/menu/items/:categoryId/:id",
   isBusinessOwner,
   async (req, res) => {
-    const { name, details } = req.body;
+    const { name, details, price } = req.body;
     const id = req.params.id;
     try {
       const update = {
         name,
         details,
+        price,
       };
       const dish = await MenuItem.findByIdAndUpdate(id, update);
       res.send(dish);
