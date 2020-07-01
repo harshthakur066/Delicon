@@ -4,7 +4,7 @@ const MenuCategory = require("../models/MenuCategory");
 const MenuItem = require("../models/MenuItem");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
-//To Post New Dishes for Owner
+// To Post New Dishes for Owner
 router.post(
   "/api/v1/menu/items/:categoryId",
   isBusinessOwner,
