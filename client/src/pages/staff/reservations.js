@@ -49,11 +49,11 @@ const styles = {
     marginBottom: "2rem",
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "#F5F5F5", //card-bg-color
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF", //card-bg-color
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "1px 6px 8px 2px grey",
     },
   },
   edit: {
@@ -75,7 +75,7 @@ const styles = {
     float: "right",
     color: "red",
     cursor: "pointer",
-    marginBottom: "1rem",
+   
   },
 
   root: {
@@ -318,7 +318,7 @@ class Reservations extends Component {
          <div key={index} className="col-12 mb-4">
         <Card className={classes.bodycard}>
           <CardContent>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
               Name - {reservation.name}{" "}
               <div className={classes.fr}>
               Seats - {reservation.seats}
@@ -326,13 +326,13 @@ class Reservations extends Component {
                 
               </div>{" "}
             </Typography>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Email - {reservation.email}{" "}
             </Typography>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Mobile No. - {reservation.mobno}
               
-              <div className={classes.fr}>
+              <div >
                Address -  {reservation.address}
               </div>
               
@@ -400,7 +400,7 @@ class Reservations extends Component {
           <div key={index} className="col-12 mb-4">
         <Card className={classes.bodycard}>
           <CardContent>
-          <Typography variant="h6" component="h6">
+          <Typography style = {{fontSize : "1.05rem"}}>
               Name - {reservation.name}{" "}
               <div className={classes.fr}>
               Seats - {reservation.seats}
@@ -408,21 +408,21 @@ class Reservations extends Component {
                 
               </div>{" "}
             </Typography>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Email - {reservation.email}{" "}
             </Typography>
 
             
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Mobile No. - {reservation.mobno}
               
-              <div className={classes.fr}>
+              <div >
                Address -  {reservation.address}
               </div>
               
             </Typography>
             <br className={classes.breaker} />
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
               <div >
                 CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
               </div>
@@ -492,24 +492,24 @@ class Reservations extends Component {
          <div key={index} className="col-12 mb-4">
         <Card className={classes.bodycard}>
           <CardContent>
-          <Typography variant="h6" component="h6">
+          <Typography style = {{fontSize : "1.05rem"}}>
               Name - {reservation.name}{" "}
               <div className={classes.fr}>
               Seats - {reservation.seats}
               </div>{" "}
             </Typography>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Email - {reservation.email}{" "}
             </Typography>
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
             Mobile No. - {reservation.mobno}
-              <div className={classes.fr}>
+              <div >
                Address -  {reservation.address}
               </div>
             </Typography>
             <br className={classes.breaker} />
 
-            <Typography variant="h6" component="h6">
+            <Typography style = {{fontSize : "1.05rem"}}>
               <div >
                CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
               </div>
@@ -556,21 +556,21 @@ class Reservations extends Component {
     return (
       
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">
+        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
           Reservations
-          </h1>
+          </p>
         
 {/* Tabs */}
 <div  className="row mt-4">
 <div  className={classes.root}>
 <AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
-      <Tabs style = {{}} TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
+      <Tabs style = {{}} TabIndicatorProps={{style: {background:'#FFFFFF'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
           >
-        <Tab label="Pending" {...a11yProps(0)} />
-        <Tab label="CheckIns" {...a11yProps(1)} /> 
-        <Tab label="CheckOuts" {...a11yProps(2)} />
+        <Tab style = {{fontSize : ".8rem"}} label="Pending" {...a11yProps(0)} />
+        <Tab style = {{fontSize : ".8rem"}} label="CheckIns" {...a11yProps(1)} /> 
+        <Tab style = {{fontSize : ".8rem"}} label="CheckOuts" {...a11yProps(2)} />
       </Tabs>
     </AppBar>
     </div>
@@ -622,15 +622,15 @@ class Reservations extends Component {
               style={{ padding: "20px 25px", textAlign: "center" }}
             >
               {modalmode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Add a Reservation
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Edit a Reservation
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Your Reservation
                 </Typography>
               ) : null}
@@ -648,7 +648,7 @@ class Reservations extends Component {
                   <Typography variant="h6" className="mt-2 ">
                     Address - {this.state.address}
                   </Typography>
-                  <Typography variant="h6" className="mt-2 ">
+                  <Typography style = {{fontSize : "1.5rem"}} className="mt-2 ">
                     Seats - {this.state.seats}
                   </Typography>
                   

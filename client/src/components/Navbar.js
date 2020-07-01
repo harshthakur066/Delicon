@@ -47,16 +47,16 @@ const styles = {
   },
   drawerPaper: {
     boxShadow: " 2px 2px 2px 2px rgba(0, 0, 0, .2)",
-    backgroundColor: "#F5F5F5", // bg for drawer
+    backgroundColor: "#FFFFFF", // bg for drawer
     width: drawerWidth,
   },
   drawerHeader: {
-    backgroundColor: "#F5F5F5", // bg for drawerHeader
+    backgroundColor: "#FFFFFF", // bg for drawerHeader
     display: "flex",
     alignItems: "center",
   },
   content: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#FFFFFF",
     flexGrow: 1,
     marginLeft: -drawerWidth,
   },

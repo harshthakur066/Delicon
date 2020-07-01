@@ -28,11 +28,11 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#F5F5F5", //card-bg-color
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF", //card-bg-color
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "1px 6px 8px 2px grey",
     },
   },
   root: {
@@ -75,7 +75,7 @@ const styles = {
     float: "right",
     color: "red",
     cursor: "pointer",
-    marginBottom: "1rem",
+    marginBottom: "1.05rem",
     paddingRight: "2px",
   },
   pageTitle: {
@@ -289,12 +289,11 @@ class Staffs extends Component {
             <CardContent>
               <Typography
                 // className={classes.title}
-                variant="h5"
-                component="h5"
+                style = {{fontSize : "1.05rem"}}
               >
                 Name - {staff.name}
               </Typography>
-              <Typography variant="h6" component="h6">
+              <Typography style = {{fontSize : "1.05rem"}}>
                 Postion - {staff.position}
                 <br className={classes.breaker} />
 
@@ -305,10 +304,10 @@ class Staffs extends Component {
                 )}
               </Typography>
 
-              <Typography variant="h6" component="h6">
+              <Typography style = {{fontSize : "1.05rem"}}>
                 {staff.experience}
               </Typography>
-              <Typography variant="h6" component="h6">
+              <Typography style = {{fontSize : "1.05rem"}}>
                 Mobile No. - {staff.mobno}
               </Typography>
 
@@ -347,9 +346,9 @@ class Staffs extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">
+        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
           Your Staff
-          </h1>
+          </p>
           <div className="row mt-4">
             <div className="col-12" >
           {loading ? null : (
@@ -374,15 +373,15 @@ class Staffs extends Component {
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "20px 20px" }}>
               {modalmode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle} style={{textAlign:"center" }}>
+                <Typography className={classes.pageTitle} style={{textAlign:"center",fontSize : "1.5rem" }}>
                   Add a New Staff
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography variant="h4" className={classes.pageTitle} style={{ textAlign:"center" }}>
+                <Typography className={classes.pageTitle} style={{ textAlign:"center",fontSize : "1.5rem" }}>
                   Edit a Staff
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography  className={classes.pageTitle} style={{ textAlign:"center",fontSize : "1.5rem" }}>
                   Staff Details
                 </Typography>
               ) : null}

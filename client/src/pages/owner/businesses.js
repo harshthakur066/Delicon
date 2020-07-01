@@ -42,11 +42,11 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#F5F5F5", //card-bg-color
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF", //card-bg-color
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 4px 6px 2px grey",
+      boxShadow: "1px 4px 6px 2px grey",
     },
   },
 
@@ -225,18 +225,14 @@ class Businesses extends Component {
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
-                variant="h5"
-                component="h5"
                 // className={classes.title}
-                style={{ color: "#070707" }}
-                gutterBottom
+                style={{ color: "#070707",fontSize : "1.05rem" }}
               >
                 {business.name}
               </Typography>
               <Typography
-                variant="h6"
-                component="h6"
-                style={{ color: "#455A64" }}
+                
+                style={{ color: "#455A64",fontSize : "1.05rem" }}
               >
                 {business.details}
               </Typography>
@@ -278,7 +274,7 @@ class Businesses extends Component {
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">Your Businesses</h1>
+        <p style = {{fontSize : "2rem"}} className="text-center mt-4">Your Businesses</p>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -289,17 +285,17 @@ class Businesses extends Component {
             <div className="container">
               {modlemode === "Post" ? (
                 <Typography
-                  variant="h4"
+                 
                   className={classes.pageTitle}
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: "center",fontSize : "1.3rem" }}
                 >
                   Request a New Business
                 </Typography>
               ) : (
                 <Typography
-                  variant="h4"
+                 
                   className={classes.pageTitle}
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: "center",fontSize : "1.3rem" }}
                 >
                   Edit a Business
                 </Typography>

@@ -36,11 +36,11 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#F5F5F5", //card-bg-color
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF", //card-bg-color
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 4px 6px 2px grey",
+      boxShadow: "1px 4px 6px 2px grey",
     },
   },
 
@@ -228,24 +228,21 @@ class Businesses extends Component {
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
-                variant="h5"
-                component="h5"
-                style={{ color: "#070707" }}
+             
+                style={{ color: "#070707",fontSize : "1.05rem" }}
                 gutterBottom
               >
                 {business.name}
               </Typography>
               <Typography
-                variant="h6"
-                component="h6"
-                style={{ color: "#455A64" }}
+               
+                style={{ color: "#455A64",fontSize : "1.05rem" }}
               >
                 {business.details}
               </Typography>
               <Typography
-                variant="h6"
-                component="h6"
-                style={{ color: "#455A64" }}
+                
+                style={{ color: "#455A64",fontSize : "1.05rem" }}
               >
                 Status - {business.status}
               </Typography>
@@ -272,7 +269,7 @@ class Businesses extends Component {
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">Requested Businesses </h1>
+        <p style = {{fontSize : "2rem"}}className="text-center mt-4">Requested Businesses </p>
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
@@ -296,15 +293,15 @@ class Businesses extends Component {
           <div className={classes.modlebox}>
             <div className="container">
               {modalmode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Request a new Business
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Edit a Business Request
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Your Business
                 </Typography>
               ) : null}

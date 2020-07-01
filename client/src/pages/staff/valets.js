@@ -33,11 +33,11 @@ const styles = {
     marginBottom: "2rem",
     paddingLeft: 30,
     paddingRight: 30,
-    backgroundColor: "#F5F5F5", //card-bg-color
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF", //card-bg-color
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "1px 6px 8px 2px grey",
     },
   },
   edit: {
@@ -56,7 +56,7 @@ const styles = {
     float: "right",
     color: "red",
     cursor: "pointer",
-    marginBottom: "1rem",
+    marginBottom: "1.05rem",
   },
   root: {
     margin:"auto",
@@ -287,13 +287,13 @@ class Valets extends Component {
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography variant="h6" component="h6">
+              <Typography style = {{fontSize : "1.05rem"}}>
                 Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
               </Typography>
-              <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
+              <Typography style = {{fontSize : "1.05rem"}} >Driver Name - {vallet.driverName} </Typography>
               <br className={classes.breaker} />
 
-              <Typography variant="h6" component="h6" >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
+              <Typography style = {{fontSize : "1.05rem"}} >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
 
               <div className = "text-center mt-2 ">
               {/* <Button
@@ -346,14 +346,14 @@ class Valets extends Component {
         <div key={index} className="col-12 mb-4">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography variant="h6" component="h6">
+              <Typography style = {{fontSize : "1.05rem"}}>
                 Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
               </Typography>
-              <Typography variant="h6" component="h6" >Driver Name - {vallet.driverName} </Typography>
+              <Typography style = {{fontSize : "1.05rem"}} >Driver Name - {vallet.driverName} </Typography>
               <br className={classes.breaker} />
 
-              <Typography variant="h6" component="h6" >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
-              <Typography variant="h6" component="h6" >Time Out - {new Date(vallet.timeOut).toLocaleString()} </Typography>
+              <Typography style = {{fontSize : "1.05rem"}} >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
+              <Typography style = {{fontSize : "1.05rem"}} >Time Out - {new Date(vallet.timeOut).toLocaleString()} </Typography>
 
               <div className = "text-center ">
               {/* <Button
@@ -387,21 +387,21 @@ class Valets extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <h1 className="text-center mt-4">
+        <p style ={{fontSize:"2rem"}} className="text-center mt-4">
           Valets
-          </h1>
+          </p>
 
           {/* TABS */}
 
 <div  className="row mt-4">
 <div  className={classes.root}>
 <AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
-      <Tabs TabIndicatorProps={{style: {background:'#F5F5F5'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
+      <Tabs TabIndicatorProps={{style: {background:'#FFFFFF'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
           >
-        <Tab label="Time In" {...a11yProps(0)} />
-        <Tab label="Time Out" {...a11yProps(1)} /> 
+        <Tab style = {{fontSize : ".8rem"}} label="Time In" {...a11yProps(0)} />
+        <Tab style = {{fontSize : ".8rem"}} label="Time Out" {...a11yProps(1)} /> 
       </Tabs>
     </AppBar>
     </div>
@@ -442,15 +442,15 @@ class Valets extends Component {
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "20px 20px" }}>
               {modalmode === "Post" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Add a New Valet
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Edit a Valet
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography variant="h4" className={classes.pageTitle}>
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
                   Your Valet
                 </Typography>
               ) : null}

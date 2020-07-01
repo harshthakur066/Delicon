@@ -21,11 +21,11 @@ const styles = {
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#F5F5F5",
-    boxShadow: "0px 2px 4px 0px grey",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "0px 6px 8px 2px grey",
+      boxShadow: "1px 6px 8px 2px grey",
     },
   },
 };
@@ -78,26 +78,23 @@ class BusinessDetails extends Component {
         <Card className={classes.cardStyle} variant="outlined">
           <CardContent>
             <Typography
-              variant="h4"
-              component="h4"
+              style = {{fontSize : "1.05rem"}}
               color="#070707"
-              gutterBottom
               className="text-center"
             >
               {data.owner.business.name}
             </Typography>
             <Typography
-              variant="h6"
-              component="h6"
+              style = {{fontSize : "1.05rem"}}
               color="#455A64"
               className="float-right"
             >
               Owner Name - {data.owner.business.owner}
             </Typography>
-            <Typography variant="h6" component="h6" color="#455A64">
+            <Typography style = {{fontSize : "1.05rem"}} color="#455A64">
               Address - {data.owner.business.address}
             </Typography>
-            <Typography variant="h6" component="h6" color="#455A64">
+            <Typography style = {{fontSize : "1.05rem"}} color="#455A64">
               Details - {data.owner.business.details}
             </Typography>
           </CardContent>
