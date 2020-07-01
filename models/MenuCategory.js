@@ -6,11 +6,12 @@ const menuCategorySchema = new Schema({
   name: String,
   details: String,
   ownerId: String,
+  businessId: String,
   createdAt: Date,
-  dishes: [
+  items: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Dish",
+      ref: "MenuItem",
     },
   ],
 });

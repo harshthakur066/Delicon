@@ -6,38 +6,48 @@ const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 const router = express.Router();
 
 // CREATE CATEGORY OF Menu Access to Business Owner
-router.post("/api/v1/menu/categories", isBusinessOwner, async (req, res) => {
-  const { name, details } = req.body;
-  const ownerId = req.owner._id;
-  const date = new Date().toLocaleDateString().split("/").reverse();
-  try {
-    const menuCategory = new MenuCategory({
-      name: name,
-      details: details,
-      ownerId: ownerId,
-      createdAt: new Date(date[0], date[2], date[1]),
-    });
-    await menuCategory.save();
-    res.status(200).json(menuCategory);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.post(
+  "/api/v1/menu/categories/:businessId",
+  isBusinessOwner,
+  async (req, res) => {
+    const { name, details } = req.body;
+    const ownerId = req.owner._id;
+    const businessId = req.params.businessId;
+    const date = new Date().toLocaleDateString().split("/").reverse();
+    try {
+      const menuCategory = new MenuCategory({
+        name: name,
+        details: details,
+        ownerId: ownerId,
+        businessId,
+        createdAt: new Date(date[0], date[2], date[1]),
+      });
+      await menuCategory.save();
+      res.status(200).json(menuCategory);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 // READ ALL CATEGORIES OF Menu Access to Business Owner
-router.get("/api/v1/menu/categories", isBusinessOwner, async (req, res) => {
-  try {
-    const menuCategory = await MenuCategory.find({
-      ownerId: req.owner._id,
-    });
-    res.status(200).json(menuCategory);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.get(
+  "/api/v1/menu/categories/:businessId",
+  isBusinessOwner,
+  async (req, res) => {
+    try {
+      const menuCategory = await MenuCategory.find({
+        businessId: req.params.businessId,
+      });
+      res.status(200).json(menuCategory);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 // READ PARTICULAR CATEGORY OF MENU Access to Business Owner
-router.get("/api/v1/menu/categories/:id", isBusinessOwner, async (req, res) => {
+router.get("/api/v1/menu/category/:id", isBusinessOwner, async (req, res) => {
   const id = req.params.id;
   try {
     const menuCategory = await MenuCategory.findById(id);
@@ -48,7 +58,7 @@ router.get("/api/v1/menu/categories/:id", isBusinessOwner, async (req, res) => {
 });
 
 // UPDATE CATEGORY OF MENU Access to Business Owner
-router.put("/api/v1/menu/categories/:id", isBusinessOwner, async (req, res) => {
+router.put("/api/v1/menu/category/:id", isBusinessOwner, async (req, res) => {
   const id = req.params.id;
   const { name, details } = req.body;
   let update = { name: name, details: details };
@@ -62,7 +72,7 @@ router.put("/api/v1/menu/categories/:id", isBusinessOwner, async (req, res) => {
 
 // DELETE CATEGORY OF BUSINESS Access to Super Admin
 router.delete(
-  "/api/v1/menu/categories/:id",
+  "/api/v1/menu/category/:id",
   isBusinessOwner,
   async (req, res) => {
     const id = req.params.id;

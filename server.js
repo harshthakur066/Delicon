@@ -18,7 +18,8 @@ const walkInRoutes = require("./routes/walkInRoutes");
 const valetAnalyticsRoutes = require("./routes/valetAnalyticsRoutes");
 const walkInAnalyticsRoutes = require("./routes/walkinAnalyticsRoutes");
 const menuCategoryRoutes = require("./routes/menuCategoryRoutes");
-const dishRoutes = require("./routes/dishRoutes");
+const MenuItemRoutes = require("./routes/MenuItemRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 
@@ -50,7 +51,8 @@ app.use(reservationRoutes);
 app.use(valetRoutes);
 app.use(walkInRoutes);
 app.use(menuCategoryRoutes);
-app.use(dishRoutes);
+app.use(MenuItemRoutes);
+app.use(orderRoutes);
 
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);

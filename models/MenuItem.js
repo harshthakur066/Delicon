@@ -10,4 +10,4 @@ const dishSchema = new Schema({
   createdAt: Date,
 });
 
-module.exports = mongoose.model("Dish", dishSchema);
+module.exports = mongoose.model("MenuItem", dishSchema);

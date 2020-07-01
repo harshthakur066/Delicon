@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const MenuCategory = require("../models/MenuCategory");
-const Dish = require("../models/Dish");
+const MenuItem = require("../models/MenuItem");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
 //To Post New Dishes for Owner
 router.post(
-  "/api/v1/menu/dishes/:categoryId",
+  "/api/v1/menu/items/:categoryId",
   isBusinessOwner,
   async (req, res) => {
     const date = new Date().toLocaleDateString().split("/").reverse();
@@ -14,7 +14,7 @@ router.post(
     const ownerId = req.owner._id;
     const categoryId = req.params.categoryId;
     try {
-      const dish = new Dish({
+      const dish = new MenuItem({
         name,
         details,
         ownerId,
@@ -24,7 +24,7 @@ router.post(
       await dish.save();
       try {
         const currentCatagory = await MenuCategory.findById(categoryId);
-        currentCatagory.dishes.push(dish._id);
+        currentCatagory.items.push(dish._id);
         await MenuCategory.findByIdAndUpdate(categoryId, currentCatagory);
         res.json(dish);
       } catch (err) {
@@ -40,15 +40,15 @@ router.post(
   }
 );
 
-// To get all dishes of a category for Business Owner
+// To get all items of a category for Business Owner
 router.get(
-  "/api/v1/menu/dishes/:categoryId",
+  "/api/v1/menu/items/:categoryId",
   isBusinessOwner,
   async (req, res) => {
     const categoryId = req.params.categoryId;
     try {
-      const dishes = await Dish.find({ categoryId });
-      res.send(dishes);
+      const items = await MenuItem.find({ categoryId });
+      res.send(items);
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -57,13 +57,13 @@ router.get(
 
 // To get a perticular dish for business Owner
 router.get(
-  "/api/v1/menu/dishes/:categoryId/:id",
+  "/api/v1/menu/items/:categoryId/:id",
   isBusinessOwner,
   async (req, res) => {
     const id = req.params.id;
     try {
-      const dishes = await Dish.findById(id);
-      res.send(dishes);
+      const items = await MenuItem.findById(id);
+      res.send(items);
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -72,7 +72,7 @@ router.get(
 
 // To update any other info
 router.put(
-  "/api/v1/menu/dishes/:categoryId/:id",
+  "/api/v1/menu/items/:categoryId/:id",
   isBusinessOwner,
   async (req, res) => {
     const { name, details } = req.body;
@@ -82,7 +82,7 @@ router.put(
         name,
         details,
       };
-      const dish = await Dish.findByIdAndUpdate(id, update);
+      const dish = await MenuItem.findByIdAndUpdate(id, update);
       res.send(dish);
     } catch (err) {
       return res.status(500).json({ error: err.message });
@@ -92,16 +92,16 @@ router.put(
 
 //To delete a particular dish
 router.delete(
-  "/api/v1/menu/dishes/:categoryId/:id",
+  "/api/v1/menu/items/:categoryId/:id",
   isBusinessOwner,
   async (req, res) => {
     const id = req.params.id;
     const categoryId = req.params.categoryId;
     try {
-      const dish = await Dish.findByIdAndDelete(id);
+      const dish = await MenuItem.findByIdAndDelete(id);
       try {
         const currentCatagory = await MenuCategory.findById(categoryId);
-        currentCatagory.dishes = currentCatagory.dishes.filter(
+        currentCatagory.items = currentCatagory.items.filter(
           (dishId) => dishId != id
         );
         await MenuCategory.findByIdAndUpdate(categoryId, currentCatagory);
