@@ -14,7 +14,7 @@ const OrderSchema = new Schema({
   services: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Service",
+      ref: "ServiceItem",
     },
   ],
   businessId: String,
