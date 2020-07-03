@@ -82,7 +82,7 @@ const mapDispatchToProps = {
 
 class ButtonAppBar extends Component {
   state = {
-    open: false,
+    open: null,
   };
   handlelogout = () => {
     this.props.logOutUser();
@@ -101,8 +101,22 @@ class ButtonAppBar extends Component {
     });
   };
 
+  componentDidMount() {
+    if (window.innerWidth > 768) {
+      this.setState({
+        open: true,
+      });
+    }
+  }
+
   render() {
     const classes = this.props.classes;
+    var cont = document.getElementById("sider");
+    if (this.state.open) {
+      cont.style.marginLeft = "240px";
+    } else if (this.state.open === false) {
+      cont.style.marginLeft = "0px";
+    }
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -112,8 +126,6 @@ class ButtonAppBar extends Component {
             [classes.appBarShift]: this.state.open,
           })}
         >
-          {/* */}
-          {/* bg color for navBar */}
           <Toolbar style={{ backgroundColor: "#3f51b5" }}>
             {this.props.user.userRole ? (
               <IconButton
@@ -137,10 +149,8 @@ class ButtonAppBar extends Component {
                   style={{ height: 70, width: 170 }}
                   alt="Delicon"
                 />
-                {/* Delicon Assist */}
               </Link>
             </Typography>
-
             {this.props.user.authenticated ? (
               <Button onClick={this.handlelogout} color="inherit">
                 Logout
@@ -166,11 +176,14 @@ class ButtonAppBar extends Component {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
+          {window.innerWidth < 768 ? (
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={this.handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+          ) : null}
+
           <Divider />
           {this.props.user.userRole === "Owner" ? (
             <List>

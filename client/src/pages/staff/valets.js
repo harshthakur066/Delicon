@@ -21,11 +21,10 @@ import {
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
 
-
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 
 const styles = {
   bodycard: {
@@ -59,9 +58,9 @@ const styles = {
     marginBottom: "1.05rem",
   },
   root: {
-    margin:"auto",
-    textAlign:"center",
-    flexGrow: 0
+    margin: "auto",
+    textAlign: "center",
+    flexGrow: 0,
   },
   bullet: {
     display: "inline-block",
@@ -92,18 +91,17 @@ const styles = {
     top: "13%",
     left: "10%",
     right: "10%",
-    bottom:"5%",
+    bottom: "5%",
     backgroundColor: "white",
     borderRadius: "30px",
     border: "0px",
     width: "auto",
     outline: "none",
     overflowY: "scroll",
-    
   },
 };
 
-function TabPanel (props)  {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -113,7 +111,6 @@ function TabPanel (props)  {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-      
     >
       {value === index && (
         <Box p={2}>
@@ -127,10 +124,9 @@ function TabPanel (props)  {
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -143,7 +139,7 @@ const mapDispatchToProps = {
   deletevalet,
   postvalets,
   editvalets,
-  valetstimeout
+  valetstimeout,
 };
 
 class Valets extends Component {
@@ -153,28 +149,27 @@ class Valets extends Component {
     carNumber: "",
     ownerName: "",
     driverName: "",
-    value:0,
-    timeIn:"",
-    timeOut:"",
+    value: 0,
+    timeIn: "",
+    timeOut: "",
     loading: true,
     btnload: false,
     postmodal: false,
   };
 
-
-  handleMe = (event, newValue) => { //used in Tabs
+  handleMe = (event, newValue) => {
+    //used in Tabs
     this.setState({
-      value : newValue
-    });   
-   };
+      value: newValue,
+    });
+  };
 
   componentDidMount() {
     this.props.getvalets();
-    document.body.style.backgroundColor = "#F0F2FE"
-
+    document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.data.staff.valets !== undefined) {
       this.setState({
         loading: false,
@@ -278,25 +273,26 @@ class Valets extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.valets.map((vallet, index) => (
+      this.props.data.staff.valets.map((vallet, index) =>
+        vallet.timeIn !== undefined && vallet.timeOut === undefined ? (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {vallet.ownerName}{" "}
+                  <div>Car No - {vallet.carNumber}</div>{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Driver Name - {vallet.driverName}{" "}
+                </Typography>
+                <br className={classes.breaker} />
 
-        (vallet.timeIn !== undefined && vallet.timeOut === undefined
-          
-          ?
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
+                </Typography>
 
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style = {{fontSize : "1.05rem"}}>
-                Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
-              </Typography>
-              <Typography style = {{fontSize : "1.05rem"}} >Driver Name - {vallet.driverName} </Typography>
-              <br className={classes.breaker} />
-
-              <Typography style = {{fontSize : "1.05rem"}} >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
-
-              <div className = "text-center mt-2 ">
-              {/* <Button
+                <div className="text-center mt-2 ">
+                  {/* <Button
                 style = {{color:"#616161"}}
                 onClick={() => this.openbusiness(vallet)}
                 variant="contained"
@@ -304,59 +300,61 @@ class Valets extends Component {
               >
                 Details
               </Button> */}
-              </div>
-              <div className = "text-center mt-2 ">
-              <Button
-                style = {{color:"#616161"}}
-                onClick={() => valetstimeout(vallet._id)}
-                variant="contained"
-                size="small"
-              >
-                TimeOut
-              </Button>
-              </div>
-              <RiEdit2Line
-                size={25}
-                onClick={() => this.editbusiness(vallet)}
-                className={classes.edit}
-              ></RiEdit2Line>
-              <DeleteIcon
-                size={25}
-                onClick={() => deletevalet(vallet._id)}
-                className={classes.delete}
-              />
-            </CardContent>
-          </Card>
-        </div>
-        : null
-      ))
-    )
-    )
+                </div>
+                <div className="text-center mt-2 ">
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => valetstimeout(vallet._id)}
+                    variant="contained"
+                    size="small"
+                  >
+                    TimeOut
+                  </Button>
+                </div>
+                <RiEdit2Line
+                  size={25}
+                  onClick={() => this.editbusiness(vallet)}
+                  className={classes.edit}
+                ></RiEdit2Line>
+                <DeleteIcon
+                  size={25}
+                  onClick={() => deletevalet(vallet._id)}
+                  className={classes.delete}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        ) : null
+      )
+    );
     const markup2 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.valets.map((vallet, index) => (
+      this.props.data.staff.valets.map((vallet, index) =>
+        vallet.timeIn !== undefined && vallet.timeOut !== undefined ? (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {vallet.ownerName}{" "}
+                  <div>Car No - {vallet.carNumber}</div>{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Driver Name - {vallet.driverName}{" "}
+                </Typography>
+                <br className={classes.breaker} />
 
-        (vallet.timeIn !== undefined && vallet.timeOut !== undefined
-          
-          ?
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Time Out - {new Date(vallet.timeOut).toLocaleString()}{" "}
+                </Typography>
 
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style = {{fontSize : "1.05rem"}}>
-                Name - {vallet.ownerName} <div>Car No - {vallet.carNumber}</div>{" "}
-              </Typography>
-              <Typography style = {{fontSize : "1.05rem"}} >Driver Name - {vallet.driverName} </Typography>
-              <br className={classes.breaker} />
-
-              <Typography style = {{fontSize : "1.05rem"}} >Time In - {new Date(vallet.timeIn).toLocaleString()} </Typography>
-              <Typography style = {{fontSize : "1.05rem"}} >Time Out - {new Date(vallet.timeOut).toLocaleString()} </Typography>
-
-              <div className = "text-center ">
-              {/* <Button
+                <div className="text-center ">
+                  {/* <Button
                 style = {{color:"#616161"}}
                 onClick={() => this.openbusiness(vallet)}
                 variant="contained"
@@ -364,75 +362,83 @@ class Valets extends Component {
               >
                 Details
               </Button> */}
-              </div>
-              <RiEdit2Line
-                size={25}
-                onClick={() => this.editbusiness(vallet)}
-                className={classes.edit}
-              ></RiEdit2Line>
-              <DeleteIcon
-                size={25}
-                onClick={() => deletevalet(vallet._id)}
-                className={classes.delete}
-              />
-            </CardContent>
-          </Card>
-        </div>
-        : null
-      ))
-    )
-    )
+                </div>
+                <RiEdit2Line
+                  size={25}
+                  onClick={() => this.editbusiness(vallet)}
+                  className={classes.edit}
+                ></RiEdit2Line>
+                <DeleteIcon
+                  size={25}
+                  onClick={() => deletevalet(vallet._id)}
+                  className={classes.delete}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        ) : null
+      )
+    );
 
     console.log(this.props.data);
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style ={{fontSize:"2rem"}} className="text-center mt-4">
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Valets
-          </p>
+        </p>
 
-          {/* TABS */}
+        {/* TABS */}
 
-<div  className="row mt-4">
-<div  className={classes.root}>
-<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
-      <Tabs TabIndicatorProps={{style: {background:'#FFFFFF'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-          >
-        <Tab style = {{fontSize : ".8rem"}} label="Time In" {...a11yProps(0)} />
-        <Tab style = {{fontSize : ".8rem"}} label="Time Out" {...a11yProps(1)} /> 
-      </Tabs>
-    </AppBar>
-    </div>
-    </div>
-
-          <div className="row mt-4">
-            <div className="col-12" >
-          {loading ? null : (
-            <Button
-              className=" mb-4 float-right"
-              variant="contained"
-              
-              onClick={this.handlePost}
-            >
-              Add Valet
-            </Button>
-          )}
+        <div className="row mt-4">
+          <div className={classes.root}>
+            <AppBar style={{ backgroundColor: "#3f51b5" }} position="static">
+              <Tabs
+                TabIndicatorProps={{ style: { background: "#FFFFFF" } }}
+                value={this.state.value}
+                onChange={this.handleMe}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="Time In"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="Time Out"
+                  {...a11yProps(1)}
+                />
+              </Tabs>
+            </AppBar>
           </div>
+        </div>
+
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                className=" mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Valet
+              </Button>
+            )}
           </div>
+        </div>
 
-          
-    <TabPanel value={this.state.value} index={0}>
-<div className="row mt-4">{markup1}</div>
-</TabPanel>
-    <TabPanel value={this.state.value} index={1}>
-    <div className="row mt-4">{markup2}</div>
+        <TabPanel value={this.state.value} index={0}>
+          <div className="row mt-4">{markup1}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          <div className="row mt-4">{markup2}</div>
+        </TabPanel>
 
-    </TabPanel>
+        {/* Tabs end */}
 
-{/* Tabs end */}
-     
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -442,15 +448,24 @@ class Valets extends Component {
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "20px 20px" }}>
               {modalmode === "Post" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Add a New Valet
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Edit a Valet
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Your Valet
                 </Typography>
               ) : null}
@@ -519,7 +534,6 @@ class Valets extends Component {
             </div>
           </div>
         </Modal>
-
       </div>
     );
   }

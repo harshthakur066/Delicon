@@ -17,14 +17,14 @@ import {
   deletewalkin,
   postwalkins,
   editwalkin,
-  walkout
+  walkout,
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 
 const styles = {
   bodycard: {
@@ -41,9 +41,9 @@ const styles = {
   },
   fr: {
     float: "right",
-    '@media (min-width: 320px) and (max-width: 480px)' : {
+    "@media (min-width: 320px) and (max-width: 480px)": {
       float: "none",
-    }
+    },
   },
   breaker: {
     marginTop: 5,
@@ -61,9 +61,9 @@ const styles = {
     marginBottom: "1.05rem",
   },
   root: {
-    margin:"auto",
-    textAlign:"center",
-    flexGrow: 0
+    margin: "auto",
+    textAlign: "center",
+    flexGrow: 0,
   },
   bullet: {
     display: "inline-block",
@@ -94,7 +94,7 @@ const styles = {
     top: "15%",
     left: "10%",
     right: "10%",
-    bottom:"5%",
+    bottom: "5%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
@@ -104,7 +104,7 @@ const styles = {
   },
 };
 
-function TabPanel (props)  {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -114,7 +114,6 @@ function TabPanel (props)  {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-      
     >
       {value === index && (
         <Box p={2}>
@@ -128,7 +127,7 @@ function TabPanel (props)  {
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
 
@@ -143,7 +142,7 @@ const mapDispatchToProps = {
   deletewalkin,
   postwalkins,
   editwalkin,
-  walkout
+  walkout,
 };
 
 class Walkins extends Component {
@@ -154,26 +153,27 @@ class Walkins extends Component {
     email: "",
     mobno: "",
     address: "",
-    seats:"",
-    walkIn:"",
-    walkOut:"",
+    seats: "",
+    walkIn: "",
+    walkOut: "",
     value: 0, // used in Tabs
     btnload: false,
     loading: true,
     postmodal: false,
   };
 
-  handleMe = (event, newValue) => { //used in Tabs
+  handleMe = (event, newValue) => {
+    //used in Tabs
     this.setState({
-      value : newValue
-    });   
-   };
+      value: newValue,
+    });
+  };
 
   componentDidMount() {
     this.props.getwalkins();
-    }
+  }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.data.staff.walkins !== undefined) {
       this.setState({
         loading: false,
@@ -198,7 +198,7 @@ class Walkins extends Component {
       mobno: "",
       ownerId: "",
       businessId: "",
-      seats:""
+      seats: "",
     });
   };
 
@@ -219,7 +219,7 @@ class Walkins extends Component {
       email: this.state.email,
       address: this.state.address,
       mobno: this.state.mobno,
-      seats:this.state.seats,
+      seats: this.state.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
     };
@@ -249,7 +249,7 @@ class Walkins extends Component {
       email: business.email,
       address: business.address,
       mobno: business.mobno,
-      seats:business.seats,
+      seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Edit",
@@ -264,7 +264,7 @@ class Walkins extends Component {
       email: business.email,
       address: business.address,
       mobno: business.mobno,
-      seats:business.seats,
+      seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Open",
@@ -280,36 +280,32 @@ class Walkins extends Component {
 
     const { classes, deletewalkin, walkout } = this.props; //WithStyles Material Thing
 
-//Tab 1
+    //Tab 1
     const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.walkins.map((walkin, index) => (
-        (walkin.walkIn !== undefined && walkin.walkOut === undefined
-          
-          ?
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style = {{fontSize : "1.05rem"}} >
-                Name - {walkin.name}{" "}
-                <div className={classes.fr}>
-                  Seats -  
-                {" " + walkin.seats}
-              </div>{" "}
-              
-                <div> Mobile No. - {walkin.mobno}</div>{" "}
-                <div>  Email - {walkin.email}</div>{" "}
-                <div>  Address - {walkin.address}</div>{" "}
-                <br className={classes.breaker} />
+      this.props.data.staff.walkins.map((walkin, index) =>
+        walkin.walkIn !== undefined && walkin.walkOut === undefined ? (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {walkin.name}{" "}
+                  <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+                  <div> Mobile No. - {walkin.mobno}</div>{" "}
+                  <div> Email - {walkin.email}</div>{" "}
+                  <div> Address - {walkin.address}</div>{" "}
+                  <br className={classes.breaker} />
+                  <div>
+                    {" "}
+                    Walkin Time - {new Date(walkin.walkIn).toLocaleString()}
+                  </div>
+                </Typography>
 
-               <div>  Walkin Time -  {new Date(walkin.walkIn).toLocaleString()}</div>
-              </Typography>
-              
-              <br className={classes.breaker} />
-              <div className = "float-left mb-2">
+                <br className={classes.breaker} />
+                <div className="float-left mb-2">
                   {/* <Button
                    style={{color:"#616161"}} 
                     onClick={() => this.openbusiness(walkin)}
@@ -318,38 +314,34 @@ class Walkins extends Component {
                            >
                      Details
                         </Button> */}
-               
-                 </div>
+                </div>
 
-            <div className = "text-center">
-              <Button
-              style={{color:"#616161"}} 
-              onClick={() => walkout(walkin._id)}
-              variant="contained"
-              size="small"
-            >
-              WalkOut
-            </Button>
-               
-            </div>
-            <br className={classes.breaker} />
-
-            </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(walkin)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() => deletewalkin(walkin._id)}
-              className={classes.delete}
-            />
-          </Card>
-        </div>
-        : null
-        )
-      ))
+                <div className="text-center">
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => walkout(walkin._id)}
+                    variant="contained"
+                    size="small"
+                  >
+                    WalkOut
+                  </Button>
+                </div>
+                <br className={classes.breaker} />
+              </CardContent>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(walkin)}
+                className={classes.edit}
+              ></RiEdit2Line>
+              <DeleteIcon
+                size={25}
+                onClick={() => deletewalkin(walkin._id)}
+                className={classes.delete}
+              />
+            </Card>
+          </div>
+        ) : null
+      )
     );
 
     // Tab 2
@@ -358,31 +350,31 @@ class Walkins extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.walkins.map((walkin, index) => (
-        (walkin.walkIn !== undefined && walkin.walkOut !== undefined
-          
-          ?
+      this.props.data.staff.walkins.map((walkin, index) =>
+        walkin.walkIn !== undefined && walkin.walkOut !== undefined ? (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {walkin.name}{" "}
+                  <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+                  <br className={classes.breaker} />
+                  <div> Mobile No. - {walkin.mobno}</div>{" "}
+                  <div> Email - {walkin.email}</div>{" "}
+                  <div> Address - {walkin.address}</div>{" "}
+                  <br className={classes.breaker} />
+                  <div>
+                    {" "}
+                    Walkin Time - {new Date(walkin.walkIn).toLocaleString()}
+                  </div>
+                  <div>
+                    {" "}
+                    Walkout Time - {new Date(walkin.walkOut).toLocaleString()}
+                  </div>
+                </Typography>
 
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.bodycard}>
-            <CardContent>
-            <Typography style = {{fontSize : "1.05rem"}} >
-                Name - {walkin.name}{" "}
-                <div className={classes.fr}>
-                  Seats -  
-                {" " + walkin.seats}
-              </div>{" "}
-              <br className={classes.breaker} />
-                <div> Mobile No. - {walkin.mobno}</div>{" "}
-                <div>  Email - {walkin.email}</div>{" "}
-                <div>  Address - {walkin.address}</div>{" "}
-                <br className={classes.breaker} />
-                <div>  Walkin Time -  {new Date(walkin.walkIn).toLocaleString()}</div>
-                <div>  Walkout Time -  {new Date(walkin.walkOut).toLocaleString()}</div>
-              </Typography>
-
-              <div className = "text-center mt-2 ">
-              {/* <Button
+                <div className="text-center mt-2 ">
+                  {/* <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(walkin)}
               variant="contained"
@@ -390,80 +382,85 @@ class Walkins extends Component {
             >
               Details
             </Button> */}
-               
-            </div>
-            </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(walkin)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() => deletewalkin(walkin._id)}
-              className={classes.delete}
-            />
-          </Card>
-        </div>
-        : null
-        )
-      ))
+                </div>
+              </CardContent>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(walkin)}
+                className={classes.edit}
+              ></RiEdit2Line>
+              <DeleteIcon
+                size={25}
+                onClick={() => deletewalkin(walkin._id)}
+                className={classes.delete}
+              />
+            </Card>
+          </div>
+        ) : null
+      )
     );
 
     console.log(this.props.data);
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Walkins
-          </p>
+        </p>
 
-{/* TABS */}
+        {/* TABS */}
 
-<div  className="row mt-4">
-<div  className={classes.root}>
-<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
-      <Tabs TabIndicatorProps={{style: {background:'#FFFFFF'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-          >
-        <Tab style = {{fontSize : ".8rem"}}  label="WalkIn" {...a11yProps(0)} />
-        <Tab style = {{fontSize : ".8rem"}}  label="WalkOut" {...a11yProps(1)} /> 
-      </Tabs>
-    </AppBar>
-    </div>
-    </div>
-
-{/* ADD */}
-    <div className="row mt-4">
-            <div className="col-12" >
-          {loading ? null : (
-            <Button
-            className="mb-4 float-right"
-              variant="contained"
-              onClick={this.handlePost}
-            >
-              Add Walkin
-            </Button>
-          )}
+        <div className="row mt-4">
+          <div className={classes.root}>
+            <AppBar style={{ backgroundColor: "#3f51b5" }} position="static">
+              <Tabs
+                TabIndicatorProps={{ style: { background: "#FFFFFF" } }}
+                value={this.state.value}
+                onChange={this.handleMe}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="WalkIn"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="WalkOut"
+                  {...a11yProps(1)}
+                />
+              </Tabs>
+            </AppBar>
           </div>
+        </div>
+
+        {/* ADD */}
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                className="mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Walkin
+              </Button>
+            )}
           </div>
-          {/* ADD */}
+        </div>
+        {/* ADD */}
 
-    <TabPanel value={this.state.value} index={0}>
-<div className="row mt-4">{markup1}</div>
-</TabPanel>
-    <TabPanel value={this.state.value} index={1}>
-    <div className="row mt-4">{markup2}</div>
+        <TabPanel value={this.state.value} index={0}>
+          <div className="row mt-4">{markup1}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          <div className="row mt-4">{markup2}</div>
+        </TabPanel>
 
-    </TabPanel>
+        {/* Tabs end */}
 
-{/* Tabs end */}
-
-          
-        
-
-       
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -476,15 +473,24 @@ class Walkins extends Component {
               style={{ padding: "20px 25px", textAlign: "center" }}
             >
               {modalmode === "Post" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Add a New Walkin
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Edit a Walkin
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Your Walkin
                 </Typography>
               ) : null}
@@ -579,8 +585,6 @@ class Walkins extends Component {
             </div>
           </div>
         </Modal>
-       
-        
       </div>
     );
   }

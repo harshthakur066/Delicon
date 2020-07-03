@@ -135,7 +135,7 @@ class Businesses extends Component {
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.data.owner.businesses !== undefined) {
       this.setState({
         loading: false,
@@ -214,8 +214,6 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    console.log(this.props.data.owner.businesses);
-
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
@@ -225,10 +223,7 @@ class Businesses extends Component {
         <div key={index} className="col-12 text-center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography
-                // className={classes.title}
-                style={{ color: "#070707", fontSize: "1.05rem" }}
-              >
+              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                 {business.name}
               </Typography>
               <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>

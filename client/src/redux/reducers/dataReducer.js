@@ -336,14 +336,14 @@ export default function (state = initialState, action) {
         owner: serviceItem4,
       };
 
-      // MENU ITEMS
+    // MENU ITEMS
 
-      case ActionTypes.GET_MENUITEMS:
-       return {
+    case ActionTypes.GET_MENUITEMS:
+      return {
         ...state,
-        owner: {...state.owner, item: action.payload },
+        owner: { ...state.owner, item: action.payload },
       };
-     
+
     case ActionTypes.DELETE_MENUITEM:
       var item1 = state.owner;
       item1.item = state.owner.item.filter(
@@ -362,21 +362,13 @@ export default function (state = initialState, action) {
         ...state,
         owner: item2,
       };
-      case ActionTypes.GET_MENUITEM:
-      var item3= state.owner;
-      item3.item = action.payload;
-      return {
-        ...state,
-        owner: item3,
-      };
-      case ActionTypes.POST_MENUITEM:
+    case ActionTypes.POST_MENUITEM:
       var item4 = state.owner;
       item4.item.push(action.payload);
       return {
         ...state,
-        owner: item4 
+        owner: item4,
       };
-
 
     default:
       return state;

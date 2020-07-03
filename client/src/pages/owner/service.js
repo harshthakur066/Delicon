@@ -136,7 +136,7 @@ class service extends Component {
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.data.owner.service !== undefined) {
       this.setState({
         loading: false,

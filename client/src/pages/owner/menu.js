@@ -129,7 +129,7 @@ class menu extends Component {
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.data.owner.menu !== undefined) {
       this.setState({
         loading: false,

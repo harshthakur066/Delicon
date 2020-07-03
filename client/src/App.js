@@ -24,7 +24,6 @@ import menu from "./pages/owner/menu";
 import menuItems from "./pages/owner/menuItems";
 import service from "./pages/owner/service";
 import serviceItem from "./pages/owner/serviceItem";
-// import signup from "./pages/signup";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 
@@ -53,27 +52,37 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <ErrorBoundry>
-            <Switch>
-              <Route exact path="/" component={home} />
-              <Route exact path="/login" component={login} />
-              <Route exact path="/businesses" component={businesses} />
-              <Route exact path="/reqbusinesses" component={reqbusiness} />
-              <Route exact path="/businesses/:busiId" component={busiDetails} />
-              <Route exact path="/reservations" component={reservations} />
-              <Route exact path="/valets" component={valets} />
-              <Route exact path="/walkins" component={walkins} />
-              <Route exact path="/staffs/:businessid" component={staffs} />
-              <Route exact path="/menu/:businessid" component={menu} />
-              <Route exact path="/menu/:businessid/:id" component={menuItems} />
-              <Route exact path="/service/:businessid" component={service} />
-              <Route
-                exact
-                path="/serviceitem/:serviceid"
-                component={serviceItem}
-              />
-              <Route exact path="/ownerDash" component={ownerDash} />
-              <Route exact path="/staffDash" component={staffDash} />
-            </Switch>
+            <div id="sider">
+              <Switch>
+                <Route exact path="/" component={home} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/businesses" component={businesses} />
+                <Route exact path="/reqbusinesses" component={reqbusiness} />
+                <Route
+                  exact
+                  path="/businesses/:busiId"
+                  component={busiDetails}
+                />
+                <Route exact path="/reservations" component={reservations} />
+                <Route exact path="/valets" component={valets} />
+                <Route exact path="/walkins" component={walkins} />
+                <Route exact path="/staffs/:businessid" component={staffs} />
+                <Route exact path="/menu/:businessid" component={menu} />
+                <Route
+                  exact
+                  path="/menu/:businessid/:id"
+                  component={menuItems}
+                />
+                <Route exact path="/service/:businessid" component={service} />
+                <Route
+                  exact
+                  path="/serviceitem/:serviceid"
+                  component={serviceItem}
+                />
+                <Route exact path="/ownerDash" component={ownerDash} />
+                <Route exact path="/staffDash" component={staffDash} />
+              </Switch>
+            </div>
           </ErrorBoundry>
         </BrowserRouter>
       </ThemeProvider>

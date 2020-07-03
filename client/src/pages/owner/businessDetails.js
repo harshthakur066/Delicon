@@ -44,11 +44,10 @@ class BusinessDetails extends Component {
   componentDidMount() {
     const { busiId } = this.props.match.params;
     this.props.getbusiness(this.doneLoading, busiId);
-    document.body.style.backgroundColor = "#F0F2FE"
-
+    document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
         errors: nextProps.UI.errors,
@@ -78,23 +77,23 @@ class BusinessDetails extends Component {
         <Card className={classes.cardStyle} variant="outlined">
           <CardContent>
             <Typography
-              style = {{fontSize : "1.05rem"}}
+              style={{ fontSize: "1.05rem" }}
               color="#070707"
               className="text-center"
             >
               {data.owner.business.name}
             </Typography>
             <Typography
-              style = {{fontSize : "1.05rem"}}
+              style={{ fontSize: "1.05rem" }}
               color="#455A64"
               className="float-right"
             >
               Owner Name - {data.owner.business.owner}
             </Typography>
-            <Typography style = {{fontSize : "1.05rem"}} color="#455A64">
+            <Typography style={{ fontSize: "1.05rem" }} color="#455A64">
               Address - {data.owner.business.address}
             </Typography>
-            <Typography style = {{fontSize : "1.05rem"}} color="#455A64">
+            <Typography style={{ fontSize: "1.05rem" }} color="#455A64">
               Details - {data.owner.business.details}
             </Typography>
           </CardContent>

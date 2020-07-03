@@ -52,9 +52,9 @@ const styles = {
   },
   fr: {
     float: "right",
-     '@media (min-width: 320px) and (max-width: 480px)' : {
-       float:"none",
-     }
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      float: "none",
+    },
   },
   bodycard: {
     margin: 5,
@@ -95,7 +95,7 @@ const styles = {
     position: "fixed",
     top: "6%",
     left: "10%",
-    right:"10%",
+    right: "10%",
     bottom: "6%",
     backgroundColor: "white",
     borderRadius: "20px",
@@ -104,7 +104,6 @@ const styles = {
     outline: "none",
     height: "90%",
     overflowY: "scroll",
-    
   },
 };
 
@@ -145,11 +144,10 @@ class Staffs extends Component {
   componentDidMount() {
     const { businessid } = this.props.match.params;
     this.props.getstaffs(businessid);
-    document.body.style.backgroundColor = "#F0F2FE"
-
+    document.body.style.backgroundColor = "#F0F2FE";
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.UI.errors) {
       this.setState({
         errors: newProps.UI.errors,
@@ -289,14 +287,13 @@ class Staffs extends Component {
             <CardContent>
               <Typography
                 // className={classes.title}
-                style = {{fontSize : "1.05rem"}}
+                style={{ fontSize: "1.05rem" }}
               >
                 Name - {staff.name}
               </Typography>
-              <Typography style = {{fontSize : "1.05rem"}}>
+              <Typography style={{ fontSize: "1.05rem" }}>
                 Postion - {staff.position}
                 <br className={classes.breaker} />
-
                 {staff.working ? (
                   <span className={classes.fr}> Currently Working </span>
                 ) : (
@@ -304,28 +301,27 @@ class Staffs extends Component {
                 )}
               </Typography>
 
-              <Typography style = {{fontSize : "1.05rem"}}>
+              <Typography style={{ fontSize: "1.05rem" }}>
                 {staff.experience}
               </Typography>
-              <Typography style = {{fontSize : "1.05rem"}}>
+              <Typography style={{ fontSize: "1.05rem" }}>
                 Mobile No. - {staff.mobno}
               </Typography>
 
-              <div className = "text-center mt-2 ">
-              {<Button
-                style = {{color:"#616161"}}
-                onClick={() => this.openbusiness(staff)}
-                variant="contained"
-                size="small"
-              >
-                Details
-              </Button> }
+              <div className="text-center mt-2 ">
+                {
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => this.openbusiness(staff)}
+                    variant="contained"
+                    size="small"
+                  >
+                    Details
+                  </Button>
+                }
               </div>
-
-              
-
             </CardContent>
-            
+
             <RiEdit2Line
               size={25}
               onClick={() => this.editbusiness(staff)}
@@ -346,24 +342,24 @@ class Staffs extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Your Staff
-          </p>
-          <div className="row mt-4">
-            <div className="col-12" >
-          {loading ? null : (
-            <Button
-             style={{ width:"auto" }}
-             className="mb-4 float-right"
-              variant="contained"
-              onClick={this.handlePost}
-            >
-              Add Staff
-            </Button>
-          )}
+        </p>
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                style={{ width: "auto" }}
+                className="mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Staff
+              </Button>
+            )}
           </div>
-          </div>
-       
+        </div>
+
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -373,15 +369,24 @@ class Staffs extends Component {
           <div className={classes.modlebox}>
             <div className="container" style={{ padding: "20px 20px" }}>
               {modalmode === "Post" ? (
-                <Typography className={classes.pageTitle} style={{textAlign:"center",fontSize : "1.5rem" }}>
+                <Typography
+                  className={classes.pageTitle}
+                  style={{ textAlign: "center", fontSize: "1.5rem" }}
+                >
                   Add a New Staff
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography className={classes.pageTitle} style={{ textAlign:"center",fontSize : "1.5rem" }}>
+                <Typography
+                  className={classes.pageTitle}
+                  style={{ textAlign: "center", fontSize: "1.5rem" }}
+                >
                   Edit a Staff
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography  className={classes.pageTitle} style={{ textAlign:"center",fontSize : "1.5rem" }}>
+                <Typography
+                  className={classes.pageTitle}
+                  style={{ textAlign: "center", fontSize: "1.5rem" }}
+                >
                   Staff Details
                 </Typography>
               ) : null}

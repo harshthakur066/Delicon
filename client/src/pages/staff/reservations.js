@@ -18,13 +18,13 @@ import {
   postreservation,
   editreservation,
   checkInReservation,
-  checkOutReservation
+  checkOutReservation,
 } from "../../redux/actions/dataActions";
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 
 import { RiEdit2Line } from "react-icons/ri";
 
@@ -63,9 +63,9 @@ const styles = {
   },
   fr: {
     float: "right",
-     '@media (min-width: 320px) and (max-width: 480px)' : {
-       float:"none",
-     }
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      float: "none",
+    },
   },
   breaker: {
     marginTop: 1,
@@ -75,13 +75,12 @@ const styles = {
     float: "right",
     color: "red",
     cursor: "pointer",
-   
   },
 
   root: {
-    margin:"auto",
-    textAlign:"center",
-    flexGrow: 0
+    margin: "auto",
+    textAlign: "center",
+    flexGrow: 0,
   },
   bullet: {
     display: "inline-block",
@@ -112,7 +111,7 @@ const styles = {
     top: "13%",
     left: "10%",
     right: "10%",
-    bottom:"5%",
+    bottom: "5%",
     backgroundColor: "white",
     borderRadius: "30px",
     border: "0px",
@@ -122,7 +121,7 @@ const styles = {
   },
 }; // Styles here
 
-function TabPanel (props)  {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -132,7 +131,6 @@ function TabPanel (props)  {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-      
     >
       {value === index && (
         <Box p={3}>
@@ -146,10 +144,9 @@ function TabPanel (props)  {
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-
 
 class Reservations extends Component {
   state = {
@@ -160,20 +157,19 @@ class Reservations extends Component {
     mobno: "",
     address: "",
     seats: "",
-    checkIn:"",
-    checkOut:"",
+    checkIn: "",
+    checkOut: "",
     loading: true,
     btnload: false,
     postmodal: false,
-    value: 0
+    value: 0,
   };
- 
 
   componentDidMount() {
     this.props.getreservations();
-    document.body.style.backgroundColor = "#F0F2FE"
+    document.body.style.backgroundColor = "#F0F2FE";
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.data.staff.reservations !== undefined) {
       this.setState({
         loading: false,
@@ -241,8 +237,6 @@ class Reservations extends Component {
 
   /////
 
-
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -250,7 +244,7 @@ class Reservations extends Component {
   };
 
   editbusiness = (business) => {
-    console.log(business)
+    console.log(business);
 
     this.setState({
       name: business.name,
@@ -267,20 +261,20 @@ class Reservations extends Component {
   };
   handleMe = (event, newValue) => {
     this.setState({
-      value : newValue
-    });   
-   };
+      value: newValue,
+    });
+  };
 
   openbusiness = (business) => {
-    console.log(business)
+    console.log(business);
     this.setState({
       name: business.name,
       email: business.email,
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
-      checkIn:business.checkIn,
-      checkOut:business.checkOut,
+      checkIn: business.checkIn,
+      checkOut: business.checkOut,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.profile.businessId,
       modalmode: "Open",
@@ -296,48 +290,38 @@ class Reservations extends Component {
     const modalmode = this.state.modalmode;
     console.log(modalmode);
 
-    const { classes, deletereservation ,checkInReservation,checkOutReservation} = this.props;
-    
-    console.log(this.state.value)
-    console.log(this.props.data.staff.reservations)
-// Tab 1
+    const {
+      classes,
+      deletereservation,
+      checkInReservation,
+      checkOutReservation,
+    } = this.props;
+
+    console.log(this.state.value);
+    console.log(this.props.data.staff.reservations);
+    // Tab 1
     const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    ) : 
-    
-    (
-      this.props.data.staff.reservations.map((reservation, index) => (
-        
-        (reservation.checkIn !== undefined
-          ?
-          null
-          :
-
-         <div key={index} className="col-12 mb-4">
-        <Card className={classes.bodycard}>
-          <CardContent>
-            <Typography style = {{fontSize : "1.05rem"}}>
-              Name - {reservation.name}{" "}
-              <div className={classes.fr}>
-              Seats - {reservation.seats}
-
-                
-              </div>{" "}
-            </Typography>
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Email - {reservation.email}{" "}
-            </Typography>
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Mobile No. - {reservation.mobno}
-              
-              <div >
-               Address -  {reservation.address}
-              </div>
-              
-            </Typography>
-            {/* <div className="text-center mt-1 ">
+    ) : (
+      this.props.data.staff.reservations.map((reservation, index) =>
+        reservation.checkIn !== undefined ? null : (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {reservation.name}{" "}
+                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Email - {reservation.email}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Mobile No. - {reservation.mobno}
+                  <div>Address - {reservation.address}</div>
+                </Typography>
+                {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -348,40 +332,33 @@ class Reservations extends Component {
              </Button>
           </div>
         */}
-          <div className="text-center mt-2 ">
-          <Button
-          style={{color:"#616161"}} 
-          onClick={() => checkInReservation(reservation._id)}
-           variant="contained"
-           size="small"
-          >
-          CheckIn
-         </Button>
-         </div>
-            
-            
-          </CardContent>
+                <div className="text-center mt-2 ">
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => checkInReservation(reservation._id)}
+                    variant="contained"
+                    size="small"
+                  >
+                    CheckIn
+                  </Button>
+                </div>
+              </CardContent>
 
-          <RiEdit2Line
-            size={25}
-            onClick={() => this.editbusiness(reservation)}
-            className={classes.edit}
-          ></RiEdit2Line>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(reservation)}
+                className={classes.edit}
+              ></RiEdit2Line>
 
-          <DeleteIcon
-            size={25}
-            onClick={() => deletereservation(reservation._id)}
-            className={classes.delete}
-          />
-          
-        </Card>
-        </div>
+              <DeleteIcon
+                size={25}
+                onClick={() => deletereservation(reservation._id)}
+                className={classes.delete}
+              />
+            </Card>
+          </div>
         )
-      ))
-      
-    
-    
-      
+      )
     );
 
     // Tab2
@@ -389,47 +366,34 @@ class Reservations extends Component {
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    ) : 
-    
-    (
-      this.props.data.staff.reservations.map((reservation, index) => (
-        
-         (reservation.checkOut === undefined && reservation.checkIn !== undefined
-          ?
-
+    ) : (
+      this.props.data.staff.reservations.map((reservation, index) =>
+        reservation.checkOut === undefined &&
+        reservation.checkIn !== undefined ? (
           <div key={index} className="col-12 mb-4">
-        <Card className={classes.bodycard}>
-          <CardContent>
-          <Typography style = {{fontSize : "1.05rem"}}>
-              Name - {reservation.name}{" "}
-              <div className={classes.fr}>
-              Seats - {reservation.seats}
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {reservation.name}{" "}
+                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Email - {reservation.email}{" "}
+                </Typography>
 
-                
-              </div>{" "}
-            </Typography>
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Email - {reservation.email}{" "}
-            </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Mobile No. - {reservation.mobno}
+                  <div>Address - {reservation.address}</div>
+                </Typography>
+                <br className={classes.breaker} />
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  <div>
+                    CheckIn at -{" "}
+                    {new Date(reservation.checkIn).toLocaleString()}
+                  </div>
+                </Typography>
 
-            
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Mobile No. - {reservation.mobno}
-              
-              <div >
-               Address -  {reservation.address}
-              </div>
-              
-            </Typography>
-            <br className={classes.breaker} />
-            <Typography style = {{fontSize : "1.05rem"}}>
-              <div >
-                CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
-              </div>
-              
-            </Typography>
-
-            {/* <div className="text-center mt-1 ">
+                {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -439,44 +403,34 @@ class Reservations extends Component {
               Details
              </Button>
           </div> */}
-       
-          <div className="text-center mt-2 ">
-          <Button
-          style={{color:"#616161"}} 
-          onClick={() => checkOutReservation(reservation._id)}
-           variant="contained"
-           size="small"
-          >
-          CheckOut
-         </Button>
-         </div>
-            
-            
-          </CardContent>
 
-          <RiEdit2Line
-            size={25}
-            onClick={() => this.editbusiness(reservation)}
-            className={classes.edit}
-          ></RiEdit2Line>
+                <div className="text-center mt-2 ">
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => checkOutReservation(reservation._id)}
+                    variant="contained"
+                    size="small"
+                  >
+                    CheckOut
+                  </Button>
+                </div>
+              </CardContent>
 
-          <DeleteIcon
-            size={25}
-            onClick={() => deletereservation(reservation._id)}
-            className={classes.delete}
-          />
-          
-        </Card>
-        </div>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(reservation)}
+                className={classes.edit}
+              ></RiEdit2Line>
 
-          :
-           null
-         
-         )
-      ))
-    
-    
-      
+              <DeleteIcon
+                size={25}
+                onClick={() => deletereservation(reservation._id)}
+                className={classes.delete}
+              />
+            </Card>
+          </div>
+        ) : null
+      )
     );
     // Tab 3
     const markup3 = loading ? (
@@ -484,42 +438,37 @@ class Reservations extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.reservations.map((reservation, index) => (
-        (reservation.checkOut !== undefined && reservation.checkIn !== undefined
-          
-          ?
-        
-         <div key={index} className="col-12 mb-4">
-        <Card className={classes.bodycard}>
-          <CardContent>
-          <Typography style = {{fontSize : "1.05rem"}}>
-              Name - {reservation.name}{" "}
-              <div className={classes.fr}>
-              Seats - {reservation.seats}
-              </div>{" "}
-            </Typography>
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Email - {reservation.email}{" "}
-            </Typography>
-            <Typography style = {{fontSize : "1.05rem"}}>
-            Mobile No. - {reservation.mobno}
-              <div >
-               Address -  {reservation.address}
-              </div>
-            </Typography>
-            <br className={classes.breaker} />
+      this.props.data.staff.reservations.map((reservation, index) =>
+        reservation.checkOut !== undefined &&
+        reservation.checkIn !== undefined ? (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Name - {reservation.name}{" "}
+                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Email - {reservation.email}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Mobile No. - {reservation.mobno}
+                  <div>Address - {reservation.address}</div>
+                </Typography>
+                <br className={classes.breaker} />
 
-            <Typography style = {{fontSize : "1.05rem"}}>
-              <div >
-               CheckIn at - {new Date(reservation.checkIn).toLocaleString()}
-              </div>
-              <div>
-               CheckOut at -  {new Date(reservation.checkOut).toLocaleString()}
-              </div>
-              
-            </Typography>
-            <br></br>
-            {/* <div className="text-center mt-1 ">
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  <div>
+                    CheckIn at -{" "}
+                    {new Date(reservation.checkIn).toLocaleString()}
+                  </div>
+                  <div>
+                    CheckOut at -{" "}
+                    {new Date(reservation.checkOut).toLocaleString()}
+                  </div>
+                </Typography>
+                <br></br>
+                {/* <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -529,87 +478,92 @@ class Reservations extends Component {
               Details
              </Button>
           </div> */}
+              </CardContent>
 
-          </CardContent>
+              <RiEdit2Line
+                size={25}
+                onClick={() => this.editbusiness(reservation)}
+                className={classes.edit}
+              ></RiEdit2Line>
 
-          <RiEdit2Line
-            size={25}
-            onClick={() => this.editbusiness(reservation)}
-            className={classes.edit}
-          ></RiEdit2Line>
-
-          <DeleteIcon
-            size={25}
-            onClick={() => deletereservation(reservation._id)}
-            className={classes.delete}
-          />
-          
-        </Card>
-        </div>
-      
-      : null
-        )
-      ))
-      
+              <DeleteIcon
+                size={25}
+                onClick={() => deletereservation(reservation._id)}
+                className={classes.delete}
+              />
+            </Card>
+          </div>
+        ) : null
+      )
     );
-    
+
     return (
-      
       <div className="container" style={{ marginTop: 90 }}>
-        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Reservations
-          </p>
-        
-{/* Tabs */}
-<div  className="row mt-4">
-<div  className={classes.root}>
-<AppBar style = {{backgroundColor:"#3f51b5"}} position="static" >
-      <Tabs style = {{}} TabIndicatorProps={{style: {background:'#FFFFFF'}}} value={this.state.value} onChange={this.handleMe} variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-          >
-        <Tab style = {{fontSize : ".8rem"}} label="Pending" {...a11yProps(0)} />
-        <Tab style = {{fontSize : ".8rem"}} label="CheckIns" {...a11yProps(1)} /> 
-        <Tab style = {{fontSize : ".8rem"}} label="CheckOuts" {...a11yProps(2)} />
-      </Tabs>
-    </AppBar>
-    </div>
-    </div>
-    
-    {/* add */}
-    <div className="row mt-4">
-            <div className="col-12" >
-          {loading ? null : (
-             <Button
-              className=" mb-4 float-right"
-              variant="contained"
-              onClick={this.handlePost}
-            >
-              Add Reservation
-            </Button>
-            
-          )}
+        </p>
+
+        {/* Tabs */}
+        <div className="row mt-4">
+          <div className={classes.root}>
+            <AppBar style={{ backgroundColor: "#3f51b5" }} position="static">
+              <Tabs
+                style={{}}
+                TabIndicatorProps={{ style: { background: "#FFFFFF" } }}
+                value={this.state.value}
+                onChange={this.handleMe}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="Pending"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="CheckIns"
+                  {...a11yProps(1)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="CheckOuts"
+                  {...a11yProps(2)}
+                />
+              </Tabs>
+            </AppBar>
           </div>
+        </div>
+
+        {/* add */}
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                className=" mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Reservation
+              </Button>
+            )}
           </div>
-          {/* add */}
+        </div>
+        {/* add */}
 
-<TabPanel value={this.state.value} index={0}>
-<div className="row mt-4">{markup1}</div>
-</TabPanel>
-    <TabPanel value={this.state.value} index={1}>
-    <div className="row mt-4">{markup2}</div>
+        <TabPanel value={this.state.value} index={0}>
+          <div className="row mt-4">{markup1}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          <div className="row mt-4">{markup2}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={2}>
+          <div className="row mt-4">{markup3}</div>
+        </TabPanel>
 
-    </TabPanel>
-    <TabPanel value={this.state.value} index={2}>
-    <div className="row mt-4">{markup3}</div>
+        {/*Tabs*/}
 
-    </TabPanel>
-    
-    
-          {/*Tabs*/}
-          
-          
-        
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -622,15 +576,24 @@ class Reservations extends Component {
               style={{ padding: "20px 25px", textAlign: "center" }}
             >
               {modalmode === "Post" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Add a Reservation
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Edit a Reservation
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Your Reservation
                 </Typography>
               ) : null}
@@ -648,10 +611,9 @@ class Reservations extends Component {
                   <Typography variant="h6" className="mt-2 ">
                     Address - {this.state.address}
                   </Typography>
-                  <Typography style = {{fontSize : "1.5rem"}} className="mt-2 ">
+                  <Typography style={{ fontSize: "1.5rem" }} className="mt-2 ">
                     Seats - {this.state.seats}
                   </Typography>
-                  
                 </>
               ) : (
                 <form onSubmit={this.handleSubmit}>
@@ -726,8 +688,6 @@ class Reservations extends Component {
             </div>
           </div>
         </Modal>
-
-        
       </div>
     ); //Render Data here
   }

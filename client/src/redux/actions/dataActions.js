@@ -452,25 +452,6 @@ export const editMenuItem = (formdata, setloading, ID) => (dispatch) => {
     });
 };
 
-export const getMenuItem = (setloading, categoryId, ID) => (dispatch) => {
-  dispatch(clearErrors());
-  axios
-    .get(`/api/v1/menu/items/${categoryId}/${ID}`)
-    .then((res) => {
-      console.log(res.data);
-      dispatch({
-        type: ActionTypes.GET_MENUITEM,
-        payload: res.data,
-      });
-      setloading();
-    })
-    .catch((err) => {
-      if (err.response !== undefined) {
-        dispatch(setErrors(err.response.data));
-      }
-    });
-};
-
 // Service Actions
 
 export const getServiceCategories = (ID) => (dispatch) => {

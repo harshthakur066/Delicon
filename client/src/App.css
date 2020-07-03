@@ -5,3 +5,12 @@ html body {
 a :hover {
   color: white;
 }
+
+.ButtonAppBar-appBarShift-2 {
+  width: 100% !important;
+  margin-left: 0px !important;
+}
+
+.MuiDrawer-paper {
+  top: 10% !important;
+}
