@@ -573,3 +573,111 @@ export const walkout = (ID) => (dispatch) => {
           }
         });
     }
+ 
+    // Menu Actions
+
+    
+export const getMenuCategories = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/categories/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_MENUCATEGORIES,
+        payload: res.data,
+      });
+      console.log(res)
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteMenuCategory = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/menu/category/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_MENUCATEGORY,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postMenuCategory = (formdata, setloading,ID) => (dispatch) => {
+  console.log(formdata)
+  console.log(ID)
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/menu/categories/${ID}`,formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_MENUCATEGORY,
+        payload: res.data,
+      });
+      console.log(res)
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+
+    export const editMenuCategory = (formdata, setloading, ID) => (dispatch) => {
+      dispatch(clearErrors());
+      axios
+        .put(`/api/v1/menu/category/${ID}`, formdata)
+        .then(() => {
+          axios
+            .put(`/api/v1/menu/category/${ID}`, formdata)
+            .then((res) => {
+              dispatch({
+                type: ActionTypes.EDIT_MENUCATEGORY,
+                payload: res.data,
+              });
+              setloading();
+              alert("Edited Successfully");
+            })
+            .catch((err) => {
+              if (err.response !== undefined) {
+                dispatch(setErrors(err.response.data));
+              }
+            });
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    };
+
+
+export const getMenuCategory = (setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/category/${ID}`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.GET_MENUCATEGORY,
+        payload: res.data,
+      });
+      setloading();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
