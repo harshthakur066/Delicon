@@ -215,6 +215,8 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
+    console.log(this.props.data.owner.businesses)
+
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
@@ -267,7 +269,17 @@ class Businesses extends Component {
               >
                 Staffs
               </Button>
+              
             </CardActions>
+            <Button
+                component={Link}
+                variant="contained"
+                color="inherit"
+                size="small"
+                to={`/menu/${business._id}`}
+              >
+                Menu
+              </Button>
           </Card>
         </div>
       ))

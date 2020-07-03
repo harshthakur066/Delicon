@@ -20,6 +20,7 @@ import ownerDash from "./pages/owner/ownerDashboard";
 import staffDash from "./pages/staff/staffDashboard";
 import busiDetails from "./pages/owner/businessDetails";
 import reqbusiness from "./pages/owner/reqbusiness";
+import menu from "./pages/owner/menu"
 // import signup from "./pages/signup";
 
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -59,6 +60,7 @@ function App() {
               <Route exact path="/valets" component={valets} />
               <Route exact path="/walkins" component={walkins} />
               <Route exact path="/staffs/:businessid" component={staffs} />
+              <Route exact path="/menu/:businessid" component={menu} />
               <Route exact path="/ownerDash" component={ownerDash} />
               <Route exact path="/staffDash" component={staffDash} />
             </Switch>

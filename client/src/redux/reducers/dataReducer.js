@@ -233,6 +233,48 @@ export default function (state = initialState, action) {
           ...state,
           staff: timeout,
            };
+
+// MENU REDUCERS
+
+case ActionTypes.GET_MENUCATEGORIES:
+       return {
+        ...state,
+        owner: {...state.owner, menu: action.payload },
+      };
+     
+    case ActionTypes.DELETE_MENUCATEGORY:
+      var menu1 = state.owner;
+      menu1.menu = state.owner.menu.filter(
+        (business) => business._id !== action.payload
+      );
+      return {
+        ...state,
+        owner: menu1,
+      };
+    case ActionTypes.EDIT_MENUCATEGORY:
+      var menu2 = state.owner;
+      menu2.menu = state.owner.menu.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      return {
+        ...state,
+        owner: menu2,
+      };
+      case ActionTypes.GET_MENUCATEGORY:
+      var menu3= state.owner;
+      menu3.menu = action.payload;
+      return {
+        ...state,
+        owner: menu3,
+      };
+      case ActionTypes.POST_MENUCATEGORY:
+      var menu4 = state.owner;
+      menu4.menu.push(action.payload);
+      return {
+        ...state,
+        owner: menu4 
+      };
+
     default:
       return state;
   }
