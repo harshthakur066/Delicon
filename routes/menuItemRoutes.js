@@ -3,6 +3,7 @@ const router = express.Router();
 const MenuCategory = require("../models/MenuCategory");
 const MenuItem = require("../models/MenuItem");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const isStaff = require("../middlewares/requireStaff");
 
 // To Post New Dishes for Owner
 router.post(
@@ -56,6 +57,17 @@ router.get(
   }
 );
 
+// To get all items of a category for Staff
+router.get("/api/v1/menu/items/:categoryId", isStaff, async (req, res) => {
+  const categoryId = req.params.categoryId;
+  try {
+    const items = await MenuItem.find({ categoryId });
+    res.send(items);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // To get a perticular dish for business Owner
 router.get(
   "/api/v1/menu/items/:categoryId/:id",
@@ -72,25 +84,21 @@ router.get(
 );
 
 // To update any other info
-router.put(
-  "/api/v1/menu/items/:categoryId/:id",
-  isBusinessOwner,
-  async (req, res) => {
-    const { name, details, price } = req.body;
-    const id = req.params.id;
-    try {
-      const update = {
-        name,
-        details,
-        price,
-      };
-      const dish = await MenuItem.findByIdAndUpdate(id, update);
-      res.send(dish);
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
-    }
+router.put("/api/v1/menu/items/:id", isBusinessOwner, async (req, res) => {
+  const { name, details, price } = req.body;
+  const id = req.params.id;
+  try {
+    const update = {
+      name,
+      details,
+      price,
+    };
+    const dish = await MenuItem.findByIdAndUpdate(id, update);
+    res.send(dish);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
-);
+});
 
 //To delete a particular dish
 router.delete(

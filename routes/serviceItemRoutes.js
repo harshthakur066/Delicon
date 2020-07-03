@@ -3,6 +3,7 @@ const router = express.Router();
 const ServiceCatogary = require("../models/ServiceCategoty");
 const ServiceItem = require("../models/ServiceItem");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const isStaff = require("../middlewares/requireStaff");
 
 //To Post New services for Owner
 router.post(
@@ -56,6 +57,17 @@ router.get(
   }
 );
 
+// To get all items of a category for Staff
+router.get("/api/v1/service/items/:categoryId", isStaff, async (req, res) => {
+  const categoryId = req.params.categoryId;
+  try {
+    const items = await ServiceItem.find({ categoryId });
+    res.send(items);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // To get a perticular service for business Owner
 router.get(
   "/api/v1/service/items/:categoryId/:id",
@@ -72,25 +84,21 @@ router.get(
 );
 
 // To update any other info
-router.put(
-  "/api/v1/service/items/:categoryId/:id",
-  isBusinessOwner,
-  async (req, res) => {
-    const { name, details, price } = req.body;
-    const id = req.params.id;
-    try {
-      const update = {
-        name,
-        details,
-        price,
-      };
-      const service = await ServiceItem.findByIdAndUpdate(id, update);
-      res.send(service);
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
-    }
+router.put("/api/v1/service/items/:id", isBusinessOwner, async (req, res) => {
+  const { name, details, price } = req.body;
+  const id = req.params.id;
+  try {
+    const update = {
+      name,
+      details,
+      price,
+    };
+    const service = await ServiceItem.findByIdAndUpdate(id, update);
+    res.send(service);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
-);
+});
 
 //To delete a particular service
 router.delete(
