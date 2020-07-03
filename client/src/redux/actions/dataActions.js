@@ -258,6 +258,389 @@ export const setworking = (Id) => (dispatch) => {
     });
 };
 
+// Menu Actions
+
+export const getMenuCategories = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/categories/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_MENUCATEGORIES,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteMenuCategory = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/menu/category/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_MENUCATEGORY,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postMenuCategory = (formdata, setloading, ID) => (dispatch) => {
+  console.log(formdata);
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/menu/categories/${ID}`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_MENUCATEGORY,
+        payload: res.data,
+      });
+      console.log(res);
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editMenuCategory = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/menu/category/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/menu/category/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_MENUCATEGORY,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const getMenuCategory = (setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/category/${ID}`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.GET_MENUCATEGORY,
+        payload: res.data,
+      });
+      setloading();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+// Menu ITEMS Actions
+
+export const getMenuItems = (categoryId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/items/${categoryId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_MENUITEMS,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteMenuItem = (categoryId, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/menu/items/${categoryId}/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_MENUITEM,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postMenuItem = (formdata, setloading, categoryId) => (
+  dispatch
+) => {
+  console.log(formdata);
+  console.log(categoryId);
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/menu/items/${categoryId}`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_MENUITEM,
+        payload: res.data,
+      });
+      console.log(res);
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editMenuItem = (formdata, setloading, ID) => (dispatch) => {
+  console.log(formdata);
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/menu/items/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/menu/items/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_MENUITEM,
+            payload: res.data,
+          });
+          console.log(res.data);
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const getMenuItem = (setloading, categoryId, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/items/${categoryId}/${ID}`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ActionTypes.GET_MENUITEM,
+        payload: res.data,
+      });
+      setloading();
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+// Service Actions
+
+export const getServiceCategories = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/service/categories/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_SERVICECATEGORIES,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteServiceCategory = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/service/category/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_SERVICECATEGORY,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postServiceCategory = (formdata, setloading, ID) => (dispatch) => {
+  console.log(formdata);
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/service/categories/${ID}`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_SERVICECATEGORY,
+        payload: res.data,
+      });
+      console.log(res);
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editServiceCategory = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/service/category/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/service/category/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_SERVICECATEGORY,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+// Service Item Actions
+
+export const getServiceItems = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/service/items/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_SERVICEITEMS,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteServiceItem = (categoryID, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/service/items/${categoryID}/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_SERVICEITEM,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postServiceItem = (formdata, setloading, ID) => (dispatch) => {
+  console.log(formdata);
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/service/items/${ID}`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_SERVICEITEM,
+        payload: res.data,
+      });
+      console.log(res);
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editServiceItem = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/service/items/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/service/items/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_SERVICEITEM,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
 ///////////////////////////////////////   FOR STAFF   /////////////////////////////////////////////////
 
 //RESERVATION ACTIONS ...........................................
@@ -345,41 +728,39 @@ export const editreservation = (formdata, setloading, ID) => (dispatch) => {
 /// Reservation Check Ins/Outs
 
 export const checkInReservation = (ID) => (dispatch) => {
-  console.log(ID)
+  console.log(ID);
   dispatch(clearErrors());
-      axios
-        .put(`/api/v1/reservations/${ID}/checkin`)
-        .then((res) => {
-          dispatch({
-            type: ActionTypes.RESERVATION_CHECKIN,
-            payload: res.data,
-          });
-          alert("CheckIn Successfully");
-
-          
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            dispatch(setErrors(err.response.data));
-          }
-        });
+  axios
+    .put(`/api/v1/reservations/${ID}/checkin`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.RESERVATION_CHECKIN,
+        payload: res.data,
+      });
+      alert("CheckIn Successfully");
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
 };
 export const checkOutReservation = (ID) => (dispatch) => {
   dispatch(clearErrors());
-      axios
-        .put(`/api/v1/reservations/${ID}/checkout`)
-        .then((res) => {
-          dispatch({
-            type: ActionTypes.RESERVATION_CHECKOUT,
-            payload: res.data,
-          });
-          alert("Checkout Successfully");
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            dispatch(setErrors(err.response.data));
-          }
-        });
+  axios
+    .put(`/api/v1/reservations/${ID}/checkout`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.RESERVATION_CHECKOUT,
+        payload: res.data,
+      });
+      alert("Checkout Successfully");
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
 };
 
 //Valets Actions ................................................
@@ -459,24 +840,25 @@ export const editvalets = (formdata, setloading, ID) => (dispatch) => {
       }
     });
 };
+
 export const valetstimeout = (ID) => (dispatch) => {
   dispatch(clearErrors());
   axios
-        .put(`/api/v1/valets/${ID}/timeout`)
-        .then((res) => {
-          dispatch({
-            type: ActionTypes.VALET_TIMEOUT,
-            payload: res.data,
-          });
-          
-          alert("Edited Successfully");
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            dispatch(setErrors(err.response.data));
-          }
-        });
-    }
+    .put(`/api/v1/valets/${ID}/timeout`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.VALET_TIMEOUT,
+        payload: res.data,
+      });
+
+      alert("Edited Successfully");
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
 
 //WalkIN Actions ...............................................................................
 
@@ -558,121 +940,14 @@ export const editwalkin = (formdata, setloading, ID) => (dispatch) => {
 
 export const walkout = (ID) => (dispatch) => {
   dispatch(clearErrors());
-      axios
-        .put(`/api/v1/walkin/${ID}/walkout`)
-        .then((res) => {
-          dispatch({
-            type: ActionTypes.WALK_OUT,
-            payload: res.data,
-          });
-          alert("Walkout Successfully");
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            dispatch(setErrors(err.response.data));
-          }
-        });
-    }
- 
-    // Menu Actions
-
-    
-export const getMenuCategories = (ID) => (dispatch) => {
-  dispatch(clearErrors());
   axios
-    .get(`/api/v1/menu/categories/${ID}`)
+    .put(`/api/v1/walkin/${ID}/walkout`)
     .then((res) => {
       dispatch({
-        type: ActionTypes.GET_MENUCATEGORIES,
+        type: ActionTypes.WALK_OUT,
         payload: res.data,
       });
-      console.log(res)
-    })
-    .catch((err) => {
-      dispatch(setErrors(err.response.data));
-    });
-};
-
-export const deleteMenuCategory = (ID) => (dispatch) => {
-  dispatch(clearErrors());
-  axios
-    .delete(`/api/v1/menu/category/${ID}`)
-    .then((res) => {
-      dispatch({
-        type: ActionTypes.DELETE_MENUCATEGORY,
-        payload: ID,
-      });
-    })
-    .then(alert("Business Deleted"))
-    .catch((err) => {
-      dispatch(setErrors(err.response.data));
-    });
-};
-
-export const postMenuCategory = (formdata, setloading,ID) => (dispatch) => {
-  console.log(formdata)
-  console.log(ID)
-  dispatch(clearErrors());
-  axios
-    .post(`/api/v1/menu/categories/${ID}`,formdata)
-    .then((res) => {
-      dispatch({
-        type: ActionTypes.POST_MENUCATEGORY,
-        payload: res.data,
-      });
-      console.log(res)
-      setloading();
-      alert("Submitted");
-    })
-    .catch((err) => {
-      console.log(err)
-      if (err.response !== undefined) {
-        dispatch(setErrors(err.response.data));
-      }
-    });
-};
-
-
-    export const editMenuCategory = (formdata, setloading, ID) => (dispatch) => {
-      dispatch(clearErrors());
-      axios
-        .put(`/api/v1/menu/category/${ID}`, formdata)
-        .then(() => {
-          axios
-            .put(`/api/v1/menu/category/${ID}`, formdata)
-            .then((res) => {
-              dispatch({
-                type: ActionTypes.EDIT_MENUCATEGORY,
-                payload: res.data,
-              });
-              setloading();
-              alert("Edited Successfully");
-            })
-            .catch((err) => {
-              if (err.response !== undefined) {
-                dispatch(setErrors(err.response.data));
-              }
-            });
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            dispatch(setErrors(err.response.data));
-          }
-        });
-    };
-
-
-export const getMenuCategory = (setloading, ID) => (dispatch) => {
-  dispatch(clearErrors());
-  axios
-    .get(`/api/v1/menu/category/${ID}`)
-    .then((res) => {
-      console.log(res.data);
-      dispatch({
-        type: ActionTypes.GET_MENUCATEGORY,
-        payload: res.data,
-      });
-      setloading();
+      alert("Walkout Successfully");
     })
     .catch((err) => {
       if (err.response !== undefined) {
@@ -680,4 +955,3 @@ export const getMenuCategory = (setloading, ID) => (dispatch) => {
       }
     });
 };
-

@@ -14,13 +14,12 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+  getServiceItems,
+  editServiceItem,
+  postServiceItem,
+  deleteServiceItem,
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
 
 const styles = {
   bodycard: {
@@ -107,30 +106,31 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+  getServiceItems,
+  editServiceItem,
+  postServiceItem,
+  deleteServiceItem,
 };
 
-class menu extends Component {
+class serviceItem extends Component {
   state = {
     modalmode: null,
     _id: "",
     name: "",
     details: "",
+    price: "",
     btnload: false,
     loading: true,
     postmodal: false,
   };
 
   componentDidMount() {
-    this.props.getMenuCategories(this.props.match.params.businessid);
+    this.props.getServiceItems(this.props.match.params.serviceid);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.data.owner.menu !== undefined) {
+    if (newProps.data.owner.serviceItem !== undefined) {
       this.setState({
         loading: false,
       });
@@ -168,15 +168,16 @@ class menu extends Component {
     const userData = {
       name: this.state.name,
       details: this.state.details,
+      price: this.state.price,
     };
     if (this.state.modalmode === "Post") {
-      this.props.postMenuCategory(
+      this.props.postServiceItem(
         userData,
         this.handleDone,
-        this.props.match.params.businessid
+        this.props.match.params.serviceid
       );
     } else {
-      this.props.editMenuCategory(userData, this.handleDone, this.state._id);
+      this.props.editServiceItem(userData, this.handleDone, this.state._id);
     }
   };
 
@@ -197,6 +198,7 @@ class menu extends Component {
     this.setState({
       name: business.name,
       details: business.details,
+      price: business.price,
       modalmode: "Edit",
       _id: business._id,
       postmodal: true,
@@ -207,6 +209,7 @@ class menu extends Component {
     this.setState({
       name: business.name,
       details: business.details,
+      price: business.price,
       modalmode: "Open",
       _id: business._id,
       postmodal: true,
@@ -218,48 +221,32 @@ class menu extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const { classes, deleteMenuCategory } = this.props;
-
-    console.log(this.props.data.owner.menu);
+    const { classes, deleteServiceItem } = this.props;
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.owner.menu.map((food, index) => (
+      this.props.data.owner.serviceItem.map((food, index) => (
         <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
-          
           <Card className={classes.bodycard}>
             <CardContent>
               <Typography style={{ fontSize: "1.05rem" }}>
                 {food.name} <br></br>
                 {food.details}
+                <br />
+                {food.price}
               </Typography>
-              {/* <div className = "float-left mb-2">
-                  {<Button
-                   style={{color:"#616161"}} 
-                    onClick={() => this.openbusiness(food)}
-                    variant="contained"
-                  size="small"
-                           >
-                     Details
-                        </Button> }
-               
-                 </div> */}
-               <br></br>
-
-               <Button
-                component={Link}
+              <Button
+                style={{ color: "#616161" }}
+                onClick={() => this.openbusiness(food)}
                 variant="contained"
-                color="inherit"
                 size="small"
-                to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
+                className="mt-3"
               >
-                Items
+                Details
               </Button>
-            
-            <br className={classes.breaker} />
               <br className={classes.breaker} />
             </CardContent>
             <RiEdit2Line
@@ -269,7 +256,9 @@ class menu extends Component {
             ></RiEdit2Line>
             <DeleteIcon
               size={25}
-              onClick={() => deleteMenuCategory(food._id)}
+              onClick={() =>
+                deleteServiceItem(this.props.match.params.serviceid, food._id)
+              }
               className={classes.delete}
             />
           </Card>
@@ -280,7 +269,7 @@ class menu extends Component {
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Menu
+          Services
         </p>
         <div className="row mt-4">
           <div className="col-12">
@@ -290,7 +279,7 @@ class menu extends Component {
                 variant="contained"
                 onClick={this.handlePost}
               >
-                Add Category
+                Add Item
               </Button>
             )}
           </div>
@@ -313,21 +302,21 @@ class menu extends Component {
                   style={{ fontSize: "1.5rem" }}
                   className={classes.pageTitle}
                 >
-                  Add a New Category
+                  Add a New Item
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography
                   style={{ fontSize: "1.5rem" }}
                   className={classes.pageTitle}
                 >
-                  Edit a Category
+                  Edit a Item
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
                   style={{ fontSize: "1.5rem" }}
                   className={classes.pageTitle}
                 >
-                  Your Category
+                  Your Item
                 </Typography>
               ) : null}
               {modalmode === "Open" ? (
@@ -357,6 +346,16 @@ class menu extends Component {
                     label="Details.."
                     className={classes.TextField}
                     value={this.state.details}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                  <TextField
+                    name="price"
+                    type="price"
+                    label="Price.."
+                    className={classes.TextField}
+                    value={this.state.price}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
@@ -391,4 +390,4 @@ class menu extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(menu));
+)(withStyles(styles)(serviceItem));

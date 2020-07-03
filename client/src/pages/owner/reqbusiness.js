@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   getreqbusinesses,
   postbusiness,
@@ -124,8 +123,7 @@ class Businesses extends Component {
 
   componentDidMount() {
     this.props.getreqbusinesses();
-    document.body.style.backgroundColor = "#F0F2FE"
-
+    document.body.style.backgroundColor = "#F0F2FE";
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.data.owner.reqbusinesses !== undefined) {
@@ -228,22 +226,15 @@ class Businesses extends Component {
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
-             
-                style={{ color: "#070707",fontSize : "1.05rem" }}
+                style={{ color: "#070707", fontSize: "1.05rem" }}
                 gutterBottom
               >
                 {business.name}
               </Typography>
-              <Typography
-               
-                style={{ color: "#455A64",fontSize : "1.05rem" }}
-              >
+              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
                 {business.details}
               </Typography>
-              <Typography
-                
-                style={{ color: "#455A64",fontSize : "1.05rem" }}
-              >
+              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
                 Status - {business.status}
               </Typography>
               <div className="text-center pb-4">
@@ -269,7 +260,9 @@ class Businesses extends Component {
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style = {{fontSize : "2rem"}}className="text-center mt-4">Requested Businesses </p>
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
+          Requested Businesses{" "}
+        </p>
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
@@ -293,15 +286,24 @@ class Businesses extends Component {
           <div className={classes.modlebox}>
             <div className="container">
               {modalmode === "Post" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Request a new Business
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Edit a Business Request
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                <Typography
+                  style={{ fontSize: "1.5rem" }}
+                  className={classes.pageTitle}
+                >
                   Your Business
                 </Typography>
               ) : null}

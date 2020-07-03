@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   withStyles,
@@ -14,13 +14,12 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+  editServiceCategory,
+  postServiceCategory,
+  deleteServiceCategory,
+  getServiceCategories,
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
 
 const styles = {
   bodycard: {
@@ -28,7 +27,7 @@ const styles = {
     marginBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: "#FFFFFF", //card-bg-color
+    backgroundColor: "#FFFFFF",
     boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
@@ -98,6 +97,14 @@ const styles = {
     outline: "none",
     overflowY: "scroll",
   },
+  actions: {
+    margin: "auto",
+    width: "50%",
+    "@media (min-width:780px)": {
+      margin: "auto",
+      width: "15%",
+    },
+  },
 };
 
 const mapStateToProps = (state) => ({
@@ -107,13 +114,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+  editServiceCategory,
+  postServiceCategory,
+  deleteServiceCategory,
+  getServiceCategories,
 };
 
-class menu extends Component {
+class service extends Component {
   state = {
     modalmode: null,
     _id: "",
@@ -125,12 +132,12 @@ class menu extends Component {
   };
 
   componentDidMount() {
-    this.props.getMenuCategories(this.props.match.params.businessid);
+    this.props.getServiceCategories(this.props.match.params.businessid);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.data.owner.menu !== undefined) {
+    if (newProps.data.owner.service !== undefined) {
       this.setState({
         loading: false,
       });
@@ -170,13 +177,13 @@ class menu extends Component {
       details: this.state.details,
     };
     if (this.state.modalmode === "Post") {
-      this.props.postMenuCategory(
+      this.props.postServiceCategory(
         userData,
         this.handleDone,
         this.props.match.params.businessid
       );
     } else {
-      this.props.editMenuCategory(userData, this.handleDone, this.state._id);
+      this.props.editServiceCategory(userData, this.handleDone, this.state._id);
     }
   };
 
@@ -218,48 +225,42 @@ class menu extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const { classes, deleteMenuCategory } = this.props;
+    const { classes, deleteServiceCategory } = this.props;
 
-    console.log(this.props.data.owner.menu);
+    console.log(this.props.data.owner.service);
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.owner.menu.map((food, index) => (
+      this.props.data.owner.service.map((food, index) => (
         <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
-          
           <Card className={classes.bodycard}>
             <CardContent>
               <Typography style={{ fontSize: "1.05rem" }}>
                 {food.name} <br></br>
                 {food.details}
               </Typography>
-              {/* <div className = "float-left mb-2">
-                  {<Button
-                   style={{color:"#616161"}} 
-                    onClick={() => this.openbusiness(food)}
-                    variant="contained"
-                  size="small"
-                           >
-                     Details
-                        </Button> }
-               
-                 </div> */}
-               <br></br>
-
-               <Button
+              {/* <Button
+                style={{ color: "#616161" }}
+                onClick={() => this.openbusiness(food)}
+                variant="contained"
+                size="small"
+                className="mt-3 mr-3"
+              >
+                Details
+              </Button> */}
+              <Button
                 component={Link}
                 variant="contained"
-                color="inherit"
                 size="small"
-                to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
+                color="inherit"
+                to={`/serviceitem/${food._id}`}
+                className="mt-3"
               >
-                Items
+                ITEMS
               </Button>
-            
-            <br className={classes.breaker} />
               <br className={classes.breaker} />
             </CardContent>
             <RiEdit2Line
@@ -269,7 +270,7 @@ class menu extends Component {
             ></RiEdit2Line>
             <DeleteIcon
               size={25}
-              onClick={() => deleteMenuCategory(food._id)}
+              onClick={() => deleteServiceCategory(food._id)}
               className={classes.delete}
             />
           </Card>
@@ -280,7 +281,7 @@ class menu extends Component {
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Menu
+          Services
         </p>
         <div className="row mt-4">
           <div className="col-12">
@@ -391,4 +392,4 @@ class menu extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(menu));
+)(withStyles(styles)(service));

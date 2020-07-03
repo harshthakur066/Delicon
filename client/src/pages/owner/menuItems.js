@@ -14,13 +14,14 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+    getMenuItem,
+    editMenuItem,
+    postMenuItem,
+    deleteMenuItem,
+    getMenuItems,
 } from "../../redux/actions/dataActions";
 import { RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
+
 
 const styles = {
   bodycard: {
@@ -37,9 +38,9 @@ const styles = {
   },
   fr: {
     float: "right",
-    "@media (min-width: 320px) and (max-width: 480px)": {
+    '@media (min-width: 320px) and (max-width: 480px)' : {
       float: "none",
-    },
+    }
   },
   breaker: {
     marginTop: 5,
@@ -57,9 +58,9 @@ const styles = {
     marginBottom: "1.05rem",
   },
   root: {
-    margin: "auto",
-    textAlign: "center",
-    flexGrow: 0,
+    margin:"auto",
+    textAlign:"center",
+    flexGrow: 0
   },
   bullet: {
     display: "inline-block",
@@ -90,7 +91,7 @@ const styles = {
     top: "15%",
     left: "10%",
     right: "10%",
-    bottom: "5%",
+    bottom:"5%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
@@ -100,6 +101,8 @@ const styles = {
   },
 };
 
+
+
 const mapStateToProps = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -107,30 +110,41 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  editMenuCategory,
-  postMenuCategory,
-  deleteMenuCategory,
-  getMenuCategories,
+    getMenuItem,
+    editMenuItem,
+    postMenuItem,
+    deleteMenuItem,
+    getMenuItems,
 };
 
-class menu extends Component {
+class menuItems extends Component {
   state = {
     modalmode: null,
     _id: "",
     name: "",
     details: "",
+    price:"",
     btnload: false,
     loading: true,
-    postmodal: false,
+    postmodal: false, 
   };
 
+  handleMe = (event, newValue) => { //used in Tabs
+    this.setState({
+      value : newValue
+    });   
+   };
+
   componentDidMount() {
-    this.props.getMenuCategories(this.props.match.params.businessid);
-    document.body.style.backgroundColor = "#F0F2FE";
-  }
+      console.log("MENuITEMs")
+      console.log(this.props.match.params.id)
+    this.props.getMenuItems(this.props.match.params.id);
+
+    document.body.style.backgroundColor = "#F0F2FE"
+    }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.data.owner.menu !== undefined) {
+    if (newProps.data.owner.item !== undefined) {
       this.setState({
         loading: false,
       });
@@ -150,6 +164,7 @@ class menu extends Component {
       postmodal: true,
       name: "",
       details: "",
+      price:""
     });
   };
 
@@ -168,15 +183,12 @@ class menu extends Component {
     const userData = {
       name: this.state.name,
       details: this.state.details,
+      price: this.state.price
     };
     if (this.state.modalmode === "Post") {
-      this.props.postMenuCategory(
-        userData,
-        this.handleDone,
-        this.props.match.params.businessid
-      );
+      this.props.postMenuItem(userData, this.handleDone,this.props.match.params.id);
     } else {
-      this.props.editMenuCategory(userData, this.handleDone, this.state._id);
+      this.props.editMenuItem(userData, this.handleDone,this.state._id);
     }
   };
 
@@ -197,6 +209,9 @@ class menu extends Component {
     this.setState({
       name: business.name,
       details: business.details,
+      price: business.price,
+      ownerId: this.props.user.profile.ownerId,
+      businessId: this.props.user.profile.businessId,
       modalmode: "Edit",
       _id: business._id,
       postmodal: true,
@@ -207,6 +222,9 @@ class menu extends Component {
     this.setState({
       name: business.name,
       details: business.details,
+      price: business.price,
+      ownerId: this.props.user.profile.ownerId,
+      businessId: this.props.user.profile.businessId,
       modalmode: "Open",
       _id: business._id,
       postmodal: true,
@@ -218,24 +236,32 @@ class menu extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const { classes, deleteMenuCategory } = this.props;
+    const { classes,
+        deleteMenuItem,
+         } = this.props; //WithStyles Material Thing
 
-    console.log(this.props.data.owner.menu);
+             
+    console.log(this.props.data.owner.item);
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.owner.menu.map((food, index) => (
-        <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
+      this.props.data.owner.item.map((food, index) => (
+         
           
+        <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
           <Card className={classes.bodycard}>
             <CardContent>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                {food.name} <br></br>
+              <Typography style = {{fontSize : "1.05rem"}} >
+                 {food.name}{" "}
+                 <br></br>
                 {food.details}
+                <br></br>
+                {food.price}
               </Typography>
+              
               {/* <div className = "float-left mb-2">
                   {<Button
                    style={{color:"#616161"}} 
@@ -247,20 +273,10 @@ class menu extends Component {
                         </Button> }
                
                  </div> */}
-               <br></br>
 
-               <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
-              >
-                Items
-              </Button>
             
             <br className={classes.breaker} />
-              <br className={classes.breaker} />
+
             </CardContent>
             <RiEdit2Line
               size={25}
@@ -269,33 +285,40 @@ class menu extends Component {
             ></RiEdit2Line>
             <DeleteIcon
               size={25}
-              onClick={() => deleteMenuCategory(food._id)}
+              onClick={() => deleteMenuItem(this.props.match.params.id , food._id)}
               className={classes.delete}
             />
           </Card>
         </div>
+       
       ))
     );
 
+
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Menu
-        </p>
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <Button
-                className="mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Category
-              </Button>
-            )}
+        <p style = {{fontSize : "2rem"}} className="text-center mt-4">
+          Menu Items
+          </p>
+{/* ADD */}
+    <div className="row mt-4">
+            <div className="col-12" >
+          {loading ? null : (
+            <Button
+            className="mb-4 float-right"
+              variant="contained"
+              onClick={this.handlePost}
+            >
+              Add Items
+            </Button>
+          )}
           </div>
-        </div>
-        <div className="row mt-4">{markup}</div>
+          </div>
+          <div className="row mt-4">
+       
+            {markup}
+        
+          </div>
 
         <Modal
           open={this.state.postmodal}
@@ -309,25 +332,16 @@ class menu extends Component {
               style={{ padding: "20px 25px", textAlign: "center" }}
             >
               {modalmode === "Post" ? (
-                <Typography
-                  style={{ fontSize: "1.5rem" }}
-                  className={classes.pageTitle}
-                >
-                  Add a New Category
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                  Add a New Items
                 </Typography>
               ) : modalmode === "Edit" ? (
-                <Typography
-                  style={{ fontSize: "1.5rem" }}
-                  className={classes.pageTitle}
-                >
-                  Edit a Category
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                  Edit a Item
                 </Typography>
               ) : modalmode === "Open" ? (
-                <Typography
-                  style={{ fontSize: "1.5rem" }}
-                  className={classes.pageTitle}
-                >
-                  Your Category
+                <Typography style = {{fontSize : "1.5rem"}} className={classes.pageTitle}>
+                  Your Items
                 </Typography>
               ) : null}
               {modalmode === "Open" ? (
@@ -338,6 +352,11 @@ class menu extends Component {
                   <Typography variant="h6" className="mt-2 ">
                     Details - {this.state.details}
                   </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                    Price - {this.state.price}
+                  </Typography>
+                 
+                 
                 </>
               ) : (
                 <form onSubmit={this.handleSubmit}>
@@ -361,7 +380,17 @@ class menu extends Component {
                     fullWidth
                     required={true}
                   />
-
+                  <TextField
+                    name="price"
+                    type="price"
+                    label="Price.."
+                    className={classes.TextField}
+                    value={this.state.price}
+                    onChange={this.handleChange}
+                    fullWidth
+                    required={true}
+                  />
+                 
                   {this.state.errors ? <p>{this.state.errors.error}</p> : null}
                   <Button
                     type="submit"
@@ -382,7 +411,7 @@ class menu extends Component {
               )}
             </div>
           </div>
-        </Modal>
+        </Modal>  
       </div>
     );
   }
@@ -391,4 +420,4 @@ class menu extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(menu));
+)(withStyles(styles)(menuItems));

@@ -132,8 +132,7 @@ class Businesses extends Component {
 
   componentDidMount() {
     this.props.getbusinesses();
-    document.body.style.backgroundColor = "#F0F2FE"
-
+    document.body.style.backgroundColor = "#F0F2FE";
   }
 
   componentWillReceiveProps(nextProps) {
@@ -215,7 +214,7 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    console.log(this.props.data.owner.businesses)
+    console.log(this.props.data.owner.businesses);
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
@@ -228,14 +227,11 @@ class Businesses extends Component {
             <CardContent>
               <Typography
                 // className={classes.title}
-                style={{ color: "#070707",fontSize : "1.05rem" }}
+                style={{ color: "#070707", fontSize: "1.05rem" }}
               >
                 {business.name}
               </Typography>
-              <Typography
-                
-                style={{ color: "#455A64",fontSize : "1.05rem" }}
-              >
+              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
                 {business.details}
               </Typography>
               <RiEdit2Line
@@ -269,9 +265,9 @@ class Businesses extends Component {
               >
                 Staffs
               </Button>
-              
             </CardActions>
-            <Button
+            <CardActions className={classes.actions}>
+              <Button
                 component={Link}
                 variant="contained"
                 color="inherit"
@@ -280,13 +276,25 @@ class Businesses extends Component {
               >
                 Menu
               </Button>
+              <Button
+                component={Link}
+                variant="contained"
+                color="inherit"
+                size="small"
+                to={`/service/${business._id}`}
+              >
+                Services
+              </Button>
+            </CardActions>
           </Card>
         </div>
       ))
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style = {{fontSize : "2rem"}} className="text-center mt-4">Your Businesses</p>
+        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
+          Your Businesses
+        </p>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -297,17 +305,15 @@ class Businesses extends Component {
             <div className="container">
               {modlemode === "Post" ? (
                 <Typography
-                 
                   className={classes.pageTitle}
-                  style={{ textAlign: "center",fontSize : "1.3rem" }}
+                  style={{ textAlign: "center", fontSize: "1.3rem" }}
                 >
                   Request a New Business
                 </Typography>
               ) : (
                 <Typography
-                 
                   className={classes.pageTitle}
-                  style={{ textAlign: "center",fontSize : "1.3rem" }}
+                  style={{ textAlign: "center", fontSize: "1.3rem" }}
                 >
                   Edit a Business
                 </Typography>
