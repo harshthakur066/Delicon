@@ -2,6 +2,7 @@ const express = require("express");
 
 const ServiceCategory = require("../models/ServiceCategoty");
 const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const isStaff = require("../middlewares/requireStaff");
 
 const router = express.Router();
 
@@ -34,6 +35,22 @@ router.post(
 router.get(
   "/api/v1/service/categories/:businessId",
   isBusinessOwner,
+  async (req, res) => {
+    try {
+      const serviceCategory = await ServiceCategory.find({
+        businessId: req.params.businessId,
+      });
+      res.status(200).json(serviceCategory);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+// READ ALL CATEGORIES OF service Access to Staff
+router.get(
+  "/api/v1/service/categories/:businessId",
+  isStaff,
   async (req, res) => {
     try {
       const serviceCategory = await ServiceCategory.find({
