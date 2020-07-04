@@ -58,7 +58,7 @@ router.get(
 );
 
 // To get all items of a category for Staff
-router.get("/api/v1/menu/items/:categoryId", isStaff, async (req, res) => {
+router.get("/api/v1/menu/staffitems/:categoryId", isStaff, async (req, res) => {
   const categoryId = req.params.categoryId;
   try {
     const items = await MenuItem.find({ categoryId });

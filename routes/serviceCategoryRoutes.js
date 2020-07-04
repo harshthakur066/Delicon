@@ -49,7 +49,7 @@ router.get(
 
 // READ ALL CATEGORIES OF service Access to Staff
 router.get(
-  "/api/v1/service/categories/:businessId",
+  "/api/v1/service/staffcategories/:businessId",
   isStaff,
   async (req, res) => {
     try {

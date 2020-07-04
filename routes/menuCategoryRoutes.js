@@ -48,16 +48,20 @@ router.get(
 );
 
 // READ ALL CATEGORIES OF Menu Access to Staff
-router.get("/api/v1/menu/categories/:businessId", isStaff, async (req, res) => {
-  try {
-    const menuCategory = await MenuCategory.find({
-      businessId: req.params.businessId,
-    });
-    res.status(200).json(menuCategory);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.get(
+  "/api/v1/menu/staffcategories/:businessId",
+  isStaff,
+  async (req, res) => {
+    try {
+      const menuCategory = await MenuCategory.find({
+        businessId: req.params.businessId,
+      });
+      res.status(200).json(menuCategory);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 // READ PARTICULAR CATEGORY OF MENU Access to Business Owner
 router.get("/api/v1/menu/category/:id", isBusinessOwner, async (req, res) => {

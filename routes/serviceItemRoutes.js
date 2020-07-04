@@ -58,15 +58,19 @@ router.get(
 );
 
 // To get all items of a category for Staff
-router.get("/api/v1/service/items/:categoryId", isStaff, async (req, res) => {
-  const categoryId = req.params.categoryId;
-  try {
-    const items = await ServiceItem.find({ categoryId });
-    res.send(items);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+router.get(
+  "/api/v1/service/staffitems/:categoryId",
+  isStaff,
+  async (req, res) => {
+    const categoryId = req.params.categoryId;
+    try {
+      const items = await ServiceItem.find({ categoryId });
+      res.send(items);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   }
-});
+);
 
 // To get a perticular service for business Owner
 router.get(
