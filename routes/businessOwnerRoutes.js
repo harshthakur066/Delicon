@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const requireAdmin = require("../middlewares/requireSuperAdmin");
+const requireOwner = require("../middlewares/requiredBusinessOwner");
 const BusinessCategory = require("../models/BusinessCategory");
 const Business = require("../models/Business");
 const BusinessOwner = require("../models/BusinessOwner");
@@ -103,6 +104,26 @@ router.get("/api/v1/businessowner", requireAdmin, async (req, res) => {
 //Get Owner details for admin
 router.get("/api/v1/businessowner/:ownerId", requireAdmin, async (req, res) => {
   const { ownerId } = req.params;
+  try {
+    const own = await BusinessOwner.findById(ownerId);
+    const ownerdata = {
+      businesses: own.businesses,
+      reqbusinesses: own.reqbusinesses,
+      name: own.name,
+      email: own.email,
+      category: own.category,
+      categoryId: own.categoryId,
+      id: own._id,
+    };
+    res.send(ownerdata);
+  } catch (err) {
+    return res.status(404).send({ error: err.message });
+  }
+});
+
+//Get Owner details for Owner
+router.get("/api/v1/businessowner/profile", requireOwner, async (req, res) => {
+  const { ownerId } = req.owner._id;
   try {
     const own = await BusinessOwner.findById(ownerId);
     const ownerdata = {
