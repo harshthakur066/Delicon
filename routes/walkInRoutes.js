@@ -102,7 +102,7 @@ router.put("/api/v1/walkin/:id/walkout", requireStaff, async (req, res) => {
 
 // To update particular walkin
 router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
-  const { name, mobno, email, dob, address } = req.body;
+  const { name, mobno, email, dob, address, seats } = req.body;
   const walkInId = req.params.id;
   try {
     const update = {
@@ -111,6 +111,7 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
       email,
       dob,
       address,
+      seats,
     };
     const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
     res.send(walkIn);
