@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const WalkIn = require("../models/WalkIn");
 const requireBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const requireStaff = require("../middlewares/requireStaff");
 
 //For Business Owner to Show all walkIns
 router.get(
@@ -28,6 +29,23 @@ router.get(
         businessId: req.params.id,
       });
       res.json(walkIns);
+    } catch (err) {
+      console.log(err);
+      res.json({ error: err.message });
+    }
+  }
+);
+
+//For Staff to get all walkins in menu module
+router.get(
+  "/api/v1/analytics/walkins/orders/:businessId",
+  requireStaff,
+  async (req, res) => {
+    try {
+      const wallkins = await WalkIn.find({
+        businessId: req.params.businessId,
+      });
+      res.json(wallkins);
     } catch (err) {
       console.log(err);
       res.json({ error: err.message });

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Reservation = require("../models/Reservation");
 const requireBusinessOwner = require("../middlewares/requiredBusinessOwner");
+const requireStaff = require("../middlewares/requireStaff");
 
 //For Business Owner to Show all reservations
 router.get(
@@ -26,6 +27,23 @@ router.get(
     try {
       const reservations = await Reservation.find({
         businessId: req.params.id,
+      });
+      res.json(reservations);
+    } catch (err) {
+      console.log(err);
+      res.json({ error: err.message });
+    }
+  }
+);
+
+//For Staff to get all reservations in menu module
+router.get(
+  "/api/v1/analytics/reservations/orders/:businessId",
+  requireStaff,
+  async (req, res) => {
+    try {
+      const reservations = await Reservation.find({
+        businessId: req.params.businessId,
       });
       res.json(reservations);
     } catch (err) {
