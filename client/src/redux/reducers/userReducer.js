@@ -30,6 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         profile: action.payload,
       };
+
     default:
       return state;
   }

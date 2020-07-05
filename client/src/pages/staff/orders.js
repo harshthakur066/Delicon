@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  getbusinesses,
-  deletebusiness,
-  editbusiness,
-} from "../../redux/actions/dataActions";
+import { getorders } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -22,27 +18,23 @@ import {
 
 import { RiEdit2Line } from "react-icons/ri";
 
-//Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
   UI: state.UI,
   data: state.data,
+  user: state.user,
 });
 
-//jo bhi action chahiye use import kr aur isme dalde
 const mapDispatchtoProps = {
-  getbusinesses,
-  deletebusiness,
-  editbusiness,
+  getorders,
 };
 
-//inline styles likhne ke liye withStyles use krle Material UI se
 const styles = {
   cardStyle: {
     display: "block",
     width: "100%",
     height: "auto",
     marginBottom: "2rem",
-    backgroundColor: "#FFFFFF", //card-bg-color
+    backgroundColor: "#FFFFFF",
     boxShadow: "1px 2px 4px 1px grey",
     "&:hover": {
       transition: "(0.4s)",
@@ -115,9 +107,7 @@ const styles = {
   },
 };
 
-class Businesses extends Component {
-  //Loading component wise handel krenge. Ye componenet ko data load krna padta hai staring mai hi
-  //so loding ko true rakhenge start me hi.
+class Orders extends Component {
   state = {
     modalmode: null,
     _id: "",
@@ -131,12 +121,12 @@ class Businesses extends Component {
   };
 
   componentDidMount() {
-    this.props.getbusinesses();
+    this.props.getorders(this.props.user.profile.businessId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.data.owner.businesses !== undefined) {
+    if (nextProps.data.staff.orders !== undefined) {
       this.setState({
         loading: false,
       });
@@ -214,24 +204,25 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    console.log(this.props.data.owner.businesses)
-
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.owner.businesses.map((business, index) => (
+      this.props.data.staff.orders.map((order, index) => (
         <div key={index} className="col-12 text-center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                {business.name}
+                Order Id :- {order._id}
               </Typography>
               <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                {business.details}
+                Customer Id :- {order.custId}
               </Typography>
-              <RiEdit2Line
+              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                Staff Id :- {order.staffId}
+              </Typography>
+              {/* <RiEdit2Line
                 size="25"
                 onClick={() => this.editbusiness(business)}
                 className={classes.edit}
@@ -240,49 +231,8 @@ class Businesses extends Component {
                 size="25"
                 onClick={() => deletebusiness(business._id)}
                 className={classes.delete}
-              />
+              /> */}
             </CardContent>
-
-            <CardActions className={classes.actions}>
-              <Button
-                component={Link}
-                variant="contained"
-                size="small"
-                color="inherit"
-                to={`/businesses/${business._id}`}
-              >
-                Details
-              </Button>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/staffs/${business._id}`}
-              >
-                Staffs
-              </Button>
-            </CardActions>
-            <CardActions className={classes.actions}>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/menu/${business._id}`}
-              >
-                Menu
-              </Button>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/service/${business._id}`}
-              >
-                Services
-              </Button>
-            </CardActions>
           </Card>
         </div>
       ))
@@ -290,8 +240,22 @@ class Businesses extends Component {
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Your Businesses
+          Orders
         </p>
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <Button
+                component={Link}
+                className="mb-4 float-right"
+                variant="contained"
+                to="/order/customers"
+              >
+                Add Order
+              </Button>
+            )}
+          </div>
+        </div>
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -384,4 +348,4 @@ class Businesses extends Component {
 export default connect(
   mapStatetoprops,
   mapDispatchtoProps
-)(withStyles(styles)(Businesses));
+)(withStyles(styles)(Orders));

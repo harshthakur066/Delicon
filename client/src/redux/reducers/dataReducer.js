@@ -2,7 +2,13 @@ import * as ActionTypes from "../types";
 
 const initialState = {
   owner: {},
-  staff: {},
+  staff: {
+    order: {
+      custId: "",
+      MenuItems: [],
+      services: [],
+    },
+  },
 };
 
 export default function (state = initialState, action) {
@@ -368,6 +374,62 @@ export default function (state = initialState, action) {
       return {
         ...state,
         owner: item4,
+      };
+    case ActionTypes.GET_STAFFMENUCATEGORIES:
+      return {
+        ...state,
+        staff: { menu: action.payload, ...state.staff },
+      };
+    case ActionTypes.GET_STAFFSERVICECATEGORIES:
+      return {
+        ...state,
+        staff: { service: action.payload, ...state.staff },
+      };
+    case ActionTypes.SELECT_CUSTOMER:
+      var ord1 = state.staff;
+      ord1.order.custId = action.payload;
+      return {
+        ...state,
+        staff: ord1,
+      };
+    case ActionTypes.SELECT_MENUITEM:
+      var ord2 = state.staff;
+      ord2.order.MenuItems.push(action.payload);
+      return {
+        ...state,
+        staff: ord2,
+      };
+    case ActionTypes.SELECT_SERVICEITEM:
+      var ord3 = state.staff;
+      ord3.order.services.push(action.payload);
+      return {
+        ...state,
+        staff: ord3,
+      };
+
+    case ActionTypes.GET_ORDERS:
+      var ord4 = state.staff;
+      ord4.orders = action.payload;
+      console.log(ord4.orders);
+      return {
+        ...state,
+        staff: ord4,
+      };
+
+    case ActionTypes.GET_RESCUST:
+      var ord5 = state.staff;
+      ord5.allres = action.payload;
+      return {
+        ...state,
+        staff: ord5,
+      };
+
+    case ActionTypes.GET_WALKCUST:
+      var ord6 = state.staff;
+      ord6.allwalk = action.payload;
+      return {
+        ...state,
+        staff: ord6,
       };
 
     default:

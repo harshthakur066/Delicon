@@ -101,10 +101,15 @@ class ButtonAppBar extends Component {
     });
   };
 
-  componentDidMount() {
-    if (window.innerWidth > 768) {
+  componentWillReceiveProps(newProps) {
+    if (window.innerWidth > 768 && newProps.user.authenticated) {
       this.setState({
         open: true,
+      });
+    }
+    if (!newProps.user.authenticated) {
+      this.setState({
+        open: false,
       });
     }
   }
@@ -218,6 +223,10 @@ class ButtonAppBar extends Component {
               <ListItem button component={NavLink} to="/valets">
                 <RiParkingBoxLine />
                 Valets
+              </ListItem>
+              <ListItem button component={NavLink} to="/orders">
+                <RiParkingBoxLine />
+                Orders
               </ListItem>
             </List>
           )}

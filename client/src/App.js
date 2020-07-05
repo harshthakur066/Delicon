@@ -24,12 +24,19 @@ import menu from "./pages/owner/menu";
 import menuItems from "./pages/owner/menuItems";
 import service from "./pages/owner/service";
 import serviceItem from "./pages/owner/serviceItem";
+import staffMenuService from "./pages/staff/staffMenuService";
+import orders from "./pages/staff/orders";
+import {
+  getUserOwnerData,
+  getUserStaffData,
+} from "./redux/actions/userActions";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 
 import Navbar from "./components/Navbar";
 import ErrorBoundry from "./components/errorBoundry/errorBoundry";
 import { ThemeProvider } from "styled-components";
+import orderCustomer from "./pages/staff/orderCustomer";
 
 axios.defaults.baseURL = "https://deliconreservation.herokuapp.com";
 
@@ -41,7 +48,11 @@ if (token) {
     payload: decodedToken,
   });
   axios.defaults.headers.common["Authorization"] = token;
-  // store.dispatch(getUserData());
+  if (decodedToken.userRole === "Owner") {
+    store.dispatch(getUserOwnerData());
+  } else {
+    store.dispatch(getUserStaffData());
+  }
 }
 
 function App() {
@@ -79,8 +90,19 @@ function App() {
                   path="/serviceitem/:serviceid"
                   component={serviceItem}
                 />
+                <Route
+                  exact
+                  path="/order/categories"
+                  component={staffMenuService}
+                />
                 <Route exact path="/ownerDash" component={ownerDash} />
                 <Route exact path="/staffDash" component={staffDash} />
+                <Route
+                  exact
+                  path="/order/customers"
+                  component={orderCustomer}
+                />
+                <Route exact path="/orders" component={orders} />
               </Switch>
             </div>
           </ErrorBoundry>

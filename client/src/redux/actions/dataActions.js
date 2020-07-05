@@ -399,8 +399,6 @@ export const deleteMenuItem = (categoryId, ID) => (dispatch) => {
 export const postMenuItem = (formdata, setloading, categoryId) => (
   dispatch
 ) => {
-  console.log(formdata);
-  console.log(categoryId);
   dispatch(clearErrors());
   axios
     .post(`/api/v1/menu/items/${categoryId}`, formdata)
@@ -934,5 +932,115 @@ export const walkout = (ID) => (dispatch) => {
       if (err.response !== undefined) {
         dispatch(setErrors(err.response.data));
       }
+    });
+};
+
+// Staff Menu Actions
+
+export const getStaffMenuCategories = (ID) => (dispatch) => {
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/staffcategories/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_STAFFMENUCATEGORIES,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+// Staff Service Actions
+
+export const getStaffServiceCategories = (ID) => (dispatch) => {
+  console.log(ID);
+
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/service/staffcategories/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_STAFFSERVICECATEGORIES,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const selectcustomer = (customerId) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SELECT_CUSTOMER,
+    payload: customerId,
+  });
+};
+
+export const selectmenuitem = (menuitemId) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SELECT_MENUITEM,
+    payload: menuitemId,
+  });
+};
+
+export const selectserviceitem = (serviceitemId) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SELECT_SERVICEITEM,
+    payload: serviceitemId,
+  });
+};
+
+export const getorders = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  console.log(businessId);
+  axios
+    .get(`/api/v1/orders/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_ORDERS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const getallres = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  console.log(businessId);
+  axios
+    .get(`/api/v1/analytics/reservations/orders/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_RESCUST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const getallwalk = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  console.log(businessId);
+  axios
+    .get(`/api/v1/analytics/walkins/orders/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_WALKCUST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
     });
 };

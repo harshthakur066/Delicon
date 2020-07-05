@@ -12,7 +12,6 @@ export const loginUser = (userData, history) => (dispatch) => {
     })
     .then((res) => {
       setAuthorizationHeader(res.data.token, dispatch, history);
-      dispatch(getUserData());
     })
     .catch((err) => {
       dispatch(setErrors(err.response.data));
@@ -21,21 +20,6 @@ export const loginUser = (userData, history) => (dispatch) => {
 
 export const setAuthenticated = (data) => (dispatch) => {
   dispatch({ type: ActionTypes.SET_AUTHENTICATED, payload: data });
-};
-
-export const getUserData = () => (dispatch) => {
-  dispatch(clearErrors());
-  axios
-    .get("/api/v1/staff/profile")
-    .then((res) => {
-      dispatch({
-        type: ActionTypes.SET_USER,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      dispatch(setErrors(err.response.data));
-    });
 };
 
 // export const signupUser = (newuserData, history) => (dispatch) => {
@@ -66,8 +50,10 @@ const setAuthorizationHeader = (token, dispatch, history) => {
   const decodedToken = jwtDecode(token);
   dispatch(setAuthenticated(decodedToken));
   if (decodedToken.userRole === "Owner") {
+    dispatch(getUserOwnerData());
     history.push("/ownerDash");
   } else {
+    dispatch(getUserStaffData());
     history.push("/staffDash");
   }
 };
@@ -76,6 +62,36 @@ export const logOutUser = () => (dispatch) => {
   localStorage.removeItem(`FBIdToken`);
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: ActionTypes.SET_UNAUTHENTICATED });
+};
+
+export const getUserStaffData = () => (dispatch) => {
+  dispatch(clearErrors);
+  axios
+    .get("/api/v1/staff/profile")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const getUserOwnerData = () => (dispatch) => {
+  dispatch(clearErrors);
+  axios
+    .get("/api/v1/businessowner/profile")
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
 };
 
 // export const editUserDetails = (userDetails) => (dispatch) => {
