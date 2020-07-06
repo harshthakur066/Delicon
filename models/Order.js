@@ -6,6 +6,8 @@ const OrderSchema = new Schema({
   custId: String,
   custName: String,
   staffId: String,
+  staffName: String,
+  itemcount: Number,
   MenuItems: [
     {
       type: mongoose.Schema.Types.ObjectId,
