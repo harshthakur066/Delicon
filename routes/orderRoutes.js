@@ -12,8 +12,8 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
     services,
     custId,
     custName,
-    itemcount,
-    staffname,
+    itemCount,
+    staffName,
   } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
@@ -29,8 +29,8 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
       MenuItems,
       services,
       delivered,
-      itemcount,
-      staffname,
+      itemCount,
+      staffName,
     });
     await newOrder.save();
     res.status(200).json(newOrder);
