@@ -7,7 +7,7 @@ const router = express.Router();
 
 // CREATE Order Access to Staff
 router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
-  const { MenuItems, services, custId } = req.body;
+  const { MenuItems, services, custId, custName } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
   const delivered = false;
@@ -17,6 +17,7 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
       custId,
       staffId,
       businessId,
+      custName,
       createdAt: new Date(date[0], date[2], date[1]),
       MenuItems,
       services,

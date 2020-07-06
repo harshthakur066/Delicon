@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
   custId: String,
+  custName: String,
   staffId: String,
   MenuItems: [
     {
