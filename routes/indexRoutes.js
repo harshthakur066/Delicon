@@ -20,7 +20,11 @@ router.post("/api/v1/signin", async (req, res) => {
       const staff = await Staff.findById(user.userId);
       await staff.comparePassword(password);
       const token = jwt.sign(
-        { userId: staff._id, userRole: user.userRole },
+        {
+          userId: staff._id,
+          userRole: user.userRole,
+          businessId: user.businessId,
+        },
         "STAFF SECRETE KEY"
       );
       res.send({ token });
