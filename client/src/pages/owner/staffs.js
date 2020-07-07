@@ -18,9 +18,6 @@ import {
   setnotworking,
   setworking,
 } from "../../redux/actions/dataActions";
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
-import { RiEdit2Line } from "react-icons/ri";
 
 const styles = {
   cardStyle: {
@@ -276,70 +273,87 @@ class Staffs extends Component {
 
     const { classes, setnotworking, setworking } = this.props; //WithStyles Material Thing
 
-    const markup = loading ? (
+    var markup = (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    ) : (
-      this.props.data.owner.staffs.map((staff, index) => (
-        <div key={index} className="col-12 mb-4">
-          <Card className={classes.cardStyle} variant="outlined">
-            <CardContent>
-              <Typography
-                // className={classes.title}
-                style={{ fontSize: "1.05rem" }}
-              >
-                Name - {staff.name}
-              </Typography>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                Postion - {staff.position}
-                <br className={classes.breaker} />
-                {staff.working ? (
-                  <span className={classes.fr}> Currently Working </span>
-                ) : (
-                  <span className={classes.fr}> Currently Not working </span>
-                )}
-              </Typography>
-
-              <Typography style={{ fontSize: "1.05rem" }}>
-                {staff.experience}
-              </Typography>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                Mobile No. - {staff.mobno}
-              </Typography>
-
-              <div className="text-center mt-2 ">
-                {
-                  <Button
-                    style={{ color: "#616161" }}
-                    onClick={() => this.openbusiness(staff)}
-                    variant="contained"
-                    size="small"
-                  >
-                    Details
-                  </Button>
-                }
-              </div>
-            </CardContent>
-
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(staff)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <ClearIcon
-              onClick={() => setnotworking(staff._id)}
-              className={classes.delete}
-            />
-            <CheckIcon
-              onClick={() => setworking(staff._id)}
-              className={classes.delete}
-            />
-          </Card>
-        </div>
-      ))
     );
 
+    if (this.props.data.owner.staffs === undefined) {
+      markup = (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      );
+    } else {
+      markup = loading ? (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        this.props.data.owner.staffs.map((staff, index) => (
+          <div key={index} className="col-12 mb-4">
+            <Card className={classes.cardStyle} variant="outlined">
+              <CardContent>
+                <Typography
+                  // className={classes.title}
+                  style={{ fontSize: "1.05rem" }}
+                >
+                  Name - {staff.name}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Postion - {staff.position}
+                  <br className={classes.breaker} />
+                  {staff.working ? (
+                    <span className={classes.fr}> Currently Working </span>
+                  ) : (
+                    <span className={classes.fr}> Currently Not working </span>
+                  )}
+                </Typography>
+
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  {staff.experience}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  Mobile No. - {staff.mobno}
+                </Typography>
+
+                <div className="text-center mt-2 ">
+                  {
+                    <Button
+                      style={{ color: "#616161" }}
+                      onClick={() => this.openbusiness(staff)}
+                      variant="contained"
+                      size="small"
+                    >
+                      Details
+                    </Button>
+                  }
+                </div>
+              </CardContent>
+              <Button
+                onClick={() => this.editbusiness(staff)}
+                className={classes.edit}
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={() => setnotworking(staff._id)}
+                className={classes.delete}
+              >
+                Fire
+              </Button>
+              <Button
+                onClick={() => setworking(staff._id)}
+                className={classes.delete}
+              >
+                Hire
+              </Button>
+            </Card>
+          </div>
+        ))
+      );
+    }
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
@@ -367,7 +381,10 @@ class Staffs extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "20px 20px" }}>
+            <div
+              className="container"
+              style={{ padding: "10px 15px", textAlign: "center" }}
+            >
               {modalmode === "Post" ? (
                 <Typography
                   className={classes.pageTitle}

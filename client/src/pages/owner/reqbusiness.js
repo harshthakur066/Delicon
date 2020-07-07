@@ -10,7 +10,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Modal,
   TextField,
@@ -94,8 +93,8 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "5%",
-    left: "10%",
-    right: "10%",
+    left: "15%",
+    right: "15%",
     bottom: "5%",
     backgroundColor: "white",
     borderRadius: "20px",
@@ -104,7 +103,6 @@ const styles = {
     outline: "none",
     height: "90%",
     padding: "20px 20px",
-    overflowY: "scroll",
   },
 };
 
@@ -247,11 +245,12 @@ class Businesses extends Component {
                 >
                   Details
                 </Button>
-                <DeleteIcon
-                  size="25"
-                  onClick={() => deletereqbusiness(business._id)}
-                  className={classes.delete}
-                />
+                <Button
+                     onClick={() => deletereqbusiness(business._id)}
+                     className={classes.delete}
+                >
+                  Delete
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -284,7 +283,7 @@ class Businesses extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container">
+            <div className="container" style={{ padding: "20px 25px", textAlign: "center" }}>
               {modalmode === "Post" ? (
                 <Typography
                   style={{ fontSize: "1.5rem" }}

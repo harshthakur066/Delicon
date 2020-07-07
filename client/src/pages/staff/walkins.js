@@ -11,7 +11,6 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   getwalkins,
   deletewalkin,
@@ -19,7 +18,6 @@ import {
   editwalkin,
   walkout,
 } from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
 
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -328,16 +326,18 @@ class Walkins extends Component {
                 </div>
                 <br className={classes.breaker} />
               </CardContent>
-              <RiEdit2Line
-                size={25}
+              <Button
                 onClick={() => this.editbusiness(walkin)}
                 className={classes.edit}
-              ></RiEdit2Line>
-              <DeleteIcon
-                size={25}
+              >
+                Edit
+              </Button>
+              <Button
                 onClick={() => deletewalkin(walkin._id)}
                 className={classes.delete}
-              />
+              >
+                Delete
+              </Button>
             </Card>
           </div>
         ) : null
@@ -384,16 +384,18 @@ class Walkins extends Component {
             </Button> */}
                 </div>
               </CardContent>
-              <RiEdit2Line
-                size={25}
+              <Button
                 onClick={() => this.editbusiness(walkin)}
                 className={classes.edit}
-              ></RiEdit2Line>
-              <DeleteIcon
-                size={25}
+              >
+                Edit
+              </Button>
+              <Button
                 onClick={() => deletewalkin(walkin._id)}
                 className={classes.delete}
-              />
+              >
+                Delete
+              </Button>
             </Card>
           </div>
         ) : null

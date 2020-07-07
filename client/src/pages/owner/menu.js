@@ -12,14 +12,12 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   editMenuCategory,
   postMenuCategory,
   deleteMenuCategory,
   getMenuCategories,
 } from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const styles = {
@@ -29,10 +27,10 @@ const styles = {
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: "#FFFFFF", //card-bg-color
-    boxShadow: "1px 2px 4px 1px grey",
+    boxShadow: "2px 3px 4px 2px grey",
     "&:hover": {
       transition: "(0.4s)",
-      boxShadow: "1px 6px 8px 2px grey",
+      boxShadow: "2px 6px 8px 2px grey",
     },
   },
   fr: {
@@ -87,17 +85,25 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
-    left: "10%",
-    right: "10%",
-    bottom: "5%",
+    top: "20%",
+    left: "20%",
+    right: "20%",
+    bottom: "20%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
-    overflowY: "scroll",
   },
+  item: {
+    boxShadow: "1px 2px 4px 1px grey",
+    "&:hover": {
+      transition: "(0.4s)",
+      color: "red",
+      backgroundColor:"green"
+    },
+  },
+
 };
 
 const mapStateToProps = (state) => ({
@@ -122,12 +128,13 @@ class menu extends Component {
     btnload: false,
     loading: true,
     postmodal: false,
-  };
+    };
 
   componentDidMount() {
     this.props.getMenuCategories(this.props.match.params.businessid);
     document.body.style.backgroundColor = "#F0F2FE";
   }
+
 
   UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.data.owner.menu !== undefined) {
@@ -220,62 +227,90 @@ class menu extends Component {
 
     const { classes, deleteMenuCategory } = this.props;
 
-    console.log(this.props.data.owner.menu);
+    console.log(this.props.data.owner);
 
-    const markup = loading ? (
-      <Backdrop className={classes.backdrop} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    ) : (
-      this.props.data.owner.menu.map((food, index) => (
-        <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
-          
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                {food.name} <br></br>
-                {food.details}
-              </Typography>
-              {/* <div className = "float-left mb-2">
-                  {<Button
-                   style={{color:"#616161"}} 
-                    onClick={() => this.openbusiness(food)}
-                    variant="contained"
-                  size="small"
-                           >
-                     Details
-                        </Button> }
-               
-                 </div> */}
-               <br></br>
+    var markup = <Backdrop className={classes.backdrop} open={loading}>
+    <CircularProgress color="inherit" />
+  </Backdrop>
 
-               <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
-              >
-                Items
-              </Button>
+    if(this.props.data.owner.menu === undefined){
+      
+       markup = <Backdrop className={classes.backdrop} open={loading}>
+       <CircularProgress color="inherit" />
+     </Backdrop>
+
+    }
+    else 
+    {
+       markup = loading ? (
+      
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        this.props.data.owner.menu.map((food, index) => (
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4">
             
-            <br className={classes.breaker} />
-              <br className={classes.breaker} />
-            </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(food)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() => deleteMenuCategory(food._id)}
-              className={classes.delete}
-            />
-          </Card>
-        </div>
-      ))
-    );
+            <Card className={classes.bodycard } style={{ fontSize: "1.05rem" }}>
+              <CardContent>
+                <Typography className = "m-2 text-center" style={{ fontSize: "1.2rem" }}>
+                  
+                  <span >{food.name} </span>
+                  
+
+                </Typography>
+                <Typography style={{ color:"#757575"}}>
+                  <span className = "mt-2"></span>{food.details}
+                  
+                </Typography>
+                {/* <div className = "float-left mb-2">
+                    {<Button
+                     style={{color:"#616161"}} 
+                      onClick={() => this.openbusiness(food)}
+                      variant="contained"
+                    size="small"
+                             >
+                       Details
+                          </Button> }
+                 
+                   </div> */}
+                  <div className = "mt-2 text-center" >
+                 <Button
+                  component={Link}
+                  variant="contained"
+                  color="inherit"
+                  size="small"
+                  to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
+                  className={classes.item}
+
+                >
+                  Items
+                </Button>
+                </div>
+                
+                
+              </CardContent>
+              <Button
+                  onClick={() => this.editbusiness(food)}
+                  className={classes.edit}
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => deleteMenuCategory(food._id)}
+                  className={classes.delete}
+                >
+                  Delete
+                </Button>
+          
+              
+            </Card>
+          </div>
+        ))
+      );
+    }
+
+    
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

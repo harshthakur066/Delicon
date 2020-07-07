@@ -11,7 +11,7 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+
 import {
   getreservations,
   deletereservation,
@@ -25,8 +25,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-
-import { RiEdit2Line } from "react-icons/ri";
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -344,17 +342,18 @@ class Reservations extends Component {
                 </div>
               </CardContent>
 
-              <RiEdit2Line
-                size={25}
+              <Button
                 onClick={() => this.editbusiness(reservation)}
                 className={classes.edit}
-              ></RiEdit2Line>
-
-              <DeleteIcon
-                size={25}
+              >
+                Edit
+              </Button>
+              <Button
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
-              />
+              >
+                Delete
+              </Button>
             </Card>
           </div>
         )
@@ -416,17 +415,18 @@ class Reservations extends Component {
                 </div>
               </CardContent>
 
-              <RiEdit2Line
-                size={25}
+              <Button
                 onClick={() => this.editbusiness(reservation)}
                 className={classes.edit}
-              ></RiEdit2Line>
-
-              <DeleteIcon
-                size={25}
+              >
+                Edit
+              </Button>
+              <Button
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
-              />
+              >
+                Delete
+              </Button>
             </Card>
           </div>
         ) : null
@@ -479,18 +479,18 @@ class Reservations extends Component {
              </Button>
           </div> */}
               </CardContent>
-
-              <RiEdit2Line
-                size={25}
-                onClick={() => this.editbusiness(reservation)}
-                className={classes.edit}
-              ></RiEdit2Line>
-
-              <DeleteIcon
-                size={25}
+              <Button
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
-              />
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={() => this.editbusiness(reservation)}
+                className={classes.edit}
+              >
+                Delete
+              </Button>
             </Card>
           </div>
         ) : null

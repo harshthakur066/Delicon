@@ -26,6 +26,8 @@ import service from "./pages/owner/service";
 import serviceItem from "./pages/owner/serviceItem";
 import staffMenuService from "./pages/staff/staffMenuService";
 import orders from "./pages/staff/orders";
+import orderSummery from "./pages/staff/orderSummery";
+
 import {
   getUserOwnerData,
   getUserStaffData,
@@ -37,6 +39,8 @@ import Navbar from "./components/Navbar";
 import ErrorBoundry from "./components/errorBoundry/errorBoundry";
 import { ThemeProvider } from "styled-components";
 import orderCustomer from "./pages/staff/orderCustomer";
+import staffMenuItems from "./pages/staff/staffMenuItems";
+import staffServiceItems from "./pages/staff/staffServiceItems";
 
 axios.defaults.baseURL = "https://deliconreservation.herokuapp.com";
 
@@ -90,10 +94,22 @@ function App() {
                   path="/serviceitem/:serviceid"
                   component={serviceItem}
                 />
+                <Route exact path="/orders" component={orders} />
+                <Route exact path="/order/summary" component={orderSummery} />
                 <Route
                   exact
                   path="/order/categories"
                   component={staffMenuService}
+                />
+                <Route
+                  exact
+                  path="/order/menuitems/:menuId"
+                  component={staffMenuItems}
+                />
+                <Route
+                  exact
+                  path="/order/serviceitems/:serviceId"
+                  component={staffServiceItems}
                 />
                 <Route exact path="/ownerDash" component={ownerDash} />
                 <Route exact path="/staffDash" component={staffDash} />
@@ -102,7 +118,6 @@ function App() {
                   path="/order/customers"
                   component={orderCustomer}
                 />
-                <Route exact path="/orders" component={orders} />
               </Switch>
             </div>
           </ErrorBoundry>

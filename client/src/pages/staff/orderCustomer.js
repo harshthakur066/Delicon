@@ -120,11 +120,12 @@ class orderCustomer extends Component {
     }
   }
 
-  clickMe = (id) => {
+  clickMe = (customerId, name) => {
     const { selectcustomer, history } = this.props;
     try {
-      console.log("id", id);
-      selectcustomer(id);
+      const obj = { customerId, name, staff: this.props.user.profile.name };
+      console.log(obj);
+      selectcustomer(obj);
       history.push("/order/categories");
     } catch (error) {
       console.log(error);
@@ -161,7 +162,7 @@ class orderCustomer extends Component {
                 <div className="text-center">
                   <Button
                     style={{ color: "#616161" }}
-                    onClick={() => this.clickMe(walkin._id)}
+                    onClick={() => this.clickMe(walkin._id, walkin.name)}
                     variant="contained"
                     size="small"
                   >
@@ -209,7 +210,9 @@ class orderCustomer extends Component {
                 <div className="text-center mt-2 ">
                   <Button
                     style={{ color: "#616161" }}
-                    onClick={() => this.clickMe(reservation._id)}
+                    onClick={() =>
+                      this.clickMe(reservation._id, reservation.name)
+                    }
                     variant="contained"
                     size="small"
                   >

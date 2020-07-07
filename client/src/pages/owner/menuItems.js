@@ -12,14 +12,12 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   editMenuItem,
   postMenuItem,
   deleteMenuItem,
   getMenuItems,
 } from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
 
 const styles = {
   bodycard: {
@@ -86,16 +84,15 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
-    left: "10%",
-    right: "10%",
-    bottom: "5%",
+    top: "20%",
+    left: "20%",
+    right: "20%",
+    bottom: "20%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
-    overflowY: "scroll",
   },
 };
 
@@ -226,7 +223,21 @@ class menuItems extends Component {
 
     console.log(this.props.data.owner.item);
 
-    const markup = loading ? (
+    var markup = <Backdrop className={classes.backdrop} open={loading}>
+    <CircularProgress color="inherit" />
+  </Backdrop>
+
+    if(this.props.data.owner.item === undefined){
+      
+      markup = <Backdrop className={classes.backdrop} open={loading}>
+      <CircularProgress color="inherit" />
+    </Backdrop>
+
+    }
+    else 
+    {
+
+     markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -256,22 +267,25 @@ class menuItems extends Component {
 
               <br className={classes.breaker} />
             </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(food)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() =>
-                deleteMenuItem(this.props.match.params.id, food._id)
-              }
-              className={classes.delete}
-            />
+            <Button
+                  onClick={() => this.editbusiness(food)}
+                  className={classes.edit}
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() =>
+                    deleteMenuItem(this.props.match.params.id, food._id)
+                  }
+                  className={classes.delete}
+                >
+                  Delete
+                </Button>
           </Card>
         </div>
       ))
     );
+            }
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

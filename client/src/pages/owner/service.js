@@ -12,14 +12,12 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   editServiceCategory,
   postServiceCategory,
   deleteServiceCategory,
   getServiceCategories,
 } from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
 
 const styles = {
   bodycard: {
@@ -86,16 +84,15 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "15%",
-    left: "10%",
-    right: "10%",
-    bottom: "5%",
+    top: "20%",
+    left: "20%",
+    right: "20%",
+    bottom: "20%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
-    overflowY: "scroll",
   },
   actions: {
     margin: "auto",
@@ -229,20 +226,35 @@ class service extends Component {
 
     console.log(this.props.data.owner.service);
 
-    const markup = loading ? (
+    var markup = (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    ) : (
-      this.props.data.owner.service.map((food, index) => (
-        <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                {food.name} <br></br>
-                {food.details}
-              </Typography>
-              {/* <Button
+    );
+
+    if (this.props.data.owner.service === undefined) {
+      markup = (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      );
+    } else {
+      markup = loading ? (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        this.props.data.owner.service.map((food, index) => (
+          <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  {food.name}
+                  <br className={classes.breaker} />
+
+                  {food.details}
+                </Typography>
+                {/* <Button
                 style={{ color: "#616161" }}
                 onClick={() => this.openbusiness(food)}
                 variant="contained"
@@ -251,32 +263,35 @@ class service extends Component {
               >
                 Details
               </Button> */}
+                <Button
+                  component={Link}
+                  variant="contained"
+                  size="small"
+                  color="inherit"
+                  to={`/serviceitem/${food._id}`}
+                  className="mt-3"
+                >
+                  ITEMS
+                </Button>
+                <br className={classes.breaker} />
+              </CardContent>
               <Button
-                component={Link}
-                variant="contained"
-                size="small"
-                color="inherit"
-                to={`/serviceitem/${food._id}`}
-                className="mt-3"
+                onClick={() => this.editbusiness(food)}
+                className={classes.edit}
               >
-                ITEMS
+                Edit
               </Button>
-              <br className={classes.breaker} />
-            </CardContent>
-            <RiEdit2Line
-              size={25}
-              onClick={() => this.editbusiness(food)}
-              className={classes.edit}
-            ></RiEdit2Line>
-            <DeleteIcon
-              size={25}
-              onClick={() => deleteServiceCategory(food._id)}
-              className={classes.delete}
-            />
-          </Card>
-        </div>
-      ))
-    );
+              <Button
+                onClick={() => deleteServiceCategory(food._id)}
+                className={classes.delete}
+              >
+                Delete
+              </Button>
+            </Card>
+          </div>
+        ))
+      );
+    }
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

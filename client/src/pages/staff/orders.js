@@ -1,22 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getorders } from "../../redux/actions/dataActions";
+import { getorders, deleteOrder } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
-import {
-  Modal,
-  TextField,
-  CircularProgress,
-  Backdrop,
-} from "@material-ui/core";
-
-import { RiEdit2Line } from "react-icons/ri";
+import { Modal, CircularProgress, Backdrop } from "@material-ui/core";
 
 const mapStatetoprops = (state) => ({
   UI: state.UI,
@@ -26,6 +17,7 @@ const mapStatetoprops = (state) => ({
 
 const mapDispatchtoProps = {
   getorders,
+  deleteOrder,
 };
 
 const styles = {
@@ -71,6 +63,8 @@ const styles = {
     float: "right",
     color: "red",
     cursor: "pointer",
+    marginBottom: "1rem",
+    marginTop: "0.5rem",
   },
   edit: {
     float: "left",
@@ -93,8 +87,8 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "5%",
-    left: "10%",
-    right: "10%",
+    left: "20%",
+    right: "20%",
     bottom: "5%",
     backgroundColor: "white",
     borderRadius: "20px",
@@ -118,6 +112,8 @@ class Orders extends Component {
     owner: "",
     address: "",
     details: "",
+    menu: [],
+    service: [],
   };
 
   componentDidMount() {
@@ -197,12 +193,26 @@ class Orders extends Component {
     this.handleOpen();
   };
 
+  openbusiness = (business) => {
+    this.setState({
+      name: business.name,
+      owner: business.owner,
+      menu: business.MenuItems,
+      service: business.services,
+      address: business.address,
+      details: business.details,
+      modalmode: "Open",
+      _id: business._id,
+    });
+    this.handleOpen();
+  };
+
   render() {
-    const { classes, deletebusiness } = this.props;
+    const { classes, deleteOrder } = this.props;
 
     const loading = this.state.loading;
-    const btnload = this.state.btnload;
-    const modlemode = this.state.modalmode;
+    // const btnload = this.state.btnload;
+    // const modlemode = this.state.modalmode;
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
@@ -210,28 +220,41 @@ class Orders extends Component {
       </Backdrop>
     ) : (
       this.props.data.staff.orders.map((order, index) => (
-        <div key={index} className="col-12 text-center">
+        <div
+          key={index}
+          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
+        >
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+              {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                 Order Id :- {order._id}
+              </Typography> */}
+              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                Customer Name :- {order.custName}
+              </Typography>
+              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                Staff Name :- {order.staffName}
               </Typography>
               <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                Customer Id :- {order.custId}
+                Items Count :- {order.itemCount}
               </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                Staff Id :- {order.staffId}
-              </Typography>
-              {/* <RiEdit2Line
-                size="25"
-                onClick={() => this.editbusiness(business)}
-                className={classes.edit}
-              />
-              <DeleteIcon
-                size="25"
-                onClick={() => deletebusiness(business._id)}
+              <Button
+                style={{ color: "#616161", marginTop: "0.5rem" }}
+                size="small"
+                variant="contained"
+                onClick={() => this.openbusiness(order)}
+              >
+                Details
+              </Button>
+
+              <Button
+                onClick={() =>
+                  deleteOrder(this.props.user.profile.businessId, order._id)
+                }
                 className={classes.delete}
-              /> */}
+              >
+                Delete
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -263,83 +286,86 @@ class Orders extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container">
-              {modlemode === "Post" ? (
-                <Typography
-                  className={classes.pageTitle}
-                  style={{ textAlign: "center", fontSize: "1.3rem" }}
-                >
-                  Request a New Business
-                </Typography>
-              ) : (
-                <Typography
-                  className={classes.pageTitle}
-                  style={{ textAlign: "center", fontSize: "1.3rem" }}
-                >
-                  Edit a Business
-                </Typography>
-              )}
-              <form onSubmit={this.handleSubmit}>
-                <TextField
-                  name="name"
-                  type="name"
-                  label="Name of the business"
-                  className={classes.TextField}
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="owner"
-                  type="owner"
-                  label="Owner Name"
-                  className={classes.TextField}
-                  value={this.state.owner}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="address"
-                  type="address"
-                  label="Location of the business"
-                  className={classes.TextField}
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required={true}
-                />
-                <TextField
-                  name="details"
-                  type="details"
-                  label="Detailed description of the business"
-                  className={classes.TextField}
-                  value={this.state.details}
-                  onChange={this.handleChange}
-                  multiline
-                  rows={3}
-                  fullWidth
-                  required={true}
-                />
-                {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={btnload}
-                  className={classes.button}
-                >
-                  Submit
-                  {btnload && (
-                    <CircularProgress size={30} className={classes.progress} />
-                  )}
-                </Button>
-              </form>
+            <div
+              className="container"
+              style={{ padding: "20px 20px", textAlign: "center" }}
+            >
+              <Typography
+                style={{ fontSize: "2.5rem" }}
+                className={classes.pageTitle}
+              >
+                Your Order
+              </Typography>
+              <div className="row" style={{ justifyContent: "space-evenly" }}>
+                <>
+                  <div className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4">
+                    <Typography
+                      style={{ fontSize: "1.5rem", textAlign: "left" }}
+                      className={classes.pageTitle}
+                    >
+                      Menu Items
+                    </Typography>
+                    {this.state.menu.length === 0 ? (
+                      <h5>No items</h5>
+                    ) : (
+                      this.state.menu.map((m, index) => (
+                        <div
+                          style={{ marginBottom: "2rem", textAlign: "left" }}
+                          key={index}
+                        >
+                          <Typography variant="h6" className="mt-2 ">
+                            Name - {m.name}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Details - {m.details}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Price - {m.price}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Quantity - {m.quantity}
+                          </Typography>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  <div className="  ">
+                    <Typography
+                      style={{ fontSize: "1.5rem", textAlign: "left" }}
+                      className={classes.pageTitle}
+                    >
+                      Service Items
+                    </Typography>
+                    {this.state.service.length === 0 ? (
+                      <h5>No items</h5>
+                    ) : (
+                      this.state.service.map((s, index) => (
+                        <div
+                          style={{ marginBottom: "2rem", textAlign: "left" }}
+                          key={index}
+                        >
+                          <Typography variant="h6" className="mt-2 ">
+                            Name - {s.name}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Details - {s.details}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Price - {s.price}
+                          </Typography>
+                          <Typography variant="h6" className="mt-2 ">
+                            Quantity - {s.quantity}
+                          </Typography>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </>
+              </div>
             </div>
           </div>
         </Modal>
-        <div className="row mt-4 text-center ">{markup}</div>
+        <div className="row mt-4 ">{markup}</div>
       </div>
     );
   }

@@ -11,7 +11,6 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   getvalets,
   deletevalet,
@@ -19,7 +18,6 @@ import {
   editvalets,
   valetstimeout,
 } from "../../redux/actions/dataActions";
-import { RiEdit2Line } from "react-icons/ri";
 
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -88,16 +86,15 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "13%",
+    top: "15%",
     left: "10%",
     right: "10%",
-    bottom: "5%",
+    bottom: "15%",
     backgroundColor: "white",
     borderRadius: "30px",
     border: "0px",
     width: "auto",
     outline: "none",
-    overflowY: "scroll",
   },
 };
 
@@ -311,16 +308,18 @@ class Valets extends Component {
                     TimeOut
                   </Button>
                 </div>
-                <RiEdit2Line
-                  size={25}
+                <Button
                   onClick={() => this.editbusiness(vallet)}
                   className={classes.edit}
-                ></RiEdit2Line>
-                <DeleteIcon
-                  size={25}
+                >
+                  Edit
+                </Button>
+                <Button
                   onClick={() => deletevalet(vallet._id)}
                   className={classes.delete}
-                />
+                >
+                  Delete
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -363,16 +362,18 @@ class Valets extends Component {
                 Details
               </Button> */}
                 </div>
-                <RiEdit2Line
-                  size={25}
+                <Button
                   onClick={() => this.editbusiness(vallet)}
                   className={classes.edit}
-                ></RiEdit2Line>
-                <DeleteIcon
-                  size={25}
+                >
+                  Edit
+                </Button>
+                <Button
                   onClick={() => deletevalet(vallet._id)}
                   className={classes.delete}
-                />
+                >
+                  Delete
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -446,7 +447,10 @@ class Valets extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "20px 20px" }}>
+            <div
+              className="container"
+              style={{ padding: "20px 25px", textAlign: "center" }}
+            >
               {modalmode === "Post" ? (
                 <Typography
                   style={{ fontSize: "1.5rem" }}

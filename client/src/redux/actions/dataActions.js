@@ -975,25 +975,43 @@ export const getStaffServiceCategories = (ID) => (dispatch) => {
     });
 };
 
-export const selectcustomer = (customerId) => (dispatch) => {
+export const selectcustomer = (obj) => (dispatch) => {
   dispatch({
     type: ActionTypes.SELECT_CUSTOMER,
-    payload: customerId,
+    payload: obj,
   });
 };
 
-export const selectmenuitem = (menuitemId) => (dispatch) => {
+export const selectmenuitem = (menuitem) => (dispatch) => {
   dispatch({
     type: ActionTypes.SELECT_MENUITEM,
-    payload: menuitemId,
+    payload: menuitem,
   });
+  alert(menuitem.quantity + " " + menuitem.name + " Added !");
 };
 
-export const selectserviceitem = (serviceitemId) => (dispatch) => {
+export const selectserviceitem = (serviceitem) => (dispatch) => {
   dispatch({
     type: ActionTypes.SELECT_SERVICEITEM,
-    payload: serviceitemId,
+    payload: serviceitem,
   });
+  alert(serviceitem.quantity + " " + serviceitem.name + " Added !");
+};
+
+export const removemenuitem = (menuitem) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.REMOVE_MENUITEM,
+    payload: menuitem,
+  });
+  alert(menuitem.quantity + " " + menuitem.name + " Removed !");
+};
+
+export const removeserviceitem = (serviceitem) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.REMOVE_SERVICEITEM,
+    payload: serviceitem,
+  });
+  alert(serviceitem.quantity + " " + serviceitem.name + " Removed !");
 };
 
 export const getorders = (businessId) => (dispatch) => {
@@ -1041,6 +1059,75 @@ export const getallwalk = (businessId) => (dispatch) => {
       });
     })
     .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postOrder = (businessId, orderData, handleDone) => (dispatch) => {
+  dispatch(clearErrors());
+  console.log(orderData);
+  axios
+    .post(`/api/v1/orders/${businessId}`, orderData)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_ORDER,
+        payload: res.data,
+      });
+      handleDone();
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteOrder = (businessID, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/orders/${businessID}/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_ORDER,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const getStaffMenuItems = (categoryId) => (dispatch) => {
+  console.log(categoryId);
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/menu/staffitems/${categoryId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_STAFFMENUITEMS,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const getStaffServiceItems = (categoryId) => (dispatch) => {
+  console.log(categoryId);
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/service/staffitems/${categoryId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_STAFFSERVICEITEMS,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err.response);
       dispatch(setErrors(err.response.data));
     });
 };

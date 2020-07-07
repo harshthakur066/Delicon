@@ -5,6 +5,9 @@ const initialState = {
   staff: {
     order: {
       custId: "",
+      itemCount: 0,
+      staffName: "",
+      custName: "",
       MenuItems: [],
       services: [],
     },
@@ -387,7 +390,10 @@ export default function (state = initialState, action) {
       };
     case ActionTypes.SELECT_CUSTOMER:
       var ord1 = state.staff;
-      ord1.order.custId = action.payload;
+      console.log(action.payload);
+      ord1.order.custId = action.payload.customerId;
+      ord1.order.custName = action.payload.name;
+      ord1.order.staffName = action.payload.staff;
       return {
         ...state,
         staff: ord1,
@@ -395,6 +401,7 @@ export default function (state = initialState, action) {
     case ActionTypes.SELECT_MENUITEM:
       var ord2 = state.staff;
       ord2.order.MenuItems.push(action.payload);
+      ord2.order.itemCount += 1;
       return {
         ...state,
         staff: ord2,
@@ -402,11 +409,31 @@ export default function (state = initialState, action) {
     case ActionTypes.SELECT_SERVICEITEM:
       var ord3 = state.staff;
       ord3.order.services.push(action.payload);
+      ord3.order.itemCount += 1;
       return {
         ...state,
         staff: ord3,
       };
-
+    case ActionTypes.REMOVE_MENUITEM:
+      var rem1 = state.staff;
+      rem1.order.MenuItems = rem1.order.MenuItems.filter(
+        (menu) => menu._id !== action.payload._id
+      );
+      rem1.order.itemCount -= 1;
+      return {
+        ...state,
+        staff: rem1,
+      };
+    case ActionTypes.REMOVE_SERVICEITEM:
+      var rem2 = state.staff;
+      rem2.order.services = rem2.order.services.filter(
+        (menu) => menu._id !== action.payload._id
+      );
+      rem2.order.itemCount -= 1;
+      return {
+        ...state,
+        staff: rem2,
+      };
     case ActionTypes.GET_ORDERS:
       var ord4 = state.staff;
       ord4.orders = action.payload;
@@ -414,6 +441,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         staff: ord4,
+      };
+
+    case ActionTypes.POST_ORDER:
+      var ord10 = state.staff;
+      ord10.orders.push(action.payload);
+      console.log(ord10.orders);
+      return {
+        ...state,
+        staff: ord10,
+      };
+
+    case ActionTypes.DELETE_ORDER:
+      var orderDel = state.staff;
+      orderDel.orders = state.staff.orders.filter(
+        (order) => order._id !== action.payload
+      );
+      return {
+        ...state,
+        staff: orderDel,
       };
 
     case ActionTypes.GET_RESCUST:
@@ -430,6 +476,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
         staff: ord6,
+      };
+
+    case ActionTypes.GET_STAFFMENUITEMS:
+      var item = state.staff;
+      item.staffMenuItems = action.payload;
+      console.log(item.staffMenuItems);
+      return {
+        ...state,
+        staff: item,
+      };
+
+    case ActionTypes.GET_STAFFSERVICEITEMS:
+      var item_service = state.staff;
+      item_service.staffServiceItems = action.payload;
+      console.log(item_service.staffItems);
+      return {
+        ...state,
+        staff: item_service,
       };
 
     default:

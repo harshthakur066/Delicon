@@ -12,7 +12,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Modal,
   TextField,
@@ -20,7 +19,6 @@ import {
   Backdrop,
 } from "@material-ui/core";
 
-import { RiEdit2Line } from "react-icons/ri";
 
 //Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
@@ -100,18 +98,15 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "5%",
-    left: "10%",
-    right: "10%",
-    bottom: "5%",
+    top: "15%",
+    left: "20%",
+    right: "20%",
+    bottom: "15%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
-    height: "90%",
-    padding: "20px 20px",
-    overflowY: "scroll",
   },
 };
 
@@ -231,18 +226,20 @@ class Businesses extends Component {
               <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
                 {business.details}
               </Typography>
-              <RiEdit2Line
-                size="25"
-                onClick={() => this.editbusiness(business)}
-                className={classes.edit}
-              />
-              <DeleteIcon
-                size="25"
-                onClick={() => deletebusiness(business._id)}
-                className={classes.delete}
-              />
             </CardContent>
-
+            <Button
+                   onClick={() => this.editbusiness(business)}
+                   className={classes.edit}
+                >
+                  Edit
+                </Button>
+                
+                <Button
+                    onClick={() => deletebusiness(business._id)}
+                    className={classes.delete}
+                >
+                  Delete
+                </Button>
             <CardActions className={classes.actions}>
               <Button
                 component={Link}
@@ -282,6 +279,7 @@ class Businesses extends Component {
               >
                 Services
               </Button>
+              
             </CardActions>
           </Card>
         </div>
@@ -299,7 +297,7 @@ class Businesses extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container">
+            <div className="container" style={{ padding: "20px 25px", textAlign: "center" }}>
               {modlemode === "Post" ? (
                 <Typography
                   className={classes.pageTitle}

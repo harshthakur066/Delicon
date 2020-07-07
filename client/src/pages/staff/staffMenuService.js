@@ -151,7 +151,7 @@ class staffMenuService extends Component {
                 variant="contained"
                 color="inherit"
                 size="small"
-                to={`/order/menuitems`}
+                to={`/order/menuitems/${food._id}`}
               >
                 Items
               </Button>
@@ -181,7 +181,7 @@ class staffMenuService extends Component {
                 variant="contained"
                 size="small"
                 color="inherit"
-                to={`/order/serviceitem`}
+                to={`/order/serviceitems/${food._id}`}
                 className="mt-3"
               >
                 ITEMS

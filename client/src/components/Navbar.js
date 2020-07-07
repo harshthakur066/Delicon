@@ -24,6 +24,7 @@ import {
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RiParkingBoxLine } from "react-icons/ri";
 
 const drawerWidth = 240;
@@ -33,7 +34,7 @@ const styles = {
     display: "flex",
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    // width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
   },
   hide: {
@@ -46,7 +47,7 @@ const styles = {
     flexShrink: 0,
   },
   drawerPaper: {
-    boxShadow: " 2px 2px 2px 2px rgba(0, 0, 0, .2)",
+    boxShadow: " 0px 2px 2px 2px rgba(0, 0, 0, .2)",
     backgroundColor: "#FFFFFF", // bg for drawer
     width: drawerWidth,
   },
@@ -225,7 +226,7 @@ class ButtonAppBar extends Component {
                 Valets
               </ListItem>
               <ListItem button component={NavLink} to="/orders">
-                <RiParkingBoxLine />
+                <AiOutlineShoppingCart />
                 Orders
               </ListItem>
             </List>
