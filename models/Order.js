@@ -8,18 +8,8 @@ const OrderSchema = new Schema({
   staffId: String,
   staffName: String,
   itemCount: Number,
-  MenuItems: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MenuItem",
-    },
-  ],
-  services: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ServiceItem",
-    },
-  ],
+  MenuItems: { type: Array, default: [] },
+  services: { type: Array, default: [] },
   businessId: String,
   createdAt: Date,
   delivered: Boolean,
