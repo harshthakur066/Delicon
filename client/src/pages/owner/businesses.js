@@ -211,7 +211,7 @@ class Businesses extends Component {
 
     console.log(this.props.data.owner.businesses)
 
-    const markup = loading ? (
+    const markup = loading ||  this.props.data.owner.businesses === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>

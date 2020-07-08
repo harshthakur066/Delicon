@@ -5,6 +5,7 @@ const initialState = {
   profile: {},
   userId: "",
   userRole: "",
+  businessId: "",
 };
 
 export default function (state = initialState, action) {
@@ -14,6 +15,7 @@ export default function (state = initialState, action) {
         ...state,
         userId: action.payload.userId,
         userRole: action.payload.userRole,
+        businessId: action.payload.businessId,
         authenticated: true,
       };
 
@@ -22,6 +24,7 @@ export default function (state = initialState, action) {
         ...state,
         userId: "",
         userRole: "",
+        businessId: "",
         authenticated: false,
         profile: {},
       };

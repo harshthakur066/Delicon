@@ -105,8 +105,8 @@ class staffMenuService extends Component {
 
   componentDidMount() {
     console.log(this.props.user);
-    this.props.getStaffMenuCategories(this.props.user.profile.businessId);
-    this.props.getStaffServiceCategories(this.props.user.profile.businessId);
+    this.props.getStaffMenuCategories(this.props.user.businessId);
+    this.props.getStaffServiceCategories(this.props.user.businessId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 

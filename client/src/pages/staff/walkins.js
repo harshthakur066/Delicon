@@ -219,7 +219,7 @@ class Walkins extends Component {
       mobno: this.state.mobno,
       seats: this.state.seats,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
     };
     if (this.state.modalmode === "Post") {
       this.props.postwalkins(userData, this.handleDone);
@@ -249,7 +249,7 @@ class Walkins extends Component {
       mobno: business.mobno,
       seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
       modalmode: "Edit",
       _id: business._id,
       postmodal: true,
@@ -264,7 +264,7 @@ class Walkins extends Component {
       mobno: business.mobno,
       seats: business.seats,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
       modalmode: "Open",
       _id: business._id,
       postmodal: true,

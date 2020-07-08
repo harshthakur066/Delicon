@@ -114,7 +114,7 @@ class OrderSummery extends Component {
       btnload: true,
     });
     this.props.postOrder(
-      this.props.user.profile.businessId,
+      this.props.user.businessId,
       this.props.data.staff.order,
       this.handleDone
     );

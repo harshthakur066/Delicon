@@ -99,8 +99,8 @@ class orderCustomer extends Component {
   };
 
   componentDidMount() {
-    this.props.getallres(this.props.user.profile.businessId);
-    this.props.getallwalk(this.props.user.profile.businessId);
+    this.props.getallres(this.props.user.businessId);
+    this.props.getallwalk(this.props.user.businessId);
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {

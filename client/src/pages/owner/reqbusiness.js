@@ -214,7 +214,7 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    const markup = loading ? (
+    const markup = loading || this.props.data.owner.reqbusinesses === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>

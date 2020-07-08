@@ -210,7 +210,7 @@ class Valets extends Component {
       ownerName: this.state.ownerName,
       driverName: this.state.driverName,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
     };
     if (this.state.modalmode === "Post") {
       this.props.postvalets(userData, this.handleDone);
@@ -238,7 +238,7 @@ class Valets extends Component {
       ownerName: business.ownerName,
       driverName: business.driverName,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
       modalmode: "Edit",
       postmodal: true,
       _id: business._id,
@@ -251,7 +251,7 @@ class Valets extends Component {
       ownerName: business.ownerName,
       driverName: business.driverName,
       ownerId: this.props.user.profile.ownerId,
-      businessId: this.props.user.profile.businessId,
+      businessId: this.props.user.businessId,
       modalmode: "Open",
       _id: business._id,
       postmodal: true,

@@ -223,21 +223,7 @@ class menuItems extends Component {
 
     console.log(this.props.data.owner.item);
 
-    var markup = <Backdrop className={classes.backdrop} open={loading}>
-    <CircularProgress color="inherit" />
-  </Backdrop>
-
-    if(this.props.data.owner.item === undefined){
-      
-      markup = <Backdrop className={classes.backdrop} open={loading}>
-      <CircularProgress color="inherit" />
-    </Backdrop>
-
-    }
-    else 
-    {
-
-     markup = loading ? (
+     const markup = loading || this.props.data.owner.item === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -285,7 +271,6 @@ class menuItems extends Component {
         </div>
       ))
     );
-            }
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

@@ -273,20 +273,7 @@ class Staffs extends Component {
 
     const { classes, setnotworking, setworking } = this.props; //WithStyles Material Thing
 
-    var markup = (
-      <Backdrop className={classes.backdrop} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    );
-
-    if (this.props.data.owner.staffs === undefined) {
-      markup = (
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      );
-    } else {
-      markup = loading ? (
+    const markup = loading || this.props.data.owner.staffs === undefined ? (
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -353,7 +340,7 @@ class Staffs extends Component {
           </div>
         ))
       );
-    }
+    
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">

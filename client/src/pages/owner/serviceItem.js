@@ -220,20 +220,7 @@ class serviceItem extends Component {
 
     const { classes, deleteServiceItem } = this.props;
 
-    var markup = (
-      <Backdrop className={classes.backdrop} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    );
-
-    if (this.props.data.owner.serviceItem === undefined) {
-      markup = (
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      );
-    } else {
-      markup = loading ? (
+    const markup = loading || this.props.data.owner.serviceItem === undefined ? (
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -278,8 +265,7 @@ class serviceItem extends Component {
           </div>
         ))
       );
-    }
-
+    
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">

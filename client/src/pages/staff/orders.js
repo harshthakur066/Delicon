@@ -117,7 +117,7 @@ class Orders extends Component {
   };
 
   componentDidMount() {
-    this.props.getorders(this.props.user.profile.businessId);
+    this.props.getorders(this.props.user.businessId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
@@ -249,7 +249,7 @@ class Orders extends Component {
 
               <Button
                 onClick={() =>
-                  deleteOrder(this.props.user.profile.businessId, order._id)
+                  deleteOrder(this.props.user.businessId, order._id)
                 }
                 className={classes.delete}
               >

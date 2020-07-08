@@ -95,14 +95,6 @@ const styles = {
     width: "auto",
     outline: "none",
   },
-  item: {
-    boxShadow: "1px 2px 4px 1px grey",
-    "&:hover": {
-      transition: "(0.4s)",
-      color: "red",
-      backgroundColor:"green"
-    },
-  },
 
 };
 
@@ -229,40 +221,25 @@ class menu extends Component {
 
     console.log(this.props.data.owner);
 
-    var markup = <Backdrop className={classes.backdrop} open={loading}>
-    <CircularProgress color="inherit" />
-  </Backdrop>
-
-    if(this.props.data.owner.menu === undefined){
-      
-       markup = <Backdrop className={classes.backdrop} open={loading}>
-       <CircularProgress color="inherit" />
-     </Backdrop>
-
-    }
-    else 
-    {
-       markup = loading ? (
+     const markup = loading || this.props.data.owner.menu === undefined ? (
       
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
       ) : (
         this.props.data.owner.menu.map((food, index) => (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4 text-center">
             
             <Card className={classes.bodycard } style={{ fontSize: "1.05rem" }}>
               <CardContent>
-                <Typography className = "m-2 text-center" style={{ fontSize: "1.2rem" }}>
+                <Typography className = "m-2" style={{ fontSize: "1.2rem" }}>
                   
                   <span >{food.name} </span>
-                  
+                  <br></br>
+                  <span className = "mt-2"></span>{food.details}
 
                 </Typography>
-                <Typography style={{ color:"#757575"}}>
-                  <span className = "mt-2"></span>{food.details}
-                  
-                </Typography>
+
                 {/* <div className = "float-left mb-2">
                     {<Button
                      style={{color:"#616161"}} 
@@ -281,8 +258,6 @@ class menu extends Component {
                   color="inherit"
                   size="small"
                   to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
-                  className={classes.item}
-
                 >
                   Items
                 </Button>
@@ -308,9 +283,6 @@ class menu extends Component {
           </div>
         ))
       );
-    }
-
-    
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
