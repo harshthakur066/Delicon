@@ -22,28 +22,7 @@ export const setAuthenticated = (data) => (dispatch) => {
   dispatch({ type: ActionTypes.SET_AUTHENTICATED, payload: data });
 };
 
-// export const signupUser = (newuserData, history) => (dispatch) => {
-//   dispatch(setUILoading());
-
-//   axios
-//     .post("/api/v1/businessowner/signup", {
-//       email: newuserData.email,
-//       password: newuserData.password,
-//       confirmPassword: newuserData.confirmPassword,
-//       catagory: newuserData.catagory,
-//       catagoryId: newuserData.catagoryId,
-//     })
-//     .then((res) => {
-//       setAuthorizationHeader(res.data.token);
-//       // dispatch(getUserData());
-//       history.push("/home");
-//     })
-//     .catch((err) => {
-//       dispatch(setErrors(err.response.data));
-//     });
-// };
-
-const setAuthorizationHeader = (token, dispatch, history) => {
+export const setAuthorizationHeader = (token, dispatch, history) => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem("FBIdToken", FBIdToken);
   axios.defaults.headers.common["Authorization"] = FBIdToken;
@@ -90,21 +69,7 @@ export const getUserOwnerData = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err.response)
+      console.log(err.response);
       dispatch(setErrors(err.response.data));
     });
 };
-
-// export const editUserDetails = (userDetails) => (dispatch) => {
-//   dispatch({ type: ActionTypes.LOADING_UI });
-//   axios
-//     .post("/user", {
-//       bio: userDetails.bio,
-//       website: userDetails.website,
-//       location: userDetails.location,
-//     })
-//     .then(() => {
-//       dispatch(getUserData());
-//     })
-//     .catch((err) => console.log(err));
-// };

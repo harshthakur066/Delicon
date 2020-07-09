@@ -69,8 +69,9 @@ const styles = {
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#f44336"
   },
   edit: {
     float: "left",
@@ -220,11 +221,11 @@ class Businesses extends Component {
       </Backdrop>
     ) : (
       this.props.data.owner.reqbusinesses.map((business, index) => (
-        <div key={index} className="col-12 text-center">
+        <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4 text-center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
-                style={{ color: "#070707", fontSize: "1.05rem" }}
+                style={{ color: "#070707", fontSize: "1.25rem" }}
                 gutterBottom
               >
                 {business.name}
@@ -259,12 +260,15 @@ class Businesses extends Component {
     );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Requested Businesses{" "}
-        </p>
+       
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
+              <span>
+              <span
+                style={{ fontSize: "2rem" }} className="text-left mt-4">
+               Requested Businesses{" "}
+             </span>
               <Button
                 className="mb-4 float-right"
                 variant="contained"
@@ -272,6 +276,7 @@ class Businesses extends Component {
               >
                 Request business
               </Button>
+              </span>
             )}
           </div>
         </div>

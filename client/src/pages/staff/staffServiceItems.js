@@ -46,7 +46,7 @@ function BackButton() {
     </Button>
   );
 }
-function PlaceOrder() {
+function PlaceOrder({ items }) {
   return (
     <Button
       className=" mb-4 float-right p-2"
@@ -55,6 +55,7 @@ function PlaceOrder() {
       variant="contained"
       color="inherit"
       size="small"
+      disabled={items > 0 ? false : true}
       to={`/order/summary`}
     >
       Place Order
@@ -114,19 +115,17 @@ class staffServiceItems extends Component {
         />
       ))
     );
-
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Service Items
         </p>
-        {/* ADD */}
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
               <div>
                 <BackButton />
-                <PlaceOrder />
+                <PlaceOrder items={this.props.data.staff.order.itemCount} />
               </div>
             )}
           </div>

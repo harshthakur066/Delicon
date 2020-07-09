@@ -8,7 +8,6 @@ import {
 } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -18,7 +17,6 @@ import {
   CircularProgress,
   Backdrop,
 } from "@material-ui/core";
-
 
 //Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
@@ -48,15 +46,6 @@ const styles = {
     },
   },
 
-  actions: {
-    margin: "auto",
-    width: "50%",
-    "@media (min-width:780px)": {
-      margin: "auto",
-      width: "15%",
-    },
-  },
-
   root: {
     height: "175px",
     width: "250px",
@@ -74,14 +63,17 @@ const styles = {
     marginBottom: 12,
   },
   delete: {
-    float: "right",
-    color: "red",
+    float: "left",
+    color: "white",
     cursor: "pointer",
+    backgroundColor: "#f44336",
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -209,85 +201,113 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    console.log(this.props.data.owner.businesses)
+    console.log(this.props.data.owner.businesses);
 
-    const markup = loading ||  this.props.data.owner.businesses === undefined ? (
-      <Backdrop className={classes.backdrop} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    ) : (
-      this.props.data.owner.businesses.map((business, index) => (
-        <div key={index} className="col-12 text-center">
-          <Card className={classes.cardStyle} variant="outlined">
-            <CardContent>
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                {business.name}
-              </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                {business.details}
-              </Typography>
-            </CardContent>
-            <Button
-                   onClick={() => this.editbusiness(business)}
-                   className={classes.edit}
-                >
-                  Edit
-                </Button>
-                
-                <Button
+    const markup =
+      loading || this.props.data.owner.businesses === undefined ? (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        this.props.data.owner.businesses.map((business, index) => (
+          <div
+            key={index}
+            className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4"
+          >
+            <Card className={classes.cardStyle} variant="outlined">
+              <CardContent>
+                <Typography>
+                  <span style={{ fontSize: "1.25rem" }}> {business.name} </span>
+                  <span style={{ float: "right" }}>
+                    <Button
+                      component={Link}
+                      variant="contained"
+                      size="small"
+                      color="inherit"
+                      to={`/businesses/${business._id}`}
+                    >
+                      <span style={{ width: "80px", textAlign: "center" }}>
+                        Details
+                      </span>
+                    </Button>
+                  </span>
+                </Typography>
+                <br></br>
+                <Typography style={{ fontSize: "1rem" }}>
+                  {business.details}
+                  <span style={{ float: "right" }}>
+                    <Button
+                      component={Link}
+                      variant="contained"
+                      color="inherit"
+                      size="small"
+                      to={`/staffs/${business._id}`}
+                    >
+                      <span style={{ width: "80px", textAlign: "center" }}>
+                        Staff
+                      </span>
+                    </Button>
+                  </span>
+                </Typography>
+                <br></br>
+                <Typography style={{ fontSize: "1rem" }}>
+                  {business.address}
+                  <span style={{ float: "right" }}>
+                    <Button
+                      component={Link}
+                      variant="contained"
+                      color="inherit"
+                      size="small"
+                      to={`/menu/${business._id}`}
+                    >
+                      <span style={{ width: "80px", textAlign: "center" }}>
+                        Menu
+                      </span>
+                    </Button>
+                  </span>
+                </Typography>
+                <br></br>
+
+                <Typography style={{ fontSize: "1rem" }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => this.editbusiness(business)}
+                    className={classes.edit}
+                  >
+                    Edit
+                  </Button>
+
+                  <Button
+                    variant="contained"
                     onClick={() => deletebusiness(business._id)}
                     className={classes.delete}
-                >
-                  Delete
-                </Button>
-            <CardActions className={classes.actions}>
-              <Button
-                component={Link}
-                variant="contained"
-                size="small"
-                color="inherit"
-                to={`/businesses/${business._id}`}
-              >
-                Details
-              </Button>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/staffs/${business._id}`}
-              >
-                Staffs
-              </Button>
-            </CardActions>
-            <CardActions className={classes.actions}>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/menu/${business._id}`}
-              >
-                Menu
-              </Button>
-              <Button
-                component={Link}
-                variant="contained"
-                color="inherit"
-                size="small"
-                to={`/service/${business._id}`}
-              >
-                Services
-              </Button>
-              
-            </CardActions>
-          </Card>
-        </div>
-      ))
-    );
+                  >
+                    Delete
+                  </Button>
+                  <span style={{ float: "right" }}>
+                    <Button
+                      component={Link}
+                      variant="contained"
+                      color="inherit"
+                      size="small"
+                      to={`/service/${business._id}`}
+                    >
+                      <span style={{ width: "80px", textAlign: "center" }}>
+                        Services
+                      </span>
+                    </Button>
+                  </span>
+                </Typography>
+
+                <br></br>
+              </CardContent>
+            </Card>
+          </div>
+        ))
+      );
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
+        <p style={{ fontSize: "2rem" }} className="text-left mt-4">
           Your Businesses
         </p>
         <Modal
@@ -297,7 +317,10 @@ class Businesses extends Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modlebox}>
-            <div className="container" style={{ padding: "20px 25px", textAlign: "center" }}>
+            <div
+              className="container"
+              style={{ padding: "20px 25px", textAlign: "center" }}
+            >
               {modlemode === "Post" ? (
                 <Typography
                   className={classes.pageTitle}
@@ -373,7 +396,7 @@ class Businesses extends Component {
             </div>
           </div>
         </Modal>
-        <div className="row mt-4 text-center ">{markup}</div>
+        <div className="row mt-4">{markup}</div>
       </div>
     );
   }

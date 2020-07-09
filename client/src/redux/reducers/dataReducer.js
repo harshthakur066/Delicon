@@ -496,6 +496,23 @@ export default function (state = initialState, action) {
         staff: item_service,
       };
 
+    case ActionTypes.GET_BILL:
+      var bill1 = state.staff;
+      bill1.bill = action.payload;
+      return {
+        ...state,
+        staff: bill1,
+      };
+      case ActionTypes.ORDER_DELIVERED:
+      var delivered = state.staff;
+      delivered.orders = state.staff.orders.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      return {
+        ...state,
+        staff: delivered,
+      };
+
     default:
       return state;
   }

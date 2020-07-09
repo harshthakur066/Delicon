@@ -119,7 +119,8 @@ function BackButton() {
     </Button>
   );
 }
-function PlaceOrder() {
+
+function PlaceOrder({ items }) {
   return (
     <Button
       className=" mb-4 float-right p-2"
@@ -128,6 +129,7 @@ function PlaceOrder() {
       variant="contained"
       color="inherit"
       size="small"
+      disabled={items > 0 ? false : true}
       to={`/order/summary`}
     >
       Place Order
@@ -199,7 +201,7 @@ class staffMenuItems extends Component {
             {loading ? null : (
               <div>
                 <BackButton />
-                <PlaceOrder />
+                <PlaceOrder items={this.props.data.staff.order.itemCount} />
               </div>
             )}
           </div>

@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getorders, deleteOrder } from "../../redux/actions/dataActions";
+import { getorders, deleteOrder,orderDelivered } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Modal, CircularProgress, Backdrop } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 
 const mapStatetoprops = (state) => ({
   UI: state.UI,
@@ -18,6 +22,7 @@ const mapStatetoprops = (state) => ({
 const mapDispatchtoProps = {
   getorders,
   deleteOrder,
+  orderDelivered
 };
 
 const styles = {
@@ -44,9 +49,9 @@ const styles = {
   },
 
   root: {
-    height: "175px",
-    width: "250px",
-    background: "F6F7FE",
+    margin: "auto",
+    textAlign: "center",
+    flexGrow: 0,
   },
   bullet: {
     display: "inline-block",
@@ -61,15 +66,17 @@ const styles = {
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1rem",
-    marginTop: "0.5rem",
+    backgroundColor:"#f44336",
+    marginBottom:".6rem",
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginBottom:".6rem"
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -101,6 +108,33 @@ const styles = {
   },
 };
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={2}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 class Orders extends Component {
   state = {
     modalmode: null,
@@ -114,6 +148,8 @@ class Orders extends Component {
     details: "",
     menu: [],
     service: [],
+    value: 0, // used in Tabs
+
   };
 
   componentDidMount() {
@@ -135,6 +171,12 @@ class Orders extends Component {
       });
     }
   }
+  handleMe = (event, newValue) => {
+    //used in Tabs
+    this.setState({
+      value: newValue,
+    });
+  };
 
   handleOpen = () => {
     this.setState({
@@ -208,18 +250,87 @@ class Orders extends Component {
   };
 
   render() {
-    const { classes, deleteOrder } = this.props;
+    const { classes, deleteOrder,orderDelivered } = this.props;
 
     const loading = this.state.loading;
     // const btnload = this.state.btnload;
     // const modlemode = this.state.modalmode;
 
-    const markup = loading ? (
+    const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
       this.props.data.staff.orders.map((order, index) => (
+        order.delivered === true ? null : 
+        <div
+          key={index}
+          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
+        >
+          <Card className={classes.cardStyle} variant="outlined">
+            <CardContent>
+              {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                Order Id :- {order._id}
+              </Typography> */}
+              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                Customer Name :- {order.custName}
+              </Typography>
+              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                Staff Name :- {order.staffName}
+              </Typography>
+              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                Items Count :- {order.itemCount}
+              </Typography>
+              <br></br>
+              <div className="text-center">
+              <Button
+               style = {{width:"30px"}}
+                onClick={() =>
+                  orderDelivered(this.props.user.businessId, order._id)
+                }
+                className={classes.edit}
+              >
+                Deliver
+                </Button>
+                <span >
+              <Button
+               style = {{width:"20px"}}
+                style={{ color: "#616161",marginBottom:".6rem"}}
+                size="small"
+                variant="contained"
+                onClick={() => this.openbusiness(order)}
+              >
+                Details
+              </Button>
+              </span>
+
+              <Button
+               style = {{width:"30px"}}
+                onClick={() =>
+                  deleteOrder(this.props.user.businessId, order._id)
+                }
+                className={classes.delete}
+              >
+                Delete
+              </Button>
+              </div>
+             
+              
+            </CardContent>
+          </Card>
+        </div>
+        
+      ))
+    );
+
+    const markup2 = loading ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
+      this.props.data.staff.orders.map((order, index) => (
+        order.delivered === false ? null : 
+
         <div
           key={index}
           className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
@@ -260,11 +371,41 @@ class Orders extends Component {
         </div>
       ))
     );
+
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
           Orders
         </p>
+
+        {/* TAB */}
+        <div className="row mt-4 ">
+          <div className={classes.root}>
+            <AppBar style={{ backgroundColor: "#3f51b5" }} position="static">
+              <Tabs
+                TabIndicatorProps={{ style: { background: "#FFFFFF" } }}
+                value={this.state.value}
+                onChange={this.handleMe}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="WalkIn"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="WalkOut"
+                  {...a11yProps(1)}
+                />
+              </Tabs>
+            </AppBar>
+          </div>
+        </div>
+
+        {/* ADD */}
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
@@ -279,6 +420,15 @@ class Orders extends Component {
             )}
           </div>
         </div>
+
+        <TabPanel value={this.state.value} index={0}>
+          <div className="row mt-4">{markup1}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          <div className="row mt-4">{markup2}</div>
+        </TabPanel>
+
+        {/* Tabs end */}
         <Modal
           open={this.state.postmodal}
           onClose={this.handleClose}
@@ -365,7 +515,6 @@ class Orders extends Component {
             </div>
           </div>
         </Modal>
-        <div className="row mt-4 ">{markup}</div>
       </div>
     );
   }

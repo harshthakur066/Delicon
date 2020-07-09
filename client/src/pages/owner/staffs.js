@@ -65,15 +65,23 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3"
   },
-  delete: {
+  fire: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1.05rem",
-    paddingRight: "2px",
+    margin:"2px",
+    backgroundColor:"#4CAF50"
+  },
+  hire: {
+    float: "right",
+    color: "white",
+    cursor: "pointer",
+    margin:"2px",
+    backgroundColor:"#f44336"
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -279,16 +287,16 @@ class Staffs extends Component {
         </Backdrop>
       ) : (
         this.props.data.owner.staffs.map((staff, index) => (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.cardStyle} variant="outlined">
               <CardContent>
                 <Typography
                   // className={classes.title}
-                  style={{ fontSize: "1.05rem" }}
+                  style={{ fontSize: "1.25rem" }}
                 >
                   Name - {staff.name}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "0.75rem" }}>
                   Postion - {staff.position}
                   <br className={classes.breaker} />
                   {staff.working ? (
@@ -298,10 +306,10 @@ class Staffs extends Component {
                   )}
                 </Typography>
 
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "0.75rem" }}>
                   {staff.experience}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "0.75rem" }}>
                   Mobile No. - {staff.mobno}
                 </Typography>
 
@@ -319,20 +327,25 @@ class Staffs extends Component {
                 </div>
               </CardContent>
               <Button
+              style = {{textAlign:"center"}}
+              variant="contained"
                 onClick={() => this.editbusiness(staff)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+              style = {{textAlign:"center"}}
+               variant="contained"
                 onClick={() => setnotworking(staff._id)}
-                className={classes.delete}
+                className={classes.hire}
               >
                 Fire
               </Button>
               <Button
+              variant="contained"
                 onClick={() => setworking(staff._id)}
-                className={classes.delete}
+                className={classes.fire}
               >
                 Hire
               </Button>
@@ -343,23 +356,26 @@ class Staffs extends Component {
     
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Your Staff
-        </p>
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
+              <span>
+              <span
+                style={{ fontSize: "2rem" }} className="text-left mt-4">
+          Your Staff
+             </span>
               <Button
-                style={{ width: "auto" }}
                 className="mb-4 float-right"
                 variant="contained"
                 onClick={this.handlePost}
               >
                 Add Staff
               </Button>
+              </span>
             )}
           </div>
         </div>
+
 
         <Modal
           open={this.state.postmodal}

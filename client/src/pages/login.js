@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
+// import div from "@material-ui/core/div";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -8,6 +8,9 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
+import logo from "../assets/img/logo.png";
+import Svg from '../assets/svg/businessman.svg'
+
 
 const mapStateToProps = (state) => ({
   user: state.user,
@@ -35,7 +38,67 @@ const styles = {
   progress: {
     position: "absolute",
   },
+  split: {
+    height:" 100%",
+    width: "50%",
+    position: "fixed",
+    zIndex: 1,
+    top: 0,
+    overflowX: "hidden",
+    paddingTop: "20px",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      height:" 50%",
+      width: "100%",
+      position: "absolute",
+      zIndex: 1,
+      top: 0,
+      overflowX: "hidden",
+    },
+
+  },
+  
+  left: {
+    left: 0,
+    backgroundColor: "#2a2b33",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      right: 0,
+      backgroundColor: "#2a2b33",
+      height:"100%"
+    },
+    
+
+  },
+  
+  right: {
+    right: 0,
+    backgroundColor: "#F0F2FE",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      top: 200,
+      backgroundColor: "#F0F2FE",
+      marginTop:"100%",
+      paddingTop:"0px",
+      height:"75%"
+    },
+
+  },
+  
+  centered :{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -60%)",
+    textAlign: "center"
+  },
+  "@media (min-width: 320px) and (max-width: 480px)": {
+    position: "absolute",
+    top: "0%",
+    left: "0%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center"
+    },
+  
 };
+
 
 export class login extends Component {
   state = {
@@ -44,6 +107,9 @@ export class login extends Component {
     errors: {},
     loading: false,
   };
+  componentDidMount() {
+    document.body.style.backgroundColor = "#F0F2FE";
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -64,10 +130,6 @@ export class login extends Component {
     });
   };
 
-  componentDidMount() {
-    document.body.style.backgroundColor = "#F0F2FE";
-  }
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
@@ -86,12 +148,43 @@ export class login extends Component {
     const { classes } = this.props;
     const { errors, loading } = this.state;
     return (
-      <Grid container className={classes.form} style={{ marginTop: 90 }}>
-        <Grid item sm />
-        <Grid item sm>
-          <Typography variant="h3" className={classes.pageTitle}>
-            LOGIN
+      <div>
+           <div className = {`${classes.split} ${classes.left}`}>
+               <div className= {classes.centered}>
+
+           <Typography variant="h3" style={{fontSize: "2.05rem",color:"#9C27B0"}}>
+            Welcome To Delicon
           </Typography>
+          <br></br>
+
+          <img
+                  src={logo}
+                  style={{ height: 70, width: 170 }}
+                  alt="Delicon"
+                />
+                <br></br>
+                <img src={Svg} alt="" style={{ height: 170, width: 170 }}/>
+                <br></br>
+           <Button
+                style={{ backgroundColor: "#9C27B0",color:"white", marginTop: "1.5rem",padding :"10px" }}
+                size="small"
+                variant="contained"
+              >
+                Contact Us To Connect
+              </Button>
+            </div>
+            </div>
+
+
+
+        <div className = {`${classes.split} ${classes.right}`}>
+       <div className= {classes.centered}>
+        
+          <Typography variant="h3" style={{ fontSize: "2.05rem"}}>
+            Owner/Staff Login
+          </Typography>
+          <br></br>
+
           <form noValidate onSubmit={this.handleSubmit}>
             <TextField
               id="email"
@@ -103,6 +196,8 @@ export class login extends Component {
               onChange={this.handleChange}
               fullWidth
             />
+            <br></br>
+
             <TextField
               id="password"
               name="password"
@@ -127,9 +222,9 @@ export class login extends Component {
               )}
             </Button>
           </form>
-        </Grid>
-        <Grid item sm />
-      </Grid>
+        </div>
+        </div>
+        </div>
     );
   }
 }

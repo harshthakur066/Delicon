@@ -2,9 +2,9 @@ html body {
   margin: 0;
 }
 
-a :hover {
+/* a :hover {
   color: white;
-}
+} */
 
 .ButtonAppBar-appBarShift-2 {
   width: 100% !important;
@@ -12,5 +12,5 @@ a :hover {
 }
 
 .MuiDrawer-paper {
-  top: 10% !important;
+  top: 70px !important;
 }

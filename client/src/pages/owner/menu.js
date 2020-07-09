@@ -45,14 +45,18 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginRight:"5px",
+    marginBottom:"1rem"
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1.05rem",
+    backgroundColor:"#f44336",
+    marginBottom:"1rem"
   },
   root: {
     margin: "auto",

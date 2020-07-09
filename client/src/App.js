@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route,Redirect } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
@@ -9,7 +9,6 @@ import store from "./redux/store";
 import * as ActionTypes from "./redux/types";
 // import { getUserData } from "./redux/actions/userActions";
 
-import home from "./pages/home";
 import login from "./pages/login";
 import businesses from "./pages/owner/businesses";
 import reservations from "./pages/staff/reservations";
@@ -27,6 +26,7 @@ import serviceItem from "./pages/owner/serviceItem";
 import staffMenuService from "./pages/staff/staffMenuService";
 import orders from "./pages/staff/orders";
 import orderSummery from "./pages/staff/orderSummery";
+import billMain from "./pages/staff/billMain"
 
 import {
   getUserOwnerData,
@@ -61,6 +61,16 @@ if (token) {
 
 function App() {
   const theme = createMuiTheme();
+  var decodedToken = ""
+  if(localStorage.FBIdToken === undefined){
+    decodedToken = "new"
+  }
+  else{
+    const token = localStorage.FBIdToken;
+     decodedToken = jwtDecode(token);
+  }
+
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -69,7 +79,22 @@ function App() {
           <ErrorBoundry>
             <div id="sider">
               <Switch>
-                <Route exact path="/" component={home} />
+                {decodedToken.userRole === "Owner"
+                ?
+                <Route path='/' exact >
+                <Redirect to='/ownerDash' />
+                </Route>
+                : decodedToken.userRole === "Staff" 
+                ? (       
+                 <Route path='/' exact >
+                        <Redirect to='/staffDash' />
+                </Route>)
+                :
+                <Route path='/' exact >
+                <Redirect to='/login' />
+                </Route>
+                }
+                
                 <Route exact path="/login" component={login} />
                 <Route exact path="/businesses" component={businesses} />
                 <Route exact path="/reqbusinesses" component={reqbusiness} />
@@ -118,6 +143,11 @@ function App() {
                   path="/order/customers"
                   component={orderCustomer}
                 />
+                <Route
+                  exact
+                  path="/bill/:orderId"
+                  component={billMain}
+                /> 
               </Switch>
             </div>
           </ErrorBoundry>
