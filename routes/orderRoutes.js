@@ -75,9 +75,7 @@ router.get(
 router.get("/api/v1/orders/:businessId/:orderId", isStaff, async (req, res) => {
   const orderId = req.params.orderId;
   try {
-    const newOrder = await Order.findById(orderId)
-      .populate("MenuItems")
-      .populate("services");
+    const newOrder = await Order.findById(orderId);
     res.status(200).json(newOrder);
   } catch (err) {
     return res.status(500).json({ error: err.message });
