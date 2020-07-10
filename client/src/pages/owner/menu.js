@@ -49,14 +49,20 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#2196F3",
     marginRight:"5px",
-    marginBottom:"1rem"
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
     backgroundColor:"#f44336",
-    marginBottom:"1rem"
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   root: {
     margin: "auto",

@@ -48,14 +48,20 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#2196F3",
     marginRight:"5px",
-    marginBottom:"1rem"
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
     backgroundColor:"#f44336",
-    marginBottom:"1rem"
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   root: {
     margin: "auto",
@@ -257,7 +263,8 @@ class menuItems extends Component {
 
               <br className={classes.breaker} />
             </CardContent>
-            <Button
+            <Button  
+                   variant="contained"
                   onClick={() => this.editbusiness(food)}
                   className={classes.edit}
                 >
@@ -267,6 +274,7 @@ class menuItems extends Component {
                   onClick={() =>
                     deleteMenuItem(this.props.match.params.id, food._id)
                   }
+                  variant="contained"
                   className={classes.delete}
                 >
                   Delete

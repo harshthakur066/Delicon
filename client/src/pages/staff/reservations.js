@@ -56,8 +56,14 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginRight:"5px",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   fr: {
     float: "right",
@@ -71,8 +77,13 @@ const styles = {
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#f44336",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
 
   root: {
@@ -305,7 +316,7 @@ class Reservations extends Component {
     ) : (
       this.props.data.staff.reservations.map((reservation, index) =>
         reservation.checkIn !== undefined ? null : (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -343,12 +354,14 @@ class Reservations extends Component {
               </CardContent>
 
               <Button
+              variant="contained"
                 onClick={() => this.editbusiness(reservation)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+              variant="contained"
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
               >
@@ -369,7 +382,7 @@ class Reservations extends Component {
       this.props.data.staff.reservations.map((reservation, index) =>
         reservation.checkOut === undefined &&
         reservation.checkIn !== undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -416,12 +429,14 @@ class Reservations extends Component {
               </CardContent>
 
               <Button
+              variant="contained"
                 onClick={() => this.editbusiness(reservation)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+              variant="contained"
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
               >
@@ -441,7 +456,7 @@ class Reservations extends Component {
       this.props.data.staff.reservations.map((reservation, index) =>
         reservation.checkOut !== undefined &&
         reservation.checkIn !== undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -480,16 +495,18 @@ class Reservations extends Component {
           </div> */}
               </CardContent>
               <Button
+              variant="contained"
                 onClick={() => deletereservation(reservation._id)}
                 className={classes.delete}
               >
-                Edit
+                Delete
               </Button>
               <Button
+              variant="contained"
                 onClick={() => this.editbusiness(reservation)}
                 className={classes.edit}
               >
-                Delete
+                Edit
               </Button>
             </Card>
           </div>
@@ -499,9 +516,27 @@ class Reservations extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Reservations
-        </p>
+          {/* add */}
+          <div className="row mt-4">
+          <div className="col-12">
+          
+            {loading ? null : (
+              <span>
+              <span style={{ fontSize: "2rem" }} className="text-left mt-4">
+              Reservations
+            </span>
+              <Button
+                className=" mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Reservation
+              </Button>
+              </span>
+            )}
+          </div>
+        </div>
+        {/* add */}
 
         {/* Tabs */}
         <div className="row mt-4">
@@ -536,21 +571,7 @@ class Reservations extends Component {
           </div>
         </div>
 
-        {/* add */}
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <Button
-                className=" mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Reservation
-              </Button>
-            )}
-          </div>
-        </div>
-        {/* add */}
+      
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>

@@ -70,13 +70,19 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#f44336",
     marginBottom:".6rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   edit: {
     float: "left",
     color: "white",
     cursor: "pointer",
     backgroundColor:"#2196F3",
-    marginBottom:".6rem"
+    marginBottom:".6rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -284,7 +290,7 @@ class Orders extends Component {
               <br></br>
               <div className="text-center">
               <Button
-               style = {{width:"30px"}}
+                variant="contained"
                 onClick={() =>
                   orderDelivered(this.props.user.businessId, order._id)
                 }
@@ -294,8 +300,7 @@ class Orders extends Component {
                 </Button>
                 <span >
               <Button
-               style = {{width:"20px"}}
-                style={{ color: "#616161",marginBottom:".6rem"}}
+                style={{ color: "#616161",marginBottom:".6rem",width:"40px"}}
                 size="small"
                 variant="contained"
                 onClick={() => this.openbusiness(order)}
@@ -305,7 +310,7 @@ class Orders extends Component {
               </span>
 
               <Button
-               style = {{width:"30px"}}
+                variant="contained"
                 onClick={() =>
                   deleteOrder(this.props.user.businessId, order._id)
                 }
@@ -374,9 +379,27 @@ class Orders extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Orders
-        </p>
+      
+         {/* ADD */}
+         <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <span>
+                <span style={{ fontSize: "2rem" }} className="text-center mt-4">
+                Orders
+              </span>
+              <Button
+                component={Link}
+                className="mb-4 float-right"
+                variant="contained"
+                to="/order/customers"
+              >
+                Add Order
+              </Button>
+              </span>
+            )}
+          </div>
+        </div>
 
         {/* TAB */}
         <div className="row mt-4 ">
@@ -392,12 +415,12 @@ class Orders extends Component {
               >
                 <Tab
                   style={{ fontSize: ".8rem" }}
-                  label="WalkIn"
+                  label="Undeliverd"
                   {...a11yProps(0)}
                 />
                 <Tab
                   style={{ fontSize: ".8rem" }}
-                  label="WalkOut"
+                  label="Deliverd"
                   {...a11yProps(1)}
                 />
               </Tabs>
@@ -405,21 +428,7 @@ class Orders extends Component {
           </div>
         </div>
 
-        {/* ADD */}
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <Button
-                component={Link}
-                className="mb-4 float-right"
-                variant="contained"
-                to="/order/customers"
-              >
-                Add Order
-              </Button>
-            )}
-          </div>
-        </div>
+       
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>

@@ -44,14 +44,23 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1.05rem",
+    backgroundColor:"#f44336",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   root: {
     margin: "auto",
@@ -248,12 +257,14 @@ class serviceItem extends Component {
                 <br className={classes.breaker} />
               </CardContent>
               <Button
+              variant="contained"
                 onClick={() => this.editbusiness(food)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+              variant="contained"
                 onClick={() =>
                   deleteServiceItem(this.props.match.params.serviceid, food._id)
                 }

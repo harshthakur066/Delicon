@@ -39,8 +39,14 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginRight:"5px",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   fr: {
     float: "right",
@@ -51,9 +57,13 @@ const styles = {
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1.05rem",
+    backgroundColor:"#f44336",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   root: {
     margin: "auto",
@@ -272,7 +282,7 @@ class Valets extends Component {
     ) : (
       this.props.data.staff.valets.map((vallet, index) =>
         vallet.timeIn !== undefined && vallet.timeOut === undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -309,12 +319,14 @@ class Valets extends Component {
                   </Button>
                 </div>
                 <Button
+                 variant="contained"
                   onClick={() => this.editbusiness(vallet)}
                   className={classes.edit}
                 >
                   Edit
                 </Button>
                 <Button
+                 variant="contained"
                   onClick={() => deletevalet(vallet._id)}
                   className={classes.delete}
                 >
@@ -333,7 +345,7 @@ class Valets extends Component {
     ) : (
       this.props.data.staff.valets.map((vallet, index) =>
         vallet.timeIn !== undefined && vallet.timeOut !== undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -363,12 +375,14 @@ class Valets extends Component {
               </Button> */}
                 </div>
                 <Button
+                 variant="contained"
                   onClick={() => this.editbusiness(vallet)}
                   className={classes.edit}
                 >
                   Edit
                 </Button>
                 <Button
+                 variant="contained"
                   onClick={() => deletevalet(vallet._id)}
                   className={classes.delete}
                 >
@@ -385,9 +399,27 @@ class Valets extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Valets
-        </p>
+      
+        
+        <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <span>
+                <span style={{ fontSize: "2rem" }} className="text-center mt-4">
+                Valets
+              </span>
+              <Button
+                className=" mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Valet
+              </Button>
+              </span>
+            )}
+          </div>
+        </div>
+
 
         {/* TABS */}
 
@@ -414,20 +446,6 @@ class Valets extends Component {
                 />
               </Tabs>
             </AppBar>
-          </div>
-        </div>
-
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <Button
-                className=" mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Valet
-              </Button>
-            )}
           </div>
         </div>
 

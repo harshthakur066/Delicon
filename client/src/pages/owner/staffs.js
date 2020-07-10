@@ -67,21 +67,30 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3"
+    backgroundColor:"#2196F3",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   fire: {
     float: "right",
     color: "white",
     cursor: "pointer",
     margin:"2px",
-    backgroundColor:"#4CAF50"
+    backgroundColor:"#4CAF50",
+    "&:hover": {
+      backgroundColor:"#4CAF50",
+    },
   },
   hire: {
     float: "right",
     color: "white",
     cursor: "pointer",
     margin:"2px",
-    backgroundColor:"#f44336"
+    backgroundColor:"#f44336",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   pageTitle: {
     margin: "20px auto 20px auto",

@@ -67,6 +67,9 @@ const styles = {
     color: "white",
     cursor: "pointer",
     backgroundColor: "#f44336",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   edit: {
     float: "left",
@@ -74,6 +77,9 @@ const styles = {
     cursor: "pointer",
     backgroundColor: "#2196F3",
     marginRight: "5px",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   pageTitle: {
     margin: "20px auto 20px auto",

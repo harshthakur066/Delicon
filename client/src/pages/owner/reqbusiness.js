@@ -71,12 +71,19 @@ const styles = {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336"
+    backgroundColor:"#f44336",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   pageTitle: {
     margin: "20px auto 20px auto",
@@ -238,7 +245,6 @@ class Businesses extends Component {
               </Typography>
               <div className="text-center pb-4">
                 <Button
-                  style={{ color: "#616161" }}
                   onClick={() => this.openbusiness(business)}
                   variant="contained"
                   size="small"

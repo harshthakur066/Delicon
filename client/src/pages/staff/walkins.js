@@ -49,14 +49,24 @@ const styles = {
   },
   edit: {
     float: "left",
-    color: "blue",
+    color: "white",
     cursor: "pointer",
+    backgroundColor:"#2196F3",
+    marginRight:"5px",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#2196F3",
+    },
   },
   delete: {
     float: "right",
-    color: "red",
+    color: "white",
     cursor: "pointer",
-    marginBottom: "1.05rem",
+    backgroundColor:"#f44336",
+    marginBottom:"1rem",
+    "&:hover": {
+      backgroundColor:"#f44336",
+    },
   },
   root: {
     margin: "auto",
@@ -169,6 +179,7 @@ class Walkins extends Component {
 
   componentDidMount() {
     this.props.getwalkins();
+    document.body.style.backgroundColor = "#F0F2FE";
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
@@ -286,7 +297,7 @@ class Walkins extends Component {
     ) : (
       this.props.data.staff.walkins.map((walkin, index) =>
         walkin.walkIn !== undefined && walkin.walkOut === undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -324,15 +335,16 @@ class Walkins extends Component {
                     WalkOut
                   </Button>
                 </div>
-                <br className={classes.breaker} />
               </CardContent>
               <Button
+               variant="contained"
                 onClick={() => this.editbusiness(walkin)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+               variant="contained"
                 onClick={() => deletewalkin(walkin._id)}
                 className={classes.delete}
               >
@@ -352,7 +364,7 @@ class Walkins extends Component {
     ) : (
       this.props.data.staff.walkins.map((walkin, index) =>
         walkin.walkIn !== undefined && walkin.walkOut !== undefined ? (
-          <div key={index} className="col-12 mb-4">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -385,12 +397,14 @@ class Walkins extends Component {
                 </div>
               </CardContent>
               <Button
+               variant="contained"
                 onClick={() => this.editbusiness(walkin)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
+               variant="contained"
                 onClick={() => deletewalkin(walkin._id)}
                 className={classes.delete}
               >
@@ -406,10 +420,28 @@ class Walkins extends Component {
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-        <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Walkins
-        </p>
+       
 
+ {/* ADD */}
+ <div className="row mt-4">
+          <div className="col-12">
+            {loading ? null : (
+              <span>
+               <span style={{ fontSize: "2rem" }} className="text-center mt-4">
+               Walkins
+             </span>
+              <Button
+                className="mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Walkin
+              </Button>
+              </span>
+            )}
+          </div>
+        </div>
+        {/* ADD */}
         {/* TABS */}
 
         <div className="row mt-4">
@@ -438,21 +470,7 @@ class Walkins extends Component {
           </div>
         </div>
 
-        {/* ADD */}
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <Button
-                className="mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Walkin
-              </Button>
-            )}
-          </div>
-        </div>
-        {/* ADD */}
+       
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>
