@@ -121,7 +121,7 @@ router.put(
     const orderId = req.params.orderId;
     try {
       const update = { paid: true };
-      const newOrder = await Order.findByIdAndUpdate(orderId, update);
+      const newOrder = await Order.findByIdAndUpdate(orderId, update, { new: true });
       res.status(200).json(newOrder);
     } catch (err) {
       return res.status(500).json({ error: err.message });
