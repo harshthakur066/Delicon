@@ -12,7 +12,8 @@ const OrderSchema = new Schema({
   services: { type: Array, default: [] },
   businessId: String,
   createdAt: Date,
-  delivered: Boolean,
+  delivered: { type: Boolean, default: false },
+  paid: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

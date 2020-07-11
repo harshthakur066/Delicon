@@ -17,7 +17,6 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
   } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
-  const delivered = false;
   const date = new Date().toLocaleDateString().split("/").reverse();
   try {
     const newOrder = new Order({
@@ -28,7 +27,6 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
       createdAt: new Date(date[0], date[2], date[1]),
       MenuItems,
       services,
-      delivered,
       itemCount,
       staffName,
     });
@@ -107,6 +105,22 @@ router.put(
     const orderId = req.params.orderId;
     try {
       const update = { delivered: true };
+      const newOrder = await Order.findByIdAndUpdate(orderId, update);
+      res.status(200).json(newOrder);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+//Mark an Order as Paid
+router.put(
+  "/api/v1/orders/:businessId/:orderId/paid",
+  isStaff,
+  async (req, res) => {
+    const orderId = req.params.orderId;
+    try {
+      const update = { paid: true };
       const newOrder = await Order.findByIdAndUpdate(orderId, update);
       res.status(200).json(newOrder);
     } catch (err) {
