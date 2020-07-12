@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Switch, Route,Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
@@ -26,7 +26,8 @@ import serviceItem from "./pages/owner/serviceItem";
 import staffMenuService from "./pages/staff/staffMenuService";
 import orders from "./pages/staff/orders";
 import orderSummery from "./pages/staff/orderSummery";
-import billMain from "./pages/staff/billMain"
+import billMain from "./pages/staff/billMain";
+import billList from "./pages/staff/billList";
 
 import {
   getUserOwnerData,
@@ -61,15 +62,13 @@ if (token) {
 
 function App() {
   const theme = createMuiTheme();
-  var decodedToken = ""
-  if(localStorage.FBIdToken === undefined){
-    decodedToken = "new"
-  }
-  else{
+  var decodedToken = "";
+  if (localStorage.FBIdToken === undefined) {
+    decodedToken = "new";
+  } else {
     const token = localStorage.FBIdToken;
-     decodedToken = jwtDecode(token);
+    decodedToken = jwtDecode(token);
   }
-
 
   return (
     <Provider store={store}>
@@ -79,22 +78,20 @@ function App() {
           <ErrorBoundry>
             <div id="sider">
               <Switch>
-                {decodedToken.userRole === "Owner"
-                ?
-                <Route path='/' exact >
-                <Redirect to='/ownerDash' />
-                </Route>
-                : decodedToken.userRole === "Staff" 
-                ? (       
-                 <Route path='/' exact >
-                        <Redirect to='/staffDash' />
-                </Route>)
-                :
-                <Route path='/' exact >
-                <Redirect to='/login' />
-                </Route>
-                }
-                
+                {decodedToken.userRole === "Owner" ? (
+                  <Route path="/" exact>
+                    <Redirect to="/ownerDash" />
+                  </Route>
+                ) : decodedToken.userRole === "Staff" ? (
+                  <Route path="/" exact>
+                    <Redirect to="/staffDash" />
+                  </Route>
+                ) : (
+                  <Route path="/" exact>
+                    <Redirect to="/login" />
+                  </Route>
+                )}
+
                 <Route exact path="/login" component={login} />
                 <Route exact path="/businesses" component={businesses} />
                 <Route exact path="/reqbusinesses" component={reqbusiness} />
@@ -143,11 +140,8 @@ function App() {
                   path="/order/customers"
                   component={orderCustomer}
                 />
-                <Route
-                  exact
-                  path="/bill/:orderId"
-                  component={billMain}
-                /> 
+                <Route exact path="/bills" component={billList} />
+                <Route exact path="/bill/:orderId" component={billMain} />
               </Switch>
             </div>
           </ErrorBoundry>

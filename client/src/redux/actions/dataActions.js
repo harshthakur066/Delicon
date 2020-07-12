@@ -1147,31 +1147,65 @@ export const getbilldata = (businessId, orderId) => (dispatch) => {
       dispatch(setErrors(err.response.data));
     });
 };
-export const orderDelivered = (businessId,orderId) => (dispatch) => {
-  console.log(orderId);
+export const markPaid = (businessID, orderID) => (dispatch) => {
   dispatch(clearErrors());
   axios
-  .put(`/api/v1/orders/${businessId}/${orderId}/delivered`)
-  .then(() => {
-  axios
-    .put(`/api/v1/orders/${businessId}/${orderId}/delivered`)
+    .put(`/api/v1/orders/${businessID}/${orderID}/paid`)
     .then((res) => {
-      console.log(res.data);
       dispatch({
-        type: ActionTypes.ORDER_DELIVERED,
+        type: ActionTypes.MARK_PAID,
         payload: res.data,
       });
-      alert("ORDER_DELIVERED Successfully");
+      alert("Marked as Paid Successfully");
     })
     .catch((err) => {
       if (err.response !== undefined) {
         dispatch(setErrors(err.response.data));
       }
     });
-  })
-  .catch((err) => {
-    if (err.response !== undefined) {
-      dispatch(setErrors(err.response.data));
-    }
-  });
+};
+export const orderDelivered = (businessId, orderId) => (dispatch) => {
+  console.log(orderId);
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/orders/${businessId}/${orderId}/delivered`)
+    .then(() => {
+      axios
+        .put(`/api/v1/orders/${businessId}/${orderId}/delivered`)
+        .then((res) => {
+          console.log(res.data);
+          dispatch({
+            type: ActionTypes.ORDER_DELIVERED,
+            payload: res.data,
+          });
+          alert("ORDER_DELIVERED Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const getdeliverdorders = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/orders/${businessId}/delivered`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_DELEVERD_ORDERS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
 };

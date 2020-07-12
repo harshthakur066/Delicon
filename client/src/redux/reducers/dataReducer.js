@@ -503,7 +503,14 @@ export default function (state = initialState, action) {
         ...state,
         staff: bill1,
       };
-      case ActionTypes.ORDER_DELIVERED:
+    case ActionTypes.MARK_PAID:
+      var markPaid = state.staff;
+      markPaid.bill = action.payload;
+      return {
+        ...state,
+        staff: markPaid,
+      };
+    case ActionTypes.ORDER_DELIVERED:
       var delivered = state.staff;
       delivered.orders = state.staff.orders.map((busi) =>
         busi._id === action.payload._id ? action.payload : busi
@@ -511,6 +518,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         staff: delivered,
+      };
+
+    case ActionTypes.GET_DELEVERD_ORDERS:
+      var deli = state.staff;
+      deli.bills = action.payload;
+      return {
+        ...state,
+        staff: deli,
       };
 
     default:

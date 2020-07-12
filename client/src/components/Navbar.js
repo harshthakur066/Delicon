@@ -228,6 +228,10 @@ class ButtonAppBar extends Component {
                   <AiOutlineShoppingCart />
                   Orders
                 </ListItem>
+                <ListItem button component={NavLink} to="/bills">
+                  <AiOutlineShoppingCart />
+                  Bills
+                </ListItem>
               </List>
             )}
             <Divider />

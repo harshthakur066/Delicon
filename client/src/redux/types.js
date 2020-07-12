@@ -106,6 +106,7 @@ export const DELETE_ORDER = "DELETE_ORDER";
 
 export const GET_BILL = "GET_BILL";
 
+export const MARK_PAID = "MARK_PAID";
 export const ORDER_DELIVERED = "ORDER_DELIVERED";
 
-
+export const GET_DELEVERD_ORDERS = "GET_DELEVERD_ORDERS";
