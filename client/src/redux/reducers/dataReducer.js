@@ -528,6 +528,40 @@ export default function (state = initialState, action) {
         staff: deli,
       };
 
+      // FEEDBACK QUESTIONS REDUCER
+
+    case ActionTypes.GET_FEEDBACKQUESTIONS:
+      return {
+        ...state,
+        owner: { ...state.owner, feedbackquestions: action.payload },
+      };
+
+    case ActionTypes.DELETE_FEEDBACKQUESTION:
+      var feed1 = state.owner;
+      feed1.feedbackquestions = state.owner.feedbackquestions.filter(
+        (business) => business._id !== action.payload
+      );
+      return {
+        ...state,
+        owner: feed1,
+      };
+    case ActionTypes.EDIT_FEEDBACKQUESTION:
+      var feed2 = state.owner;
+      feed2.feedbackquestions = state.owner.feedbackquestions.map((busi) =>
+        busi._id === action.payload._id ? action.payload : busi
+      );
+      return {
+        ...state,
+        owner: feed2,
+      };
+    case ActionTypes.POST_FEEDBACKQUESTION:
+      var feed3 = state.owner;
+      feed3.feedbackquestions.push(action.payload);
+      return {
+        ...state,
+        owner: feed3,
+      };
+
     default:
       return state;
   }

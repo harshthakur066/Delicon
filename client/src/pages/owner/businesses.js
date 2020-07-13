@@ -62,13 +62,19 @@ const styles = {
   pos: {
     marginBottom: 12,
   },
+  btnView: {
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      width: "70%",
+    },
+  },
   delete: {
     float: "left",
     color: "white",
     cursor: "pointer",
+    marginRight: "5px",
     backgroundColor: "#f44336",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   edit: {
@@ -78,7 +84,20 @@ const styles = {
     backgroundColor: "#2196F3",
     marginRight: "5px",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
+    },
+  },
+  analytics: {
+    float: "left",
+    color: "white",
+    cursor: "pointer",
+    marginRight: "5px",
+    backgroundColor: "#F7BB0F",
+    "&:hover": {
+      backgroundColor: "#F7BB0F",
+    },
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      margin: "5px",
     },
   },
   pageTitle: {
@@ -228,13 +247,11 @@ class Businesses extends Component {
                     <Button
                       component={Link}
                       variant="contained"
-                      size="small"
                       color="inherit"
-                      to={`/businesses/${business._id}`}
+                      size="small"
+                      to={`/feedBack/${business._id}`}
                     >
-                      <span style={{ width: "80px", textAlign: "center" }}>
-                        Details
-                      </span>
+                      FeedBack
                     </Button>
                   </span>
                 </Typography>
@@ -275,21 +292,32 @@ class Businesses extends Component {
                 <br></br>
 
                 <Typography style={{ fontSize: "1rem" }}>
-                  <Button
-                    variant="contained"
-                    onClick={() => this.editbusiness(business)}
-                    className={classes.edit}
-                  >
-                    Edit
-                  </Button>
+                  <div className={classes.btnView}>
+                    <Button
+                      variant="contained"
+                      onClick={() => this.editbusiness(business)}
+                      className={classes.edit}
+                    >
+                      Edit
+                    </Button>
 
-                  <Button
-                    variant="contained"
-                    onClick={() => deletebusiness(business._id)}
-                    className={classes.delete}
-                  >
-                    Delete
-                  </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => deletebusiness(business._id)}
+                      className={classes.delete}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      component={Link}
+                      style={{ color: "white" }}
+                      variant="contained"
+                      to={`/businesses/${business._id}`}
+                      className={classes.analytics}
+                    >
+                      <span style={{ color: "white" }}>Analytics</span>
+                    </Button>
+                  </div>
                   <span style={{ float: "right" }}>
                     <Button
                       component={Link}

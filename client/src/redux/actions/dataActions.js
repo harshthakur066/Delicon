@@ -620,6 +620,90 @@ export const editServiceItem = (formdata, setloading, ID) => (dispatch) => {
     });
 };
 
+//FeedBack Questions Routes
+export const getFeedBackQuestions = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/feedback/question/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_FEEDBACKQUESTIONS,
+        payload: res.data,
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const deleteFeedBackQuestion = (ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .delete(`/api/v1/feedback/question/${ID}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.DELETE_FEEDBACKQUESTION,
+        payload: ID,
+      });
+    })
+    .then(alert("Business Deleted"))
+    .catch((err) => {
+      dispatch(setErrors(err.response.data));
+    });
+};
+
+export const postFeedBackQuestion = (formdata, setloading, ID) => (dispatch) => {
+  console.log(formdata);
+  console.log(ID);
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/feedback/question/${ID}`, formdata)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.POST_FEEDBACKQUESTION,
+        payload: res.data,
+      });
+      console.log(res);
+      setloading();
+      alert("Submitted");
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const editFeedBackQuestion = (formdata, setloading, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/feedback/question/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/feedback/question/${ID}`, formdata)
+        .then((res) => {
+          dispatch({
+            type: ActionTypes.EDIT_FEEDBACKQUESTION,
+            payload: res.data,
+          });
+          setloading();
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
 ///////////////////////////////////////   FOR STAFF   /////////////////////////////////////////////////
 
 //RESERVATION ACTIONS ...........................................

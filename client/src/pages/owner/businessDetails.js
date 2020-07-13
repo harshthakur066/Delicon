@@ -60,6 +60,17 @@ const styles = {
       backgroundColor: "#1E88E5",
     },
   },
+  feedBack: {
+    color: "white",
+    cursor: "pointer",
+    backgroundColor: "#2196F3",
+    marginBottom: "1rem",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "none",
+      backgroundColor: "#1E88E5",
+    },
+  },
   root: {
     maxWidth: 345,
   },
@@ -138,9 +149,9 @@ class BusinessDetails extends Component {
   };
 
   render() {
-    const { classes, data } = this.props;
+    const { classes } = this.props;
     const { loading } = this.state;
-    console.log(data.owner.business);
+    console.log(this.props.data.owner.business);
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>

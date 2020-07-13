@@ -28,6 +28,7 @@ import orders from "./pages/staff/orders";
 import orderSummery from "./pages/staff/orderSummery";
 import billMain from "./pages/staff/billMain";
 import billList from "./pages/staff/billList";
+import feedBack from "./pages/owner/feedBack"
 
 import {
   getUserOwnerData,
@@ -142,6 +143,7 @@ function App() {
                 />
                 <Route exact path="/bills" component={billList} />
                 <Route exact path="/bill/:orderId" component={billMain} />
+                <Route exact path="/feedback/:businessId" component={feedBack} />
               </Switch>
             </div>
           </ErrorBoundry>
