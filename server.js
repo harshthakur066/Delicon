@@ -22,6 +22,7 @@ const menuItemRoutes = require("./routes/menuItemRoutes");
 const serviceCategoryRoutes = require("./routes/serviceCategoryRoutes");
 const serviceItemRoutes = require("./routes/serviceItemRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const feedbackQuestionRoutes = require("./routes/feedbackQuestionRoutes");
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use(menuItemRoutes);
 app.use(serviceCategoryRoutes);
 app.use(serviceItemRoutes);
 app.use(orderRoutes);
+app.use(feedbackQuestionRoutes);
 
 //AnalyticRoutes
 app.use(reservationAnalyticsRoutes);
