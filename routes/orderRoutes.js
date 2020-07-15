@@ -14,6 +14,8 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
     custName,
     itemCount,
     staffName,
+    mobno,
+    email,
   } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
@@ -27,6 +29,8 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
       createdAt: new Date(date[0], date[2], date[1]),
       MenuItems,
       services,
+      mobno,
+      email,
       itemCount,
       staffName,
     });
@@ -80,6 +84,17 @@ router.get("/api/v1/orders/:businessId/:orderId", isStaff, async (req, res) => {
   }
 });
 
+//Read a perticular order access to all;
+router.get("/api/v1/all/orders/:orderId", async (req, res) => {
+  const orderId = req.params.orderId;
+  try {
+    const newOrder = await Order.findById(orderId);
+    res.status(200).json(newOrder);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 //Update an Order access to Staff
 router.put("/api/v1/orders/:businessId/:orderId", isStaff, async (req, res) => {
   const orderId = req.params.orderId;
@@ -121,7 +136,9 @@ router.put(
     const orderId = req.params.orderId;
     try {
       const update = { paid: true };
-      const newOrder = await Order.findByIdAndUpdate(orderId, update, { new: true });
+      const newOrder = await Order.findByIdAndUpdate(orderId, update, {
+        new: true,
+      });
       res.status(200).json(newOrder);
     } catch (err) {
       return res.status(500).json({ error: err.message });

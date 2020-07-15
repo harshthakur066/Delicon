@@ -47,8 +47,7 @@ router.get(
 
 // READ ALL feedback question Access to Staff
 router.get(
-  "/api/v1/staff/feedback/question/:businessId",
-  isStaff,
+  "/api/v1/all/feedback/question/:businessId",
   async (req, res) => {
     try {
       const feedbackQues = await FeedbackQuestion.find({
