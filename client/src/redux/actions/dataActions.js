@@ -653,7 +653,9 @@ export const deleteFeedBackQuestion = (ID) => (dispatch) => {
     });
 };
 
-export const postFeedBackQuestion = (formdata, setloading, ID) => (dispatch) => {
+export const postFeedBackQuestion = (formdata, setloading, ID) => (
+  dispatch
+) => {
   console.log(formdata);
   console.log(ID);
   dispatch(clearErrors());
@@ -676,7 +678,9 @@ export const postFeedBackQuestion = (formdata, setloading, ID) => (dispatch) => 
     });
 };
 
-export const editFeedBackQuestion = (formdata, setloading, ID) => (dispatch) => {
+export const editFeedBackQuestion = (formdata, setloading, ID) => (
+  dispatch
+) => {
   dispatch(clearErrors());
   axios
     .put(`/api/v1/feedback/question/${ID}`, formdata)
@@ -1288,6 +1292,69 @@ export const getdeliverdorders = (businessId) => (dispatch) => {
       });
     })
     .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+/////// FeedBack FORM
+export const getfeedbackquestions = (businessId, orderId, handledone) => (
+  dispatch
+) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/all/feedback/question/${businessId}`)
+    .then((res) => {
+      axios
+        .get(`/api/v1/all/orders/${orderId}`)
+        .then((des) => {
+          dispatch({
+            type: ActionTypes.GET_STAFFFEEDBACK,
+            payload: { ques: res.data, ord: des.data },
+          });
+          handledone();
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const getallfeedbacks = (businessId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/api/v1/feedback/${businessId}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_FEEDBACKS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+export const postFeedBack = (formdata, handledone) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/feedback`, formdata)
+    .then((res) => {
+      console.log(res.data);
+      alert("Feedback Submitted!");
+      handledone();
+    })
+    .catch((err) => {
+      console.log(err.response);
       if (err.response !== undefined) {
         dispatch(setErrors(err.response.data));
       }

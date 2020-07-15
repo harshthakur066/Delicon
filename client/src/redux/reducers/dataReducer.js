@@ -394,6 +394,8 @@ export default function (state = initialState, action) {
       ord1.order.custId = action.payload.customerId;
       ord1.order.custName = action.payload.name;
       ord1.order.staffName = action.payload.staff;
+      ord1.order.mobno = action.payload.mobno;
+      ord1.order.email = action.payload.email;
       return {
         ...state,
         staff: ord1,
@@ -528,7 +530,7 @@ export default function (state = initialState, action) {
         staff: deli,
       };
 
-      // FEEDBACK QUESTIONS REDUCER
+    // FEEDBACK QUESTIONS REDUCER
 
     case ActionTypes.GET_FEEDBACKQUESTIONS:
       return {
@@ -560,6 +562,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
         owner: feed3,
+      };
+
+    //// staff FEEDBACK FORM
+    case ActionTypes.GET_STAFFFEEDBACK:
+      var feed5 = state.staff;
+      feed5.feedbackform = action.payload.ques;
+      feed5.orderdetails = action.payload.ord;
+      return {
+        ...state,
+        staff: feed5,
+      };
+
+    case ActionTypes.GET_FEEDBACKS:
+      var feed4 = state.owner;
+      feed4.feedbacks = action.payload;
+      return {
+        ...state,
+        owner: feed4,
       };
 
     default:

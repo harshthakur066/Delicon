@@ -336,7 +336,7 @@ class feedBack extends Component {
         </Backdrop>
       ) : (
         this.props.data.owner.feedbackquestions.map((food,i) => (
-          <div key={food._id} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4 ">
+          <div key={food._id} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4 ">
             
             <Card className={classes.bodycard } style={{ fontSize: "1.05rem" }}>
               <CardContent>
@@ -394,14 +394,14 @@ class feedBack extends Component {
           <div className="col-12">
             {loading ? null : (
               <span>
-               <Button
+               {/* <Button
                className="mb-4 float-left"
                onClick={() => this.openbusiness()}
                variant="contained"
                size="small"
              >
                Preview
-             </Button>
+             </Button> */}
 
               <Button
                 className="mb-4 float-right"

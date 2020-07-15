@@ -49,6 +49,8 @@ const styles = {
     paddingRight: 20,
     backgroundColor: "#FFFFFF", //card-bg-color
     boxShadow: "1px 2px 4px 1px grey",
+    width: "inherit",
+    height: "inherit",
     "&:hover": {
       transition: "(0.4s)",
       boxShadow: "1px 6px 8px 2px grey",

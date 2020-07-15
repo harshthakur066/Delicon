@@ -32,6 +32,7 @@ const styles = {
     paddingRight: 30,
     backgroundColor: "#FFFFFF", //card-bg-color
     boxShadow: "1px 2px 4px 1px grey",
+    width: "inherit",
     "&:hover": {
       transition: "(0.4s)",
       boxShadow: "1px 6px 8px 2px grey",
@@ -44,6 +45,7 @@ const styles = {
     backgroundColor:"#2196F3",
     marginRight:"5px",
     marginBottom:"1rem",
+    marginTop:".6rem",
     "&:hover": {
       backgroundColor:"#2196F3",
     },
@@ -61,6 +63,7 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#f44336",
     marginBottom:"1rem",
+    marginTop:".6rem",
     "&:hover": {
       backgroundColor:"#f44336",
     },

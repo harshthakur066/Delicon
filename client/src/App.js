@@ -29,6 +29,9 @@ import orderSummery from "./pages/staff/orderSummery";
 import billMain from "./pages/staff/billMain";
 import billList from "./pages/staff/billList";
 import feedBack from "./pages/owner/feedBack"
+import feedBackForm from "./pages/staff/feedBackForm"
+// import feedBack from "./pages/owner/feedBack";
+import feedbackList from "./pages/owner/feedbackslist";
 
 import {
   getUserOwnerData,
@@ -143,7 +146,19 @@ function App() {
                 />
                 <Route exact path="/bills" component={billList} />
                 <Route exact path="/bill/:orderId" component={billMain} />
-                <Route exact path="/feedback/:businessId" component={feedBack} />
+                 {/* <Route exact path="/feedback/:businessId" component={feedBack} /> */}
+                <Route exact path="/feedbackform/:businessId/:orderId" component={feedBackForm} />
+
+                <Route
+                  exact
+                  path="/feedback/:businessId"
+                  component={feedBack}
+                />
+                <Route
+                  exact
+                  path="/feedbacklist/:businessId"
+                  component={feedbackList}
+                />
               </Switch>
             </div>
           </ErrorBoundry>

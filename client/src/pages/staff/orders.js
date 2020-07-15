@@ -13,6 +13,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
+
 const mapStatetoprops = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -70,9 +71,14 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#f44336",
     marginBottom:".6rem",
+    width:"5rem",
     "&:hover": {
       backgroundColor:"#f44336",
     },
+    "@media (min-width: 320px) and (max-width: 330px)": {
+
+    },
+    
   },
   edit: {
     float: "left",
@@ -80,8 +86,16 @@ const styles = {
     cursor: "pointer",
     backgroundColor:"#2196F3",
     marginBottom:".6rem",
+    width:"5rem",
     "&:hover": {
       backgroundColor:"#2196F3",
+    },
+    
+  },
+  detail: {
+    color: "#616161",marginBottom:".6rem",width:"5rem",
+    "@media (min-width: 320px) and (max-width: 330px)": {
+      float:"right"
     },
   },
   pageTitle: {
@@ -262,6 +276,8 @@ class Orders extends Component {
     // const btnload = this.state.btnload;
     // const modlemode = this.state.modalmode;
 
+    console.log(this.props.data.staff.orders)
+
     const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
@@ -271,7 +287,7 @@ class Orders extends Component {
         order.delivered === true ? null : 
         <div
           key={index}
-          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
+          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4"
         >
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
@@ -300,10 +316,10 @@ class Orders extends Component {
                 </Button>
                 <span >
               <Button
-                style={{ color: "#616161",marginBottom:".6rem",width:"40px"}}
                 size="small"
                 variant="contained"
                 onClick={() => this.openbusiness(order)}
+                className={classes.detail}
               >
                 Details
               </Button>
@@ -364,6 +380,7 @@ class Orders extends Component {
               </Button>
 
               <Button
+              style={{marginBottom:"0px",marginTop:"6px"}}
                 onClick={() =>
                   deleteOrder(this.props.user.businessId, order._id)
                 }

@@ -125,6 +125,12 @@ const styles = {
     width: "auto",
     outline: "none",
   },
+  side: {
+    float: "right",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      marginTop: "8px",
+    },
+  },
 };
 
 class Businesses extends Component {
@@ -237,7 +243,7 @@ class Businesses extends Component {
         this.props.data.owner.businesses.map((business, index) => (
           <div
             key={index}
-            className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4"
+            className="col-12 col-sm-12 col-xs-12 col-md-12 col-lg-6 mb-4"
           >
             <Card className={classes.cardStyle} variant="outlined">
               <CardContent>
@@ -250,8 +256,11 @@ class Businesses extends Component {
                       color="inherit"
                       size="small"
                       to={`/feedBack/${business._id}`}
-                    >
+                      className={classes.side}
+                    >               
+                      <span style={{ width: "80px", textAlign: "center" }}>
                       FeedBack
+                      </span>
                     </Button>
                   </span>
                 </Typography>
@@ -265,6 +274,7 @@ class Businesses extends Component {
                       color="inherit"
                       size="small"
                       to={`/staffs/${business._id}`}
+                      className={classes.side}
                     >
                       <span style={{ width: "80px", textAlign: "center" }}>
                         Staff
@@ -282,6 +292,8 @@ class Businesses extends Component {
                       color="inherit"
                       size="small"
                       to={`/menu/${business._id}`}
+                      className={classes.side}
+
                     >
                       <span style={{ width: "80px", textAlign: "center" }}>
                         Menu
@@ -317,6 +329,15 @@ class Businesses extends Component {
                     >
                       <span style={{ color: "white" }}>Analytics</span>
                     </Button>
+                    <Button
+                      component={Link}
+                      style={{ color: "white" }}
+                      variant="contained"
+                      to={`/feedbacklist/${business._id}`}
+                      className={classes.analytics}
+                    >
+                      <span style={{ color: "white" }}>Feedbacks List</span>
+                    </Button>
                   </div>
                   <span style={{ float: "right" }}>
                     <Button
@@ -325,6 +346,8 @@ class Businesses extends Component {
                       color="inherit"
                       size="small"
                       to={`/service/${business._id}`}
+                      className={classes.side}
+
                     >
                       <span style={{ width: "80px", textAlign: "center" }}>
                         Services
