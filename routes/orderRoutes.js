@@ -84,6 +84,17 @@ router.get("/api/v1/orders/:businessId/:orderId", isStaff, async (req, res) => {
   }
 });
 
+//Read a perticular order access to all;
+router.get("/api/v1/all/orders/:orderId", async (req, res) => {
+  const orderId = req.params.orderId;
+  try {
+    const newOrder = await Order.findById(orderId);
+    res.status(200).json(newOrder);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 //Update an Order access to Staff
 router.put("/api/v1/orders/:businessId/:orderId", isStaff, async (req, res) => {
   const orderId = req.params.orderId;
