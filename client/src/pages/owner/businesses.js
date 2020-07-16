@@ -329,7 +329,7 @@ class Businesses extends Component {
                     >
                       <span style={{ color: "white" }}>Analytics</span>
                     </Button>
-                    <Button
+                    {/* <Button
                       component={Link}
                       style={{ color: "white" }}
                       variant="contained"
@@ -337,7 +337,7 @@ class Businesses extends Component {
                       className={classes.analytics}
                     >
                       <span style={{ color: "white" }}>Feedbacks List</span>
-                    </Button>
+                    </Button> */}
                   </div>
                   <span style={{ float: "right" }}>
                     <Button

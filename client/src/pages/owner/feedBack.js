@@ -26,7 +26,13 @@ import {
   postFeedBackQuestion,
   deleteFeedBackQuestion,
   getFeedBackQuestions,
+  getallfeedbacks
 } from "../../redux/actions/dataActions";
+
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 
 const styles = {
   bodycard: {
@@ -112,6 +118,13 @@ const styles = {
     border: "0px",
     width: "auto",
     outline: "none",
+    overflowY: "scroll",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      top: "10%",
+      left: "10%",
+      right: "10%",
+      bottom: "10%",    },
+
   },
   preview: {
     position: "fixed",
@@ -130,6 +143,33 @@ const styles = {
 
 
 };
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={2}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -142,6 +182,7 @@ const mapDispatchToProps = {
   postFeedBackQuestion,
   deleteFeedBackQuestion,
   getFeedBackQuestions,
+  getallfeedbacks,
 };
 
  
@@ -155,17 +196,23 @@ class feedBack extends Component {
     btnload: false,
     loading: true,
     postmodal: false,
+    value:0, // used in tabs
+    custName: "",
+    mobno: "",
+    email: "",
+    feedback: [],
     };
 
   componentDidMount() {
       console.log(this.props.match.params.businessId)
+      this.props.getallfeedbacks(this.props.match.params.businessId);
     this.props.getFeedBackQuestions(this.props.match.params.businessId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
 
   UNSAFE_componentWillReceiveProps(newProps) {
-    if (newProps.data.owner.feedbackquestions !== undefined) {
+    if (newProps.data.owner.feedbackquestions !== undefined && newProps.data.owner.feedbacks !== undefined) {
       this.setState({
         loading: false,
       });
@@ -178,6 +225,14 @@ class feedBack extends Component {
       });
     }
   }
+
+  handleMe = (event, newValue) => {
+    //used in Tabs
+    this.setState({
+      value: newValue,
+    });
+  };
+
 
   handlePost = () => {
     this.setState({
@@ -238,10 +293,16 @@ class feedBack extends Component {
     });
   };
 
-  openbusiness = () => {
-    console.log("open")
+  openbusiness = (business) => {
+    console.log(business)
+    
     this.setState({
+      custName: business.custName,
+      mobno: business.mobno,
+      email: business.email,
+      feedback: business.feedback,
       modalmode: "Open",
+      _id: business._id,
       postmodal: true,
     });
   };
@@ -329,13 +390,34 @@ class feedBack extends Component {
 
     console.log(this.props.data.owner.feedbackquestions);
 
-     const markup = loading || this.props.data.owner.feedbackquestions === undefined ? (
+
+    //tab1
+     const markup1 = loading || this.props.data.owner.feedbackquestions === undefined ? (
       
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
       ) : (
-        this.props.data.owner.feedbackquestions.map((food,i) => (
+     <div>
+     
+     <div className="row mt-4">
+          <div className="col-12">
+     <p style={{ fontSize: "1.5rem" }} className="text-center">
+          Questions and Type
+        </p>
+        
+        <Button
+                className="mb-4 float-right"
+                variant="contained"
+                onClick={this.handlePost}
+              >
+                Add Question
+              </Button>
+              </div>
+        </div>
+        <div className="row mt-4">
+       { this.props.data.owner.feedbackquestions.map((food,i) => (
+         
           <div key={food._id} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4 ">
             
             <Card className={classes.bodycard } style={{ fontSize: "1.05rem" }}>
@@ -377,44 +459,104 @@ class feedBack extends Component {
 
             </Card>
           </div>
-        ))
+         
+        ))}
+         </div>
+         
+        </div>
       );
 
+      // tab2
+      const markup2 =
+      loading || this.props.data.owner.feedbacks === undefined ? (
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <div>
+        <div className="row mt-4">
+          <div className="col-12">
+     <p style={{ fontSize: "1.5rem" }} className="text-center">
+          Feedback List
+        </p>
+        
+      
+              </div>
+        </div>
+        <div className="row mt-4">
+
+        {this.props.data.owner.feedbacks.map((food, index) => (
+          <div key={index} className="col-12 sm-12 xs-12 mb-4 text-center">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  {food.custName} <br></br>
+                  {food.mobno}
+                  <br></br>
+                  {food.email}
+                </Typography>
+
+                <div className="float-left mb-2">
+                  <Button
+                    style={{ color: "#616161" }}
+                    onClick={() => this.openbusiness(food)}
+                    variant="contained"
+                    size="small"
+                  >
+                    Details
+                  </Button>
+                </div>
+                <br className={classes.breaker} />
+              </CardContent>
+            </Card>
+          </div>
+        ))}
+        </div>
+        </div>
+      );
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
-          Feedback Form
+          Feedback
         </p>
-        <p style={{ fontSize: "1.5rem" }} className="text-center">
-          Questions and Type
-        </p>
-        
+     
 
-        <div className="row mt-4">
-          <div className="col-12">
-            {loading ? null : (
-              <span>
-               {/* <Button
-               className="mb-4 float-left"
-               onClick={() => this.openbusiness()}
-               variant="contained"
-               size="small"
-             >
-               Preview
-             </Button> */}
+        {/* TABS */}
 
-              <Button
-                className="mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
+  <div className="row mt-4">
+          <div className={classes.root}>
+            <AppBar style={{ backgroundColor: "#3f51b5" }} position="static">
+              <Tabs
+                TabIndicatorProps={{ style: { background: "#FFFFFF" } }}
+                value={this.state.value}
+                onChange={this.handleMe}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
               >
-                Add Question
-              </Button>
-              </span>
-            )}
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="Questions"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  style={{ fontSize: ".8rem" }}
+                  label="List"
+                  {...a11yProps(1)}
+                />
+              </Tabs>
+            </AppBar>
           </div>
         </div>
-        <div className="row mt-4">{markup}</div>
+
+        <TabPanel value={this.state.value} index={0}>
+          <div className=" mt-4">{markup1}</div>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          <div className=" mt-4">{markup2}</div>
+        </TabPanel>
+
+        {/* Tabs end */}
 
         <Modal
           open={this.state.postmodal}
@@ -425,41 +567,57 @@ class feedBack extends Component {
           <div className={classes.modlebox}>
             <div
               className="container"
-              style={{ padding: "20px 25px", textAlign: "center" }}
+              style={{ padding: "20px 25px",}}
             >
               {modalmode === "Post" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem", textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Add a New Question
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem", textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Edit a Question
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem", textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
-                  Preview
+                  Details
                 </Typography>
               ) : null}
               {modalmode === "Open" ? (
                  
-               <div className={ ` ${classes.preview} text-left`}>
-                 <Typography
-                  style={{ fontSize: "1.5rem" }}
-                  className={classes.pageTitle}
-                >
-                  Preview
+                 <>
+                 <Typography variant="h6" className="mt-2 ">
+                   Customer Name - {this.state.custName}
+                 </Typography>
+                 <Typography variant="h6" className="mt-2 ">
+                   Mobile no. - {this.state.mobno}
+                 </Typography>
+                 <Typography variant="h6" className="mt-2 ">
+                   Email - {this.state.email}
+                 </Typography>
+
+                 {this.state.feedback.map((feed) =>
+                 (
+                   <>
+                  <Typography variant="h6" className="mt-2 ">
+                  {feed.question}
+                 </Typography>
+                 <Typography variant="h6" className="mt-2 ">
+                 {feed.ans}
                 </Typography>
-              { this.preview()}
-               </div>
+                 </>
+                 ))
+                }
+                 
+               </>
               
               ) : (
                

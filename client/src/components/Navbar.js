@@ -126,7 +126,7 @@ class ButtonAppBar extends Component {
         cont.style.marginLeft = "0px";
       }
       return (
-        <div className={classes.root}>
+        <div className={classes.root} id="navroot">
           <CssBaseline />
           <AppBar
             position="fixed"

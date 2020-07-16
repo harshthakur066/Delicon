@@ -23,6 +23,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormLabel from '@material-ui/core/FormLabel';
+import Select from '@material-ui/core/Select';
 
 const styles = {
   bodycard: {
@@ -110,6 +117,9 @@ const styles = {
     outline: "none",
     overflowY: "scroll",
   },
+  gender:{
+    marginTop:".4rem",  
+  },
 };
 
 function TabPanel(props) {
@@ -162,6 +172,11 @@ class Walkins extends Component {
     mobno: "",
     address: "",
     seats: "",
+    specialEvent:"",
+    gender:"",
+    VisitingAs:"",
+    know:"",
+    dob:"",
     walkIn: "",
     walkOut: "",
     value: 0, // used in Tabs
@@ -229,9 +244,15 @@ class Walkins extends Component {
       address: this.state.address,
       mobno: this.state.mobno,
       seats: this.state.seats,
+      specialEvent:this.state.specialEvent,
+      gender:this.state.gender,
+      VisitingAs:this.state.VisitingAs,
+      know:this.state.know,
+      dob:this.state.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
     };
+    console.log(userData)
     if (this.state.modalmode === "Post") {
       this.props.postwalkins(userData, this.handleDone);
     } else {
@@ -259,6 +280,11 @@ class Walkins extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
+      specialEvent:business.specialEvent,
+      gender:business.gender,
+      VisitingAs:business.VisitingAs,
+      know:business.know,
+      dob:business.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Edit",
@@ -490,25 +516,25 @@ class Walkins extends Component {
           <div className={classes.modlebox}>
             <div
               className="container"
-              style={{ padding: "20px 25px", textAlign: "center" }}
+              style={{ padding: "20px 25px"}}
             >
               {modalmode === "Post" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Add a New Walkin
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Edit a Walkin
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Your Walkin
@@ -546,7 +572,7 @@ class Walkins extends Component {
                   />
                   <TextField
                     name="mobno"
-                    type="mobno"
+                    type="number"
                     label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
@@ -556,13 +582,12 @@ class Walkins extends Component {
                   />
                   <TextField
                     name="address"
-                    type="address"
-                    label="Location.."
+                    type="text"
+                    label="Pincode.."
                     className={classes.TextField}
                     value={this.state.address}
                     onChange={this.handleChange}
                     fullWidth
-                    required={true}
                   />
                   <TextField
                     name="email"
@@ -574,16 +599,107 @@ class Walkins extends Component {
                     fullWidth
                     required={true}
                   />
+                 
                   <TextField
                     name="seats"
-                    type="seats"
-                    label="Seats.."
+                    type="number"
+                    label="No. of Seats.."
                     className={classes.TextField}
                     value={this.state.seats}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
                   />
+                 
+
+
+                  <div style = {{marginLeft:"10px"}} className={classes.gender} >
+                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px"}} component="legend">Gender</FormLabel>
+                   <RadioGroup  name="gender" value={this.state.gender} onChange={this.handleChange}>
+                     <FormControlLabel value="female" control={<Radio />} label="Female" />
+                      <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                 </RadioGroup>
+                 </div>
+
+                 <TextField
+                    name="specialEvent"
+                    type="text"
+                    label="Special Event.."
+                    className={classes.TextField}
+                    value={this.state.specialEvent}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+        <br></br>     
+        <br></br>     
+
+        <div className={classes.gender} >
+                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">How did you get to know?</FormLabel>
+
+             
+                  <br></br>
+                   <RadioGroup name="know" value={this.state.know} onChange={this.handleChange}>
+                     <FormControlLabel value="Newspaper" control={<Radio />} label="Newspaper" />
+                      <FormControlLabel value="Friends" control={<Radio />} label="Friends" />
+                      <FormControlLabel value="Online Promotion" control={<Radio />} label="Online Promotion" />
+                      <FormControlLabel value = {""} control={<Radio />} label="Others" />
+                    {this.state.know !== "Online Promotion" && this.state.know !== "Newspaper"  && this.state.know !== "Friends"
+                    ? <TextField
+                    id={"know"}
+                    type = "text"
+                    label="Please specify"
+                    onChange={this.handleChange}
+                    name={"know"}
+                    value={this.state.know}
+                  /> 
+                  :
+                  null
+                    }
+                 </RadioGroup>
+                 </div>
+                 <br></br>     
+  
+        <br></br>
+
+
+                  
+                <TextField
+                 style = {{float:"left"}}
+                 name="dob"
+                 id="date"
+                 label="Date of Birth"
+                 type="date"
+                 defaultValue={this.state.dob}
+                 onChange={this.handleChange}
+                 
+                 className={classes.TextField}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}
+                   />
+
+
+                 <br></br>
+                 <br></br>     
+        <br></br>     
+
+        <br></br>    
+                  
+        <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          name="VisitingAs"
+          type="text"
+          id="demo-simple-select"
+          value={this.state.VisitingAs}
+          onChange={this.handleChange}
+          fullWidth
+        >
+          <MenuItem value={"Family"}>Family</MenuItem>
+          <MenuItem value={"Friend"}>Friend</MenuItem>
+          <MenuItem value={"Couples"}>Couples</MenuItem>
+        </Select>
                   {this.state.errors ? <p>{this.state.errors.error}</p> : null}
                   <Button
                     type="submit"

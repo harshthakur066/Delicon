@@ -1220,11 +1220,11 @@ export const getStaffServiceItems = (categoryId) => (dispatch) => {
     });
 };
 
-export const getbilldata = (businessId, orderId) => (dispatch) => {
+export const getbilldata = (orderId) => (dispatch) => {
   console.log(orderId);
   dispatch(clearErrors());
   axios
-    .get(`/api/v1/orders/${businessId}/${orderId}`)
+    .get(`/api/v1/all/orders/${orderId}`)
     .then((res) => {
       dispatch({
         type: ActionTypes.GET_BILL,
@@ -1355,6 +1355,21 @@ export const postFeedBack = (formdata, handledone) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err.response);
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
+
+export const sendbillmail = (mailoptions) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/mailer/bill`, mailoptions)
+    .then((res) => {
+      alert("mail Sent !!");
+      console.log(res.data);
+    })
+    .catch((err) => {
       if (err.response !== undefined) {
         dispatch(setErrors(err.response.data));
       }

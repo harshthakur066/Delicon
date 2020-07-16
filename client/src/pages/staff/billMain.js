@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getbilldata, markPaid } from "../../redux/actions/dataActions";
+import {
+  getbilldata,
+  markPaid,
+  sendbillmail,
+} from "../../redux/actions/dataActions";
 import {
   Backdrop,
   CircularProgress,
@@ -49,6 +53,15 @@ function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
 
+window.onafterprint = function () {
+  let nav = document.getElementById("navroot");
+  let side = document.getElementById("sider");
+  let buts = document.getElementById("buts");
+  buts.style.display = "block";
+  nav.style.display = "block";
+  side.style.marginLeft = "240px";
+};
+
 class billMain extends Component {
   state = {
     loading: true,
@@ -56,10 +69,7 @@ class billMain extends Component {
   };
 
   componentDidMount() {
-    this.props.getbilldata(
-      this.props.user.businessId,
-      this.props.match.params.orderId
-    );
+    this.props.getbilldata(this.props.match.params.orderId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
 
@@ -87,12 +97,34 @@ class billMain extends Component {
     );
   };
 
+  printBill = () => {
+    let nav = document.getElementById("navroot");
+    let side = document.getElementById("sider");
+    let buts = document.getElementById("buts");
+    buts.style.display = "none";
+    nav.style.display = "none";
+    side.style.marginLeft = "40px";
+    window.print();
+  };
+
+  sendmail = () => {
+    const mailoptions = {
+      to: this.props.data.staff.bill.email,
+      billurl: `https://deliconreservation.herokuapp.com/bill/${this.props.data.staff.bill._id}`,
+      feedbackurl: `http://deliconreservation.herokuapp.com/feedbackform/${this.props.data.staff.bill.businessId}/${this.props.data.staff.bill._id}`,
+    };
+    this.props.sendbillmail(mailoptions);
+  };
+
   render() {
     const { classes } = this.props;
 
     var invoiceSubtotal = 0.0;
 
-    if (this.props.data.staff.bill !== undefined) {
+    if (
+      this.props.data.staff.bill !== undefined &&
+      this.props.data.staff.bill.MenuItems !== undefined
+    ) {
       this.props.data.staff.bill.MenuItems.map(
         (row) =>
           (invoiceSubtotal =
@@ -207,10 +239,14 @@ class billMain extends Component {
           </Table>
         </TableContainer>
         <br></br>
-        <div className="text-center">
-          <Button className={classes.delete}>Print</Button>
+        <div className="text-center" id="buts">
+          <Button className={classes.delete} onClick={this.printBill}>
+            Print
+          </Button>
           <Button className={classes.edit}>Send SMS</Button>
-          <Button className={classes.edit}>Send Email</Button>
+          <Button className={classes.edit} onClick={this.sendmail}>
+            Send Email
+          </Button>
           {this.props.data.staff.bill.paid === true ? null : (
             <Button
               onClick={() =>
@@ -234,7 +270,7 @@ class billMain extends Component {
 
     return (
       <div style={{ marginTop: "100px" }}>
-        <h1 className="text-center pb-3">Your Bill</h1>
+        <h1 className="text-center pb-3">{"<Company Name>"}</h1>
         <div style={{ margin: "20px" }}>{markup}</div>
       </div>
     );
@@ -250,6 +286,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getbilldata,
   markPaid,
+  sendbillmail,
 };
 
 export default connect(

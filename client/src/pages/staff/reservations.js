@@ -25,6 +25,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormLabel from '@material-ui/core/FormLabel';
+import Select from '@material-ui/core/Select';
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -130,6 +137,10 @@ const styles = {
     outline: "none",
     overflowY: "scroll",
   },
+
+  gender:{
+    marginTop:".4rem",  
+  },
 }; // Styles here
 
 function TabPanel(props) {
@@ -168,6 +179,11 @@ class Reservations extends Component {
     mobno: "",
     address: "",
     seats: "",
+    specialEvent:"",
+    dob:"",
+    gender:"",
+    modeOfBooking:"",
+    visitingAs:"",
     checkIn: "",
     checkOut: "",
     loading: true,
@@ -200,12 +216,18 @@ class Reservations extends Component {
       modalmode: "Post",
       postmodal: true,
       name: "",
-      email: "",
-      address: "",
-      mobno: "",
-      seats: "",
+    email: "",
+    mobno: "",
+    address: "",
+    seats: "",
+    specialEvent:"",
+    dob:"",
+    gender:"",
+    modeOfBooking:"",
+    visitingAs:"",
       ownerId: "",
       businessId: "",
+      other:false
     });
   };
 
@@ -224,14 +246,22 @@ class Reservations extends Component {
     const userData = {
       name: this.state.name,
       email: this.state.email,
-      address: this.state.address,
       mobno: this.state.mobno,
       seats: this.state.seats,
+      address: this.state.address,
+      specialEvent:this.state.specialEvent,
+      dob:this.state.dob,
+      gender:this.state.gender,
+      modeOfBooking:this.state.modeOfBooking,
+      visitingAs:this.state.visitingAs,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       checkIn: this.state.checkIn,
       checkOut: this.state.checkOut,
+  
     };
+
+    console.log(userData)
     if (this.state.modalmode === "Post") {
       this.props.postreservation(userData, this.handleDone);
     } else {
@@ -263,6 +293,11 @@ class Reservations extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
+      specialEvent: business.specialEvent,
+      dob:business.dob,
+      gender:business.gender,
+      modeOfBooking:business.modeOfBooking,
+      visitingAs:business.visitingAs,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Edit",
@@ -295,11 +330,17 @@ class Reservations extends Component {
     console.log(this.state.modalmode);
   };
 
+  changeHandler = () =>{
+    this.setState({
+      other: !this.state.other,
+    });
+  }
+
   render() {
+
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
-    console.log(modalmode);
 
     const {
       classes,
@@ -308,8 +349,6 @@ class Reservations extends Component {
       checkOutReservation,
     } = this.props;
 
-    console.log(this.state.value);
-    console.log(this.props.data.staff.reservations);
     // Tab 1
     const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
@@ -407,16 +446,7 @@ class Reservations extends Component {
                   </div>
                 </Typography>
 
-                {/* <div className="text-center mt-1 ">
-              <Button
-              style={{color:"#616161"}} 
-              onClick={() => this.openbusiness(reservation)}
-               variant="contained"
-               size="small"
-              >
-              Details
-             </Button>
-          </div> */}
+             
 
                 <div className="text-center mt-2 ">
                   <Button
@@ -596,11 +626,11 @@ class Reservations extends Component {
           <div className={classes.modlebox}>
             <div
               className="container"
-              style={{ padding: "20px 25px", textAlign: "center" }}
+              style={{ padding: "20px 25px"}}
             >
               {modalmode === "Post" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem" , textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Add a Reservation
@@ -652,7 +682,7 @@ class Reservations extends Component {
                   />
                   <TextField
                     name="mobno"
-                    type="mobno"
+                    type="number"
                     label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
@@ -662,13 +692,12 @@ class Reservations extends Component {
                   />
                   <TextField
                     name="address"
-                    type="address"
-                    label="Address.."
+                    type="text"
+                    label="Pincode.."
                     className={classes.TextField}
                     value={this.state.address}
                     onChange={this.handleChange}
                     fullWidth
-                    required={true}
                   />
                   <TextField
                     name="email"
@@ -680,9 +709,36 @@ class Reservations extends Component {
                     fullWidth
                     required={true}
                   />
+                   <div>
+
+                  <div className={classes.gender} >
+                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">Mode of Booking</FormLabel>
+
+             
+                  <br></br>
+                   <RadioGroup name="modeOfBooking" value={this.state.modeOfBooking} onChange={this.handleChange}>
+                     <FormControlLabel value="online" control={<Radio />} label="Online" />
+                      <FormControlLabel value="phone" control={<Radio />} label="Phone" />
+                      <FormControlLabel value = {""} control={<Radio />} label="Others" />
+                    {this.state.modeOfBooking !== "online" && this.state.modeOfBooking !== "phone" 
+                    ? <TextField
+                    id={"modeOfBooking"}
+                    type = "text"
+                    label="Please specify"
+                    onChange={this.handleChange}
+                    name={"modeOfBooking"}
+                    value={this.state.modeOfBooking}
+                  /> 
+                  :
+                  null
+                    }
+                 </RadioGroup>
+                 </div>
+                 </div>
+
                   <TextField
                     name="seats"
-                    type="text"
+                    type="number"
                     label="No. of Seats.."
                     className={classes.TextField}
                     value={this.state.seats}
@@ -690,6 +746,66 @@ class Reservations extends Component {
                     fullWidth
                     required={true}
                   />
+                 
+
+
+                  <div style = {{marginLeft:"10px"}} className={classes.gender} >
+                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px"}} component="legend">Gender</FormLabel>
+
+                   <RadioGroup  name="gender" value={this.state.gender} onChange={this.handleChange}>
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                 </RadioGroup>
+                 </div>
+
+                 <TextField
+                    name="specialEvent"
+                    type="text"
+                    label="Special Event.."
+                    className={classes.TextField}
+                    value={this.state.specialEvent}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  
+                <TextField
+                 style = {{float:"left"}}
+                 name="dob"
+                 id="date"
+                 label="Date of Birth"
+                 type="date"
+                 defaultValue={this.state.dob}
+                 onChange={this.handleChange}
+                 
+                 className={classes.TextField}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}
+                   />
+
+
+                 <br></br>
+                 <br></br>
+                 <br></br>     
+        <br></br>     
+
+        <br></br>   
+                
+                  <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          name="visitingAs"
+          type="text"
+          id="demo-simple-select"
+          value={this.state.visitingAs}
+          onChange={this.handleChange}
+          fullWidth
+        >
+          <MenuItem value={"Family"}>Family</MenuItem>
+          <MenuItem value={"Friend"}>Friend</MenuItem>
+          <MenuItem value={"Couples"}>Couples</MenuItem>
+        </Select>
                   {this.state.errors ? <p>{this.state.errors.error}</p> : null}
                   <Button
                     type="submit"
