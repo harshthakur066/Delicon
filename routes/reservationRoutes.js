@@ -8,10 +8,14 @@ const requireStaff = require("../middlewares/requireStaff");
 router.post("/api/v1/reservations", requireStaff, async (req, res) => {
   const {
     name,
-    email,
     mobno,
+    email,
     address,
     dateOfBirth,
+    specialEvent,
+    gender,
+    modeOfBooking,
+    visitingAs,
     seats,
     ownerId,
     businessId,
@@ -25,6 +29,10 @@ router.post("/api/v1/reservations", requireStaff, async (req, res) => {
       staffId: staffId,
       mobno: mobno,
       address: address,
+      specialEvent: specialEvent,
+      gender: gender,
+      modeOfBooking: modeOfBooking,
+      visitingAs: visitingAs,
       createdAt: new Date(date[0], date[2], date[1]),
       dateOfBirth: dateOfBirth,
       seats: seats,
@@ -82,7 +90,18 @@ router.put(
   "/api/v1/reservations/:reservationId",
   requireStaff,
   async (req, res) => {
-    const { name, email, address, mobno, dateOfBirth, seats } = req.body;
+    const {
+      name,
+      email,
+      address,
+      mobno,
+      dateOfBirth,
+      seats,
+      specialEvent,
+      modeOfBooking,
+      gender,
+      visitingAs,
+    } = req.body;
     const { reservationId } = req.params;
     try {
       const update = {
@@ -90,6 +109,10 @@ router.put(
         email: email,
         address: address,
         mobno: mobno,
+        specialEvent: specialEvent,
+        gender: gender,
+        modeOfBooking: modeOfBooking,
+        visitingAs: visitingAs,
         dateOfBirth: dateOfBirth,
         seats: seats,
       };
@@ -132,6 +155,7 @@ router.delete(
   }
 );
 
+// To update checkin accsess to staff
 router.put(
   "/api/v1/reservations/:reservationId/checkin",
   requireStaff,
@@ -154,6 +178,7 @@ router.put(
   }
 );
 
+// To update checkout access to staff
 router.put(
   "/api/v1/reservations/:reservationId/checkout",
   requireStaff,

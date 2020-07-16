@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
 const reservationSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
+  mobno: { type: String, required: true },
   email: String,
-  mobno: String,
   address: String,
+  specialEvent: String,
+  gender: String,
+  modeOfBooking: String,
+  visitingAs: String,
   staffId: String,
   dateOfBirth: String,
   businessId: String,
   ownerId: String,
-  seats: String,
+  seats: { type: String, required: true },
   createdAt: Date,
   checkIn: String,
   checkOut: String,

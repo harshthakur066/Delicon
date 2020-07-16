@@ -17,6 +17,11 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
     businessId,
     ownerId,
     seats,
+    specialEvent,
+    modeOfBooking,
+    gender,
+    visitingAs,
+    known,
   } = req.body;
   const staffId = req.staff._id;
   try {
@@ -31,6 +36,11 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
       staffId,
       walkIn,
       seats,
+      specialEvent,
+      modeOfBooking,
+      gender,
+      visitingAs,
+      known,
     });
     await walk.save();
     try {
@@ -102,7 +112,19 @@ router.put("/api/v1/walkin/:id/walkout", requireStaff, async (req, res) => {
 
 // To update particular walkin
 router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
-  const { name, mobno, email, dob, address, seats } = req.body;
+  const {
+    name,
+    mobno,
+    email,
+    dob,
+    address,
+    seats,
+    specialEvent,
+    modeOfBooking,
+    gender,
+    visitingAs,
+    known,
+  } = req.body;
   const walkInId = req.params.id;
   try {
     const update = {
@@ -112,6 +134,11 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
       dob,
       address,
       seats,
+      specialEvent,
+      modeOfBooking,
+      gender,
+      visitingAs,
+      known,
     };
     const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
     res.send(walkIn);
