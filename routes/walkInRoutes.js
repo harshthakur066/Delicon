@@ -20,7 +20,7 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
     specialEvent,
     gender,
     visitingAs,
-    known,
+    know,
   } = req.body;
   const staffId = req.staff._id;
   try {
@@ -39,7 +39,7 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
 
       gender,
       visitingAs,
-      known,
+      know,
     });
     await walk.save();
     try {
@@ -121,7 +121,7 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
     specialEvent,
     gender,
     visitingAs,
-    known,
+    know,
   } = req.body;
   const walkInId = req.params.id;
   try {
@@ -136,7 +136,7 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
 
       gender,
       visitingAs,
-      known,
+      know,
     };
     const walkIn = await WalkIn.findByIdAndUpdate(walkInId, update);
     res.send(walkIn);

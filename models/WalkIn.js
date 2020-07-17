@@ -9,7 +9,7 @@ const walkInSchema = new mongoose.Schema({
   specialEvent: String,
   gender: String,
   visitingAs: String,
-  known: String,
+  know: String,
   seats: { type: String, required: true },
   walkIn: String,
   walkOut: String,
