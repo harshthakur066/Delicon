@@ -4,6 +4,7 @@ import {
   getbilldata,
   markPaid,
   sendbillmail,
+  sendbillsms,
 } from "../../redux/actions/dataActions";
 import {
   Backdrop,
@@ -114,6 +115,17 @@ class billMain extends Component {
       feedbackurl: `http://deliconreservation.herokuapp.com/feedbackform/${this.props.data.staff.bill.businessId}/${this.props.data.staff.bill._id}`,
     };
     this.props.sendbillmail(mailoptions);
+  };
+
+  sendSMS = () => {
+    console.log(this.props.data.staff.bill);
+    const msgOptions = {
+      from: "The Delicon Group",
+      to: this.props.data.staff.bill.mobno,
+      billurl: `https://deliconreservation.herokuapp.com/bill/${this.props.data.staff.bill._id}`,
+      feedbackurl: `http://deliconreservation.herokuapp.com/feedbackform/${this.props.data.staff.bill.businessId}/${this.props.data.staff.bill._id}`,
+    };
+    this.props.sendbillsms(msgOptions);
   };
 
   render() {
@@ -243,7 +255,9 @@ class billMain extends Component {
           <Button className={classes.delete} onClick={this.printBill}>
             Print
           </Button>
-          <Button className={classes.edit}>Send SMS</Button>
+          <Button className={classes.edit} onClick={this.sendSMS}>
+            Send SMS
+          </Button>
           <Button className={classes.edit} onClick={this.sendmail}>
             Send Email
           </Button>
@@ -287,6 +301,7 @@ const mapDispatchToProps = {
   getbilldata,
   markPaid,
   sendbillmail,
+  sendbillsms,
 };
 
 export default connect(

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./feedBack.css"
 
 import { connect } from "react-redux";
 import {
@@ -16,10 +15,7 @@ import {
   Select,
   InputLabel,
 } from "@material-ui/core";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
+
 
 import {
   editFeedBackQuestion,
@@ -125,20 +121,6 @@ const styles = {
       right: "10%",
       bottom: "10%",    },
 
-  },
-  preview: {
-    position: "fixed",
-    top: "15%",
-    left: "15%",
-    right: "15%",
-    bottom: "15%",
-    padding:"20px",
-    backgroundColor: "white",
-    borderRadius: "20px",
-    border: "0px",
-    width: "auto",
-    outline: "none",
-    overflowY: "scroll",
   },
 
 
@@ -306,78 +288,7 @@ class feedBack extends Component {
       postmodal: true,
     });
   };
-  preview(){
-    return (
-      
-      this.props.data.owner.feedbackquestions.map((food,i) => (
-                  <div 
-                  key={food._id} >
-                   <form>
-                    {
-                      food.type === "text" ?
-                      <>
-                  <span >{"Question " +  (Number(i) + Number(1)) + ".)  " +  food.question} </span>
-                      <TextField
-                      name="Comment"
-                      type="Comment"
-                      label="Comment.."
-                      fullWidth
-                      required={true}
-                      
-                    /> 
-                    </>
-                      : null
-                    }
-                    <br></br>
-                    {
-                      food.type === "boolean" ? 
-                      <span>
-                  <span >{"Question " +  (Number(i) + Number(1)) + ".)  " +  food.question} </span>
-                      <FormLabel component="legend">{}</FormLabel>
-                      <RadioGroup aria-label="bool" name="bool" value={true} >
-                      <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                      <FormControlLabel value="No" control={<Radio />} label="No" />
-                      </RadioGroup></span>
-                      : null
-                    }
-                      <br></br>
-                    {
-                      
-                      food.type === "rating" ? 
-                      <>
-                  <span >{"Question " +  (Number(i) + Number(1)) + ".)  " +  food.question} </span>
-                      <div class="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                        </div>
-                      </>
-                      : null
-                    }
-                     <br></br>
 
-                    
-  
-                    {/* {this.state.errors ? <p>{this.state.errors.error}</p> : null} */}
-                    {/* <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      
-                      disabled={btnload}
-                      className={classes.button}
-                    >
-                      Submit
-                      {btnload && (
-                        <CircularProgress
-                          size={30}
-                          className={classes.progress}
-                        />
-                      )}
-                    </Button> */}
-                  </form>
-            </div>
-                  ))
-    )
-  }
 
  
   render() {
@@ -434,9 +345,11 @@ class feedBack extends Component {
                       ?
                       <span >{"YES/NO"} </span>
                       :
-                      <div class="rating">
-                      <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                      </div>
+                      <div>
+
+                     <span style={{fontSize:"110%", color:"#FFCA28"}}>&#9733; &#9733; &#9733; &#9733; &#9733;
+                    </span>                     
+                       </div>
 
                   }
 
@@ -479,14 +392,12 @@ class feedBack extends Component {
      <p style={{ fontSize: "1.5rem" }} className="text-center">
           Feedback List
         </p>
-        
-      
               </div>
         </div>
         <div className="row mt-4">
 
         {this.props.data.owner.feedbacks.map((food, index) => (
-          <div key={index} className="col-12 sm-12 xs-12 mb-4 text-center">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-12 col-lg-6 mb-4 text-center">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -603,16 +514,28 @@ class feedBack extends Component {
                  <Typography variant="h6" className="mt-2 ">
                    Email - {this.state.email}
                  </Typography>
-
-                 {this.state.feedback.map((feed) =>
+<hr></hr>
+                 {this.state.feedback.map((feed,i) =>
                  (
                    <>
                   <Typography variant="h6" className="mt-2 ">
-                  {feed.question}
+                 {i+1}{")."}{feed.question}
                  </Typography>
+                 {feed.type === "rating"
+                 ?
+                 <Typography variant="h6" className="mt-2 " style={{fontSize:"130%", color:"#FFCA28"}}>
+                   {
+                     feed.ans === "1" ? <span> &#9733;</span> : feed.ans === "2" ? <span> &#9733;&#9733;</span> :feed.ans === "3" ?<span> &#9733;&#9733;&#9733;</span>
+                      : feed.ans === "4" ? <span> &#9733;&#9733;&#9733;&#9733;</span> : <span> &#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                   }
+
+                </Typography>
+                     :
                  <Typography variant="h6" className="mt-2 ">
                  {feed.ans}
-                </Typography>
+                </Typography>}
+                 
+                <hr></hr>
                  </>
                  ))
                 }
@@ -646,7 +569,7 @@ class feedBack extends Component {
                    fullWidth
                    required={true}
                   >
-                  <MenuItem value="Select Type">
+                  <MenuItem value="">
                   <em>Select Type</em>
                   </MenuItem>
                   <MenuItem value={"text"}>Comment</MenuItem>

@@ -1375,3 +1375,18 @@ export const sendbillmail = (mailoptions) => (dispatch) => {
       }
     });
 };
+
+export const sendbillsms = (smsOptions) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/v1/smssender/bill`, smsOptions)
+    .then((res) => {
+      alert("SMS sent !!");
+      console.log(res.data);
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};

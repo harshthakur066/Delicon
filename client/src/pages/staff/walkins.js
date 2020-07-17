@@ -30,6 +30,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
+import Validate from './../../utils/Validate';
 
 const styles = {
   bodycard: {
@@ -120,6 +121,13 @@ const styles = {
   gender:{
     marginTop:".4rem",  
   },
+  details:{
+    color: "#616161",
+    marginLeft:"15px",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      marginLeft:"5px",
+      },
+  }
 };
 
 function TabPanel(props) {
@@ -174,7 +182,7 @@ class Walkins extends Component {
     seats: "",
     specialEvent:"",
     gender:"",
-    VisitingAs:"",
+    visitingAs:"",
     know:"",
     dob:"",
     walkIn: "",
@@ -183,6 +191,7 @@ class Walkins extends Component {
     btnload: false,
     loading: true,
     postmodal: false,
+    errors:{}
   };
 
   handleMe = (event, newValue) => {
@@ -246,7 +255,7 @@ class Walkins extends Component {
       seats: this.state.seats,
       specialEvent:this.state.specialEvent,
       gender:this.state.gender,
-      VisitingAs:this.state.VisitingAs,
+      visitingAs:this.state.visitingAs,
       know:this.state.know,
       dob:this.state.dob,
       ownerId: this.props.user.profile.ownerId,
@@ -272,6 +281,17 @@ class Walkins extends Component {
       [event.target.name]: event.target.value,
     });
   };
+  handleBlur = e => {
+    console.log("handleBlur")
+   const { name, value } = e.target;
+   const error = { ...Validate(name, value) };
+   this.setState({
+       errors: { ...this.state.errors, ...error } 
+     });
+
+   console.log(this.state.errors)
+  
+};
 
   editbusiness = (business) => {
     this.setState({
@@ -282,7 +302,7 @@ class Walkins extends Component {
       seats: business.seats,
       specialEvent:business.specialEvent,
       gender:business.gender,
-      VisitingAs:business.VisitingAs,
+      visitingAs:business.visitingAs,
       know:business.know,
       dob:business.dob,
       ownerId: this.props.user.profile.ownerId,
@@ -300,6 +320,11 @@ class Walkins extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
+      specialEvent:business.specialEvent,
+      gender:business.gender,
+      visitingAs:business.visitingAs,
+      know:business.know,
+      dob:business.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Open",
@@ -331,7 +356,7 @@ class Walkins extends Component {
                   <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
                   <div> Mobile No. - {walkin.mobno}</div>{" "}
                   <div> Email - {walkin.email}</div>{" "}
-                  <div> Address - {walkin.address}</div>{" "}
+                
                   <br className={classes.breaker} />
                   <div>
                     {" "}
@@ -340,20 +365,20 @@ class Walkins extends Component {
                 </Typography>
 
                 <br className={classes.breaker} />
-                <div className="float-left mb-2">
-                  {/* <Button
+               
+
+                <div className="text-center">
+                <Button
                    style={{color:"#616161"}} 
                     onClick={() => this.openbusiness(walkin)}
                     variant="contained"
-                  size="small"
+                     size="small"
                            >
                      Details
-                        </Button> */}
-                </div>
-
-                <div className="text-center">
+                        </Button>
                   <Button
-                    style={{ color: "#616161" }}
+                   className={classes.details}
+                   style={{ color: "#616161" }}
                     onClick={() => walkout(walkin._id)}
                     variant="contained"
                     size="small"
@@ -399,7 +424,6 @@ class Walkins extends Component {
                   <br className={classes.breaker} />
                   <div> Mobile No. - {walkin.mobno}</div>{" "}
                   <div> Email - {walkin.email}</div>{" "}
-                  <div> Address - {walkin.address}</div>{" "}
                   <br className={classes.breaker} />
                   <div>
                     {" "}
@@ -412,14 +436,14 @@ class Walkins extends Component {
                 </Typography>
 
                 <div className="text-center mt-2 ">
-                  {/* <Button
+                  <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(walkin)}
               variant="contained"
               size="small"
             >
               Details
-            </Button> */}
+            </Button>
                 </div>
               </CardContent>
               <Button
@@ -552,11 +576,27 @@ class Walkins extends Component {
                     Email - {this.state.email}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                    Address - {this.state.address}
+                    Pincode - {this.state.address}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
                     Seats - {this.state.seats}
                   </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                  gender - {this.state.gender || "?"}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                  Date of Birth - {this.state.dob || "?"}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                  Special Event - {this.state.specialEvent || "?"}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                  How did you get to know about us? - {this.state.know || "?"}
+                  </Typography>
+                  <Typography variant="h6" className="mt-2 ">
+                  Visiting As - {this.state.visitingAs || "?"}
+                  </Typography>
+       
                 </>
               ) : (
                 <form onSubmit={this.handleSubmit}>
@@ -566,20 +606,28 @@ class Walkins extends Component {
                     label="Name.."
                     className={classes.TextField}
                     value={this.state.name}
+                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
-                  />
+                  />   
+                  {this.state.errors.errors !== undefined ? 
+                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.name}</div>
+                  :null}
                   <TextField
                     name="mobno"
                     type="number"
                     label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
+                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
                   />
+                   {this.state.errors.errors !== undefined ? 
+                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.mobno}</div>
+                  :null}
                   <TextField
                     name="address"
                     type="text"
@@ -635,9 +683,7 @@ class Walkins extends Component {
         <br></br>     
 
         <div className={classes.gender} >
-                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">How did you get to know?</FormLabel>
-
-             
+                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">How did you get to know about us ?</FormLabel>
                   <br></br>
                    <RadioGroup name="know" value={this.state.know} onChange={this.handleChange}>
                      <FormControlLabel value="Newspaper" control={<Radio />} label="Newspaper" />
@@ -689,10 +735,10 @@ class Walkins extends Component {
         <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
         <Select
           labelId="demo-simple-select-label"
-          name="VisitingAs"
+          name="visitingAs"
           type="text"
           id="demo-simple-select"
-          value={this.state.VisitingAs}
+          value={this.state.visitingAs}
           onChange={this.handleChange}
           fullWidth
         >

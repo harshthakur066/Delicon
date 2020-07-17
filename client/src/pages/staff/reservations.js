@@ -21,6 +21,8 @@ import {
   checkOutReservation,
 } from "../../redux/actions/dataActions";
 
+import Validate from "../../utils/Validate"
+
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -141,6 +143,15 @@ const styles = {
   gender:{
     marginTop:".4rem",  
   },
+
+details:{
+  color: "#616161",
+  marginLeft:"15px",
+  marginTop:"15px",
+  "@media (min-width: 320px) and (max-width: 480px)": {
+    marginLeft:"5px",
+    },
+}
 }; // Styles here
 
 function TabPanel(props) {
@@ -180,7 +191,7 @@ class Reservations extends Component {
     address: "",
     seats: "",
     specialEvent:"",
-    dob:"",
+    dateOfBirth:"",
     gender:"",
     modeOfBooking:"",
     visitingAs:"",
@@ -190,6 +201,7 @@ class Reservations extends Component {
     btnload: false,
     postmodal: false,
     value: 0,
+    errors:{}
   };
 
   componentDidMount() {
@@ -221,7 +233,7 @@ class Reservations extends Component {
     address: "",
     seats: "",
     specialEvent:"",
-    dob:"",
+    dateOfBirth:"",
     gender:"",
     modeOfBooking:"",
     visitingAs:"",
@@ -250,7 +262,7 @@ class Reservations extends Component {
       seats: this.state.seats,
       address: this.state.address,
       specialEvent:this.state.specialEvent,
-      dob:this.state.dob,
+      dateOfBirth:this.state.dateOfBirth,
       gender:this.state.gender,
       modeOfBooking:this.state.modeOfBooking,
       visitingAs:this.state.visitingAs,
@@ -261,7 +273,6 @@ class Reservations extends Component {
   
     };
 
-    console.log(userData)
     if (this.state.modalmode === "Post") {
       this.props.postreservation(userData, this.handleDone);
     } else {
@@ -285,7 +296,6 @@ class Reservations extends Component {
   };
 
   editbusiness = (business) => {
-    console.log(business);
 
     this.setState({
       name: business.name,
@@ -294,7 +304,7 @@ class Reservations extends Component {
       mobno: business.mobno,
       seats: business.seats,
       specialEvent: business.specialEvent,
-      dob:business.dob,
+      dateOfBirth:business.dateOfBirth,
       gender:business.gender,
       modeOfBooking:business.modeOfBooking,
       visitingAs:business.visitingAs,
@@ -312,13 +322,19 @@ class Reservations extends Component {
   };
 
   openbusiness = (business) => {
-    console.log(business);
     this.setState({
       name: business.name,
       email: business.email,
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
+      
+      specialEvent: business.specialEvent,
+      dateOfBirth:business.dateOfBirth,
+      gender:business.gender,
+      modeOfBooking:business.modeOfBooking,
+      visitingAs:business.visitingAs,
+
       checkIn: business.checkIn,
       checkOut: business.checkOut,
       ownerId: this.props.user.profile.ownerId,
@@ -327,14 +343,20 @@ class Reservations extends Component {
       _id: business._id,
       postmodal: true,
     });
-    console.log(this.state.modalmode);
   };
 
-  changeHandler = () =>{
+
+   handleBlur = e => {
+     console.log("handleBlur")
+    const { name, value } = e.target;
+    const error = { ...Validate(name, value) };
     this.setState({
-      other: !this.state.other,
-    });
-  }
+        errors: { ...this.state.errors, ...error } 
+      });
+
+    console.log(this.state.errors)
+   
+ };
 
   render() {
 
@@ -360,38 +382,39 @@ class Reservations extends Component {
           <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem",marginTop:"5px" }}>
                   Name - {reservation.name}{" "}
                   <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Email - {reservation.email}{" "}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Mobile No. - {reservation.mobno}
-                  <div>Address - {reservation.address}</div>
                 </Typography>
-                {/* <div className="text-center mt-1 ">
+                
+                <div className="text-center">
               <Button
-              style={{color:"#616161"}} 
+              style={{color:"#616161",marginTop:"15px"}} 
               onClick={() => this.openbusiness(reservation)}
                variant="contained"
                size="small"
               >
               Details
              </Button>
-          </div>
-        */}
-                <div className="text-center mt-2 ">
-                  <Button
-                    style={{ color: "#616161" }}
-                    onClick={() => checkInReservation(reservation._id)}
+
+                           
+              <Button
+             className={classes.details}
+             onClick={() => checkInReservation(reservation._id)}
                     variant="contained"
                     size="small"
                   >
                     CheckIn
                   </Button>
-                </div>
+          </div>
+       
+                
               </CardContent>
 
               <Button
@@ -426,18 +449,21 @@ class Reservations extends Component {
           <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Name - {reservation.name}{" "}
                   <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Email - {reservation.email}{" "}
                 </Typography>
 
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem",marginTop:"5px" }}>
                   Mobile No. - {reservation.mobno}
-                  <div>Address - {reservation.address}</div>
                 </Typography>
+
+
+                
+
                 <br className={classes.breaker} />
                 <Typography style={{ fontSize: "1.05rem" }}>
                   <div>
@@ -446,18 +472,27 @@ class Reservations extends Component {
                   </div>
                 </Typography>
 
-             
-
-                <div className="text-center mt-2 ">
-                  <Button
-                    style={{ color: "#616161" }}
+                <div className="text-center">
+              <Button
+              style={{color:"#616161",marginTop:"15px"}} 
+              onClick={() => this.openbusiness(reservation)}
+               variant="contained"
+               size="small"
+              >
+              Details
+             </Button>
+             <Button
+             className={classes.details}
                     onClick={() => checkOutReservation(reservation._id)}
                     variant="contained"
                     size="small"
                   >
                     CheckOut
                   </Button>
-                </div>
+          </div>
+             
+
+               
               </CardContent>
 
               <Button
@@ -491,17 +526,21 @@ class Reservations extends Component {
           <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
             <Card className={classes.bodycard}>
               <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Name - {reservation.name}{" "}
                   <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Email - {reservation.email}{" "}
                 </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
                   Mobile No. - {reservation.mobno}
-                  <div>Address - {reservation.address}</div>
                 </Typography>
+
+
+
+           
+
                 <br className={classes.breaker} />
 
                 <Typography style={{ fontSize: "1.05rem" }}>
@@ -515,7 +554,7 @@ class Reservations extends Component {
                   </div>
                 </Typography>
                 <br></br>
-                {/* <div className="text-center mt-1 ">
+                <div className="text-center mt-1 ">
               <Button
               style={{color:"#616161"}} 
               onClick={() => this.openbusiness(reservation)}
@@ -524,7 +563,7 @@ class Reservations extends Component {
               >
               Details
              </Button>
-          </div> */}
+          </div>
               </CardContent>
               <Button
               variant="contained"
@@ -644,7 +683,7 @@ class Reservations extends Component {
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" }}
+                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
                   className={classes.pageTitle}
                 >
                   Your Reservation
@@ -652,21 +691,37 @@ class Reservations extends Component {
               ) : null}
               {modalmode === "Open" ? (
                 <>
-                  <Typography variant="h6" className="mt-2 ">
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
                     Name - {this.state.name}
                   </Typography>
-                  <Typography variant="h6" className="mt-2 ">
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
                     Mobile No. - {this.state.mobno}
                   </Typography>
-                  <Typography variant="h6" className="mt-2 ">
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
                     Email - {this.state.email}
                   </Typography>
-                  <Typography variant="h6" className="mt-2 ">
-                    Address - {this.state.address}
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                    Pincode - {this.state.address}
                   </Typography>
-                  <Typography style={{ fontSize: "1.5rem" }} className="mt-2 ">
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
                     Seats - {this.state.seats}
                   </Typography>
+                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  Gender - {this.state.gender || "?"}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  Date of Birth - {this.state.dateOfBirth || "?"}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem",marginTop:"10px" }}>
+                  Special Event - {this.state.specialEvent || "?"}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem",marginTop:"10px" }}>
+                  Mode of Booking - {this.state.modeOfBooking || "?"}{" "}
+                </Typography>
+                <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  Visiting As - {this.state.visitingAs || "?"}{" "}
+                </Typography>
+
                 </>
               ) : (
                 <form onSubmit={this.handleSubmit}>
@@ -676,20 +731,29 @@ class Reservations extends Component {
                     label="Name.."
                     className={classes.TextField}
                     value={this.state.name}
+                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
                   />
+                  {this.state.errors.errors !== undefined ? 
+                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.name}</div>
+                  :null}
                   <TextField
                     name="mobno"
                     type="number"
                     label="Mobile Number.."
                     className={classes.TextField}
                     value={this.state.mobno}
+                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
                     fullWidth
                     required={true}
+    
                   />
+                  {this.state.errors.errors !== undefined ? 
+                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.mobno}</div>
+                  :null}
                   <TextField
                     name="address"
                     type="text"
@@ -771,11 +835,11 @@ class Reservations extends Component {
                   
                 <TextField
                  style = {{float:"left"}}
-                 name="dob"
+                 name="dateOfBirth"
                  id="date"
                  label="Date of Birth"
                  type="date"
-                 defaultValue={this.state.dob}
+                 defaultValue={this.state.dateOfBirth}
                  onChange={this.handleChange}
                  
                  className={classes.TextField}
