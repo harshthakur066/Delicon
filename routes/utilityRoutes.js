@@ -20,7 +20,10 @@ var transporter = nodemailer.createTransport({
 router.post(`/api/v1/smssender/bill`, isStaff, (req, res) => {
   const from = req.body.from;
   const to = "91" + req.body.to;
-  const text = req.body.text;
+  const text = `Bill URL - ${req.body.billurl}
+  Feedback URL - ${req.body.feedbackurl}
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
   nexmo.message.sendSms(from, to, text, {}, (err, resdata) => {
     if (err) {
       res.status(500).send(err);
