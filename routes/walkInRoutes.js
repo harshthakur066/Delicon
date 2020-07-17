@@ -18,7 +18,6 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
     ownerId,
     seats,
     specialEvent,
-    modeOfBooking,
     gender,
     visitingAs,
     known,
@@ -37,7 +36,7 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
       walkIn,
       seats,
       specialEvent,
-      modeOfBooking,
+
       gender,
       visitingAs,
       known,
@@ -120,7 +119,6 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
     address,
     seats,
     specialEvent,
-    modeOfBooking,
     gender,
     visitingAs,
     known,
@@ -135,7 +133,7 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
       address,
       seats,
       specialEvent,
-      modeOfBooking,
+
       gender,
       visitingAs,
       known,
