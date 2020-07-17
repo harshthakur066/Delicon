@@ -2,6 +2,12 @@ var nodemailer = require("nodemailer");
 const express = require("express");
 const router = express.Router();
 const isStaff = require("../middlewares/requireStaff");
+const Nexmo = require("nexmo");
+
+const nexmo = new Nexmo({
+  apiKey: "8e92d532",
+  apiSecret: "ij4nvoIo4BAxuxYb",
+});
 
 var transporter = nodemailer.createTransport({
   service: "gmail",
@@ -9,6 +15,19 @@ var transporter = nodemailer.createTransport({
     user: "delicongroup2@gmail.com",
     pass: "NewPassword@123",
   },
+});
+
+router.post(`/api/v1/smssender/bill`, isStaff, (req, res) => {
+  const from = req.body.from;
+  const to = "91" + req.body.to;
+  const text = req.body.text;
+  nexmo.message.sendSms(from, to, text, {}, (err, resdata) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(resdata);
+    }
+  });
 });
 
 router.post(`/api/v1/mailer/bill`, isStaff, (req, res) => {
