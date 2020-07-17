@@ -23,7 +23,7 @@ router.post(`/api/v1/smssender/bill`, isStaff, (req, res) => {
   const text = req.body.text;
   nexmo.message.sendSms(from, to, text, {}, (err, resdata) => {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     } else {
       res.send(resdata);
     }
