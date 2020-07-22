@@ -88,15 +88,16 @@ const styles = {
     },
   },
   analytics: {
-    float: "left",
+    float: "right",
     color: "white",
     cursor: "pointer",
-    marginRight: "5px",
+    width:"90px",
     backgroundColor: "#F7BB0F",
     "&:hover": {
       backgroundColor: "#F7BB0F",
     },
     "@media (min-width: 320px) and (max-width: 480px)": {
+      float: "left",
       margin: "5px",
     },
   },
@@ -127,6 +128,7 @@ const styles = {
   },
   side: {
     float: "right",
+    width:"90px",
     "@media (min-width: 320px) and (max-width: 480px)": {
       marginTop: "8px",
     },
@@ -255,6 +257,20 @@ class Businesses extends Component {
                       variant="contained"
                       color="inherit"
                       size="small"
+                      to={`/staffs/${business._id}`}
+                      className={classes.side}
+                    >
+                      <span style={{ width: "90px", textAlign: "center" }}>
+                        Staff
+                      </span>
+                    </Button>
+                  </span>
+                  {/* <span style={{ float: "right" }}>
+                    <Button
+                      component={Link}
+                      variant="contained"
+                      color="inherit"
+                      size="small"
                       to={`/feedBack/${business._id}`}
                       className={classes.side}
                     >               
@@ -262,44 +278,16 @@ class Businesses extends Component {
                       FeedBack
                       </span>
                     </Button>
-                  </span>
+                  </span> */}
                 </Typography>
                 <br></br>
                 <Typography style={{ fontSize: "1rem" }}>
                   {business.details}
-                  <span style={{ float: "right" }}>
-                    <Button
-                      component={Link}
-                      variant="contained"
-                      color="inherit"
-                      size="small"
-                      to={`/staffs/${business._id}`}
-                      className={classes.side}
-                    >
-                      <span style={{ width: "80px", textAlign: "center" }}>
-                        Staff
-                      </span>
-                    </Button>
-                  </span>
+                  
                 </Typography>
                 <br></br>
                 <Typography style={{ fontSize: "1rem" }}>
                   {business.address}
-                  <span style={{ float: "right" }}>
-                    <Button
-                      component={Link}
-                      variant="contained"
-                      color="inherit"
-                      size="small"
-                      to={`/menu/${business._id}`}
-                      className={classes.side}
-
-                    >
-                      <span style={{ width: "80px", textAlign: "center" }}>
-                        Menu
-                      </span>
-                    </Button>
-                  </span>
                 </Typography>
                 <br></br>
 
@@ -339,21 +327,7 @@ class Businesses extends Component {
                       <span style={{ color: "white" }}>Feedbacks List</span>
                     </Button> */}
                   </div>
-                  <span style={{ float: "right" }}>
-                    <Button
-                      component={Link}
-                      variant="contained"
-                      color="inherit"
-                      size="small"
-                      to={`/service/${business._id}`}
-                      className={classes.side}
-
-                    >
-                      <span style={{ width: "80px", textAlign: "center" }}>
-                        Services
-                      </span>
-                    </Button>
-                  </span>
+                 
                 </Typography>
 
                 <br></br>

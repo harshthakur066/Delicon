@@ -221,7 +221,7 @@ class ListBill extends Component {
         )
       )
     );
-
+    // console.log("state", this.state);
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <div className="row mt-4">

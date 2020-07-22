@@ -17,7 +17,7 @@ import walkins from "./pages/staff/walkins";
 import staffs from "./pages/owner/staffs";
 import ownerDash from "./pages/owner/ownerDashboard";
 import staffDash from "./pages/staff/staffDashboard";
-import busiDetails from "./pages/owner/businessDetails";
+import BusinessDetails from "./pages/owner/businessDetails";
 import reqbusiness from "./pages/owner/reqbusiness";
 import menu from "./pages/owner/menu";
 import menuItems from "./pages/owner/menuItems";
@@ -32,6 +32,7 @@ import feedBack from "./pages/owner/feedBack"
 import feedBackForm from "./pages/staff/feedBackForm"
 // import feedBack from "./pages/owner/feedBack";
 import feedbackList from "./pages/owner/feedbackslist";
+import resAnalytics from './pages/owner/reservationAnalytics';
 
 import {
   getUserOwnerData,
@@ -91,10 +92,10 @@ function App() {
                     <Redirect to="/staffDash" />
                   </Route>
                 ) : (
-                  <Route path="/" exact>
-                    <Redirect to="/login" />
-                  </Route>
-                )}
+                      <Route path="/" exact>
+                        <Redirect to="/login" />
+                      </Route>
+                    )}
 
                 <Route exact path="/login" component={login} />
                 <Route exact path="/businesses" component={businesses} />
@@ -102,7 +103,7 @@ function App() {
                 <Route
                   exact
                   path="/businesses/:busiId"
-                  component={busiDetails}
+                  component={BusinessDetails}
                 />
                 <Route exact path="/reservations" component={reservations} />
                 <Route exact path="/valets" component={valets} />
@@ -146,7 +147,7 @@ function App() {
                 />
                 <Route exact path="/bills" component={billList} />
                 <Route exact path="/bill/:orderId" component={billMain} />
-                 {/* <Route exact path="/feedback/:businessId" component={feedBack} /> */}
+                {/* <Route exact path="/feedback/:businessId" component={feedBack} /> */}
                 <Route exact path="/feedbackform/:businessId/:orderId" component={feedBackForm} />
 
                 <Route
@@ -159,6 +160,7 @@ function App() {
                   path="/feedbacklist/:businessId"
                   component={feedbackList}
                 />
+                <Route exact path="/analytics/reservations/:busiId" component={resAnalytics} />
               </Switch>
             </div>
           </ErrorBoundry>

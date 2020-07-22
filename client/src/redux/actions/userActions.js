@@ -70,6 +70,5 @@ export const getUserOwnerData = () => (dispatch) => {
     })
     .catch((err) => {
       console.log(err.response);
-      dispatch(setErrors(err.response.data));
     });
 };

@@ -18,6 +18,7 @@ import menu from "../../assets/img/menu.jpg";
 import service from "../../assets/img/service.jpg";
 import billing from "../../assets/img/billing.jpg";
 import feedback from "../../assets/img/feedback.jpg";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
@@ -76,44 +77,6 @@ const styles = {
   },
 };
 
-const modules = [
-  {
-    id: 0,
-    name: "Reservation",
-    image: reservation,
-  },
-  {
-    id: 1,
-    name: "Valets",
-    image: valet,
-  },
-  {
-    id: 2,
-    name: "Walkin",
-    image: walkin,
-  },
-  {
-    id: 3,
-    name: "Menu",
-    image: menu,
-  },
-  {
-    id: 4,
-    name: "Service",
-    image: service,
-  },
-  {
-    id: 5,
-    name: "Billing",
-    image: billing,
-  },
-  {
-    id: 6,
-    name: "Feedback",
-    image: feedback,
-  },
-];
-
 class BusinessDetails extends Component {
   state = {
     name: "",
@@ -126,7 +89,7 @@ class BusinessDetails extends Component {
   };
 
   componentDidMount() {
-    const { busiId } = this.props.match.params;
+    const { busiId } = this.props.match.params.busiId;
     this.props.getbusiness(this.doneLoading, busiId);
     document.body.style.backgroundColor = "#F0F2FE";
   }
@@ -151,7 +114,54 @@ class BusinessDetails extends Component {
   render() {
     const { classes } = this.props;
     const { loading } = this.state;
-    console.log(this.props.data.owner.business);
+    console.log(this.props.match.params);
+
+    const busiId = this.props.match.params.busiId;
+    const modules = [
+      {
+        id: 0,
+        name: "Reservation",
+        image: reservation,
+        setting: "",
+        analytics: `/analytics/reservations/${this.props.match.params.busiId}`,
+      },
+      {
+        id: 1,
+        name: "Valets",
+        image: valet,
+        setting: "",
+      },
+      {
+        id: 2,
+        name: "Walkin",
+        image: walkin,
+        setting: "",
+      },
+      {
+        id: 3,
+        name: "Menu",
+        image: menu,
+        setting: `/menu/${busiId}`,
+      },
+      {
+        id: 4,
+        name: "Service",
+        image: service,
+        setting: `/service/${busiId}`,
+      },
+      {
+        id: 5,
+        name: "Billing",
+        image: billing,
+        setting: "",
+      },
+      {
+        id: 6,
+        name: "Feedback",
+        image: feedback,
+        setting: `/feedBack/${busiId}`,
+      },
+    ];
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
@@ -185,8 +195,26 @@ class BusinessDetails extends Component {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button className={classes.analytics}>Analytics</Button>
-                <Button className={classes.settings}>Settings</Button>
+                <Button
+                  className={classes.settings}
+                  component={Link}
+                  variant="contained"
+                  color="inherit"
+                  to={mod.analytics}
+                >
+                  Analytics
+                </Button>
+                {mod.setting ? (
+                  <Button
+                    className={classes.settings}
+                    component={Link}
+                    variant="contained"
+                    color="inherit"
+                    to={mod.setting}
+                  >
+                    Settings
+                  </Button>
+                ) : null}
               </CardActions>
             </Card>
           </div>

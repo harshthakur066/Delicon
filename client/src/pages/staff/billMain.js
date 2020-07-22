@@ -255,12 +255,16 @@ class billMain extends Component {
           <Button className={classes.delete} onClick={this.printBill}>
             Print
           </Button>
-          <Button className={classes.edit} onClick={this.sendSMS}>
-            Send SMS
-          </Button>
-          <Button className={classes.edit} onClick={this.sendmail}>
-            Send Email
-          </Button>
+          {this.props.user.authenticated ? (
+            <div>
+              <Button className={classes.edit} onClick={this.sendSMS}>
+                Send SMS
+              </Button>
+              <Button className={classes.edit} onClick={this.sendmail}>
+                Send Email
+              </Button>
+            </div>
+          ) : null}
           {this.props.data.staff.bill.paid === true ? null : (
             <Button
               onClick={() =>
