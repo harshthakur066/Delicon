@@ -7,7 +7,6 @@ const requireOwner = require("../middlewares/requiredBusinessOwner");
 
 // To post the walkin
 router.post("/api/v1/walkin", requireStaff, async (req, res) => {
-  const walkIn = new Date().toISOString();
   const {
     name,
     mobno,
@@ -21,6 +20,7 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
     gender,
     visitingAs,
     know,
+    walkIn,
   } = req.body;
   const staffId = req.staff._id;
   try {
@@ -36,7 +36,6 @@ router.post("/api/v1/walkin", requireStaff, async (req, res) => {
       walkIn,
       seats,
       specialEvent,
-
       gender,
       visitingAs,
       know,
@@ -95,7 +94,7 @@ router.get("/api/v1/walkin/:id", requireStaff, async (req, res) => {
 // For timeOut
 router.put("/api/v1/walkin/:id/walkout", requireStaff, async (req, res) => {
   const walkInId = req.params.id;
-  const walkOut = new Date().toISOString();
+  const walkOut = req.body.walkOut;
   try {
     const update = {
       walkOut: walkOut,
@@ -133,7 +132,6 @@ router.put("/api/v1/walkin/:id", requireStaff, async (req, res) => {
       address,
       seats,
       specialEvent,
-
       gender,
       visitingAs,
       know,

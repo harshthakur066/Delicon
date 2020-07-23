@@ -10,8 +10,7 @@ router.post(
   "/api/v1/menu/items/:categoryId",
   isBusinessOwner,
   async (req, res) => {
-    const date = new Date().toLocaleDateString().split("/").reverse();
-    const { name, details, price } = req.body;
+    const { name, details, price, createdAt } = req.body;
     const ownerId = req.owner._id;
     const categoryId = req.params.categoryId;
     try {
@@ -21,7 +20,7 @@ router.post(
         price,
         ownerId,
         categoryId,
-        createdAt: new Date(date[0], date[2], date[1]),
+        createdAt,
       });
       await dish.save();
       try {

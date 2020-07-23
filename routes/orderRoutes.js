@@ -16,17 +16,17 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
     staffName,
     mobno,
     email,
+    createdAt
   } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
-  const date = new Date().toLocaleDateString().split("/").reverse();
   try {
     const newOrder = new Order({
       custId,
       staffId,
       businessId,
       custName,
-      createdAt: new Date(date[0], date[2], date[1]),
+      createdAt,
       MenuItems,
       services,
       mobno,

@@ -5,8 +5,7 @@ const isBusinessOwner = require("../middlewares/requiredBusinessOwner");
 
 // To Post New Dishes for Owner
 router.post("/api/v1/feedback", async (req, res) => {
-  const date = new Date().toLocaleDateString().split("/").reverse();
-  const { custName, mobno, email, feedback, businessId, orderId } = req.body;
+  const { custName, mobno, email, feedback, businessId, orderId, createdAt } = req.body;
   try {
     const feed = new Feedback({
       custName,
@@ -15,7 +14,7 @@ router.post("/api/v1/feedback", async (req, res) => {
       feedback,
       businessId,
       orderId,
-      createdAt: new Date(date[0], date[2], date[1]),
+      createdAt,
     });
     await feed.save();
     res.send(feed);

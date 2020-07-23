@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const valetSchema = new mongoose.Schema({
   carNumber: String,
   ownerName: String,
-  timeIn: String,
+  timeIn: Date,
   driverName: String,
-  timeOut: String,
+  timeOut: Date,
   staffId: String,
   ownerId: String,
   businessId: String,

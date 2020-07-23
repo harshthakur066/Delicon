@@ -11,17 +11,16 @@ router.post(
   "/api/v1/service/categories/:businessId",
   isBusinessOwner,
   async (req, res) => {
-    const { name, details } = req.body;
+    const { name, details, createdAt } = req.body;
     const ownerId = req.owner._id;
     const businessId = req.params.businessId;
-    const date = new Date().toLocaleDateString().split("/").reverse();
     try {
       const serviceCategory = new ServiceCategory({
         name: name,
         details: details,
         ownerId: ownerId,
         businessId,
-        createdAt: new Date(date[0], date[2], date[1]),
+        createdAt,
       });
       await serviceCategory.save();
       res.status(200).json(serviceCategory);
