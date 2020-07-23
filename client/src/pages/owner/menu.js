@@ -47,21 +47,21 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginRight:"5px",
-    marginBottom:"1rem",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -130,7 +130,7 @@ class menu extends Component {
     btnload: false,
     loading: true,
     postmodal: false,
-    };
+  };
 
   componentDidMount() {
     this.props.getMenuCategories(this.props.match.params.businessid);
@@ -177,6 +177,7 @@ class menu extends Component {
     const userData = {
       name: this.state.name,
       details: this.state.details,
+      createdAt: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postMenuCategory(
@@ -231,22 +232,22 @@ class menu extends Component {
 
     console.log(this.props.data.owner);
 
-     const markup = loading || this.props.data.owner.menu === undefined ? (
-      
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
+    const markup = loading || this.props.data.owner.menu === undefined ? (
+
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
         this.props.data.owner.menu.map((food, index) => (
           <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4 text-center">
-            
-            <Card className={classes.bodycard } style={{ fontSize: "1.05rem" }}>
+
+            <Card className={classes.bodycard} style={{ fontSize: "1.05rem" }}>
               <CardContent>
-                <Typography className = "m-2" style={{ fontSize: "1.2rem" }}>
-                  
+                <Typography className="m-2" style={{ fontSize: "1.2rem" }}>
+
                   <span >{food.name} </span>
                   <br></br>
-                  <span className = "mt-2"></span>{food.details}
+                  <span className="mt-2"></span>{food.details}
 
                 </Typography>
 
@@ -261,34 +262,34 @@ class menu extends Component {
                           </Button> }
                  
                    </div> */}
-                  <div className = "mt-2 text-center" >
-                 <Button
-                  component={Link}
-                  variant="contained"
-                  color="inherit"
-                  size="small"
-                  to ={`/menu/${this.props.match.params.businessid}/${food._id}`}
-                >
-                  Items
+                <div className="mt-2 text-center" >
+                  <Button
+                    component={Link}
+                    variant="contained"
+                    color="inherit"
+                    size="small"
+                    to={`/menu/${this.props.match.params.businessid}/${food._id}`}
+                  >
+                    Items
                 </Button>
                 </div>
-                
-                
+
+
               </CardContent>
               <Button
-                  onClick={() => this.editbusiness(food)}
-                  className={classes.edit}
-                >
-                  Edit
+                onClick={() => this.editbusiness(food)}
+                className={classes.edit}
+              >
+                Edit
                 </Button>
-                <Button
-                  onClick={() => deleteMenuCategory(food._id)}
-                  className={classes.delete}
-                >
-                  Delete
+              <Button
+                onClick={() => deleteMenuCategory(food._id)}
+                className={classes.delete}
+              >
+                Delete
                 </Button>
-          
-              
+
+
             </Card>
           </div>
         ))
@@ -357,46 +358,46 @@ class menu extends Component {
                   </Typography>
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="details"
-                    type="details"
-                    label="Details.."
-                    className={classes.TextField}
-                    value={this.state.details}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="details"
+                      type="details"
+                      label="Details.."
+                      className={classes.TextField}
+                      value={this.state.details}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

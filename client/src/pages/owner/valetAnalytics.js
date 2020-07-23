@@ -61,7 +61,7 @@ function a11yProps(index) {
   };
 }
 
-class reservationAnalytics extends Component {
+class valetAnalytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,7 +71,7 @@ class reservationAnalytics extends Component {
     };
     this.sdk = new ChartsEmbedSDK({
       baseUrl:
-        "https://charts.mongodb.com/charts-delicon-reservation-syste-yirij",
+         "https://charts.mongodb.com/charts-delicon-reservation-syste-yirij"
     });
   }
 
@@ -84,38 +84,33 @@ class reservationAnalytics extends Component {
   };
 
   weekData = () => {
-    this.graph("12c3e3d5-b2a8-4b5e-9055-6dfdb065b574", "sb-week");
-    this.graph("74b97d17-d4a9-4ed1-9850-32fe5a5c83bf", "rd-week");
-    this.graph("ef6b0fc2-0892-4f59-8fb3-fe4a21cb07dd", "g-week");
-    this.graph("ac208293-a7c9-4cfc-b835-297ef42badd8", "v-week");
-    this.graph("d059f364-757a-4753-a999-2dec575e9945", "ci-week");
-    this.graph("3c7d04bc-14f4-47cb-bad1-1a7b3a39610b", "b-week");
+    this.graph("7063b955-e9ca-4aa6-93b6-9392d3ff811a", "sb-week"); // valet Customers
+    this.graph("7125d6a2-eedd-4569-8f9b-91ae2d87ba6e", "rd-week"); // Staff Stats
+    this.graph("dbe5d1d2-2797-46ed-ad6e-df53a3771357", "g-week");  //Arrival Frequency
+    this.graph("de92eead-0099-4c79-9eea-8b8e3b534026", "v-week");  // Current Customer
    
   };
 
   monthData = () => {
-    this.graph("30ced374-6707-47ae-9adc-3b38a1ad0fda", "sb-month");
-    this.graph("56735116-212e-4a88-8135-ee90be3deaa5", "rd-month");
-    this.graph("bebaf95c-0567-4008-b839-4f7967556903", "g-month");
-    this.graph("95e593cc-441a-4767-88bc-dc9261186177", "v-month");
-    this.graph("d44068be-db9d-4a62-8a19-28eae4567dc9", "ci-month");
-    this.graph("d37a4f8e-1f53-4e8a-a5a7-e5e348bd78e5", "b-month");
+    this.graph("2c3ea261-2714-4607-a636-9f3b713219c2", "sb-month"); // valet Customers
+    this.graph("84fbe659-ba32-45cd-8bbe-37d1495014c7", "rd-month"); // Staff Stats
+    this.graph("2bf568c6-77d2-4dcf-b960-ab3d31bb496b", "g-month");  // Arrival Frequency
+    this.graph("de92eead-0099-4c79-9eea-8b8e3b534026", "v-month");  // Current Customer
+
   };
   monthsData = () => {
-    this.graph("2a74a9fc-1a68-48cd-a059-1cc5abdc1684", "sb-months");
-    this.graph("8d242e31-a9f3-4bf5-b8f5-048558548ba4", "rd-months");
-    this.graph("3304715f-da99-43d8-a7be-05a6ee7d392d", "g-months");
-    this.graph("58c7a70e-be5d-4fdc-9aed-165018ce8a37", "v-months");
-    this.graph("194244de-f9d2-4f9f-861a-8f2337d96f0a", "ci-months");
-    this.graph("57606810-04e4-4cce-9784-3fab449b89bc", "b-months");
+    this.graph("5f41fca6-00c7-4a70-9215-8d4ff46cfe3e", "sb-months"); // valet Customers
+    this.graph("3f884317-ecf0-4101-a775-5f3321ae62d1", "rd-months"); // Staff Stats
+    this.graph("382e533d-085c-42e2-ad00-b2d0eee682be", "g-months");  // Arrival Frequency
+    this.graph("de92eead-0099-4c79-9eea-8b8e3b534026", "v-months");  // Current Customer
+
   };
   yearData = () => {
-    this.graph("1a346849-8e82-4744-8804-72aa3499bc45", "sb-year");
-    this.graph("bf53aff3-aaf6-4e4d-9bc2-b53834c93b92", "rd-year");
-    this.graph("24098fbd-a2a7-40fb-8521-db241fbd3114", "g-year");
-    this.graph("732c3296-815f-4dd4-95e0-eeea358b6d58", "v-year");
-    this.graph("d2e7350c-5353-4093-8ffa-227790e85b9f", "ci-year");
-    this.graph("23b85bfc-0efc-471c-b569-4775dbd9282c", "b-year");
+    this.graph("3e216be5-85d4-44b8-933c-3aa7b3c7a574", "sb-year"); // valet Customers
+    this.graph("8734fe0a-f45b-4c19-9f1c-557aaf86783f", "rd-year"); // Staff Stats
+    this.graph("774ce80a-ee60-4bc1-a890-82c481e27910", "g-year");  // Arrival Frequency
+    this.graph("de92eead-0099-4c79-9eea-8b8e3b534026", "v-year");  // Current Customer
+
   };
 
   handleMe = (event, newValue) => {
@@ -153,8 +148,6 @@ class reservationAnalytics extends Component {
         <div className={classes.graph} id="rd-month"></div>
         <div className={classes.graph} id="g-month"></div>
         <div className={classes.graph} id="v-month"></div>
-        <div className={classes.graph} id="ci-month"></div>
-        <div className={classes.graph} id="b-month"></div>
       </div>
     );
 
@@ -164,8 +157,6 @@ class reservationAnalytics extends Component {
         <div className={classes.graph} id="rd-week"></div>
         <div className={classes.graph} id="g-week"></div>
         <div className={classes.graph} id="v-week"></div>
-        <div className={classes.graph} id="ci-week"></div>
-        <div className={classes.graph} id="b-week"></div>
       </div>
     );
 
@@ -175,8 +166,6 @@ class reservationAnalytics extends Component {
         <div className={classes.graph} id="rd-months"></div>
         <div className={classes.graph} id="g-months"></div>
         <div className={classes.graph} id="v-months"></div>
-        <div className={classes.graph} id="ci-months"></div>
-        <div className={classes.graph} id="b-months"></div>
       </div>
     );
 
@@ -186,8 +175,6 @@ class reservationAnalytics extends Component {
         <div className={classes.graph} id="rd-year"></div>
         <div className={classes.graph} id="g-year"></div>
         <div className={classes.graph} id="v-year"></div>
-        <div className={classes.graph} id="ci-year"></div>
-        <div className={classes.graph} id="b-year"></div>
       </div>
     );
 
@@ -198,7 +185,7 @@ class reservationAnalytics extends Component {
           <div className="col-12">
             <span>
               <span style={{ fontSize: "2rem" }} className="text-center mt-4">
-                Reservation Analytics
+                Valet Analytics
               </span>
             </span>
           </div>
@@ -272,5 +259,5 @@ class reservationAnalytics extends Component {
 }
 
 export default connect(mapStatetoprops)(
-  withStyles(styles)(reservationAnalytics)
+  withStyles(styles)(valetAnalytics)
 );

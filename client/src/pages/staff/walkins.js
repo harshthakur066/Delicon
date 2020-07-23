@@ -59,21 +59,21 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginRight:"5px",
-    marginBottom:"1rem",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -118,15 +118,15 @@ const styles = {
     outline: "none",
     overflowY: "scroll",
   },
-  gender:{
-    marginTop:".4rem",  
+  gender: {
+    marginTop: ".4rem",
   },
-  details:{
+  details: {
     color: "#616161",
-    marginLeft:"15px",
+    marginLeft: "15px",
     "@media (min-width: 320px) and (max-width: 480px)": {
-      marginLeft:"5px",
-      },
+      marginLeft: "5px",
+    },
   }
 };
 
@@ -180,18 +180,18 @@ class Walkins extends Component {
     mobno: "",
     address: "",
     seats: "",
-    specialEvent:"",
-    gender:"",
-    visitingAs:"",
-    know:"",
-    dob:"",
+    specialEvent: "",
+    gender: "",
+    visitingAs: "",
+    know: "",
+    dob: "",
     walkIn: "",
     walkOut: "",
     value: 0, // used in Tabs
     btnload: false,
     loading: true,
     postmodal: false,
-    errors:{}
+    errors: {}
   };
 
   handleMe = (event, newValue) => {
@@ -253,13 +253,14 @@ class Walkins extends Component {
       address: this.state.address,
       mobno: this.state.mobno,
       seats: this.state.seats,
-      specialEvent:this.state.specialEvent,
-      gender:this.state.gender,
-      visitingAs:this.state.visitingAs,
-      know:this.state.know,
-      dob:this.state.dob,
+      specialEvent: this.state.specialEvent,
+      gender: this.state.gender,
+      visitingAs: this.state.visitingAs,
+      know: this.state.know,
+      dob: this.state.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
+      walkIn: new Date().toISOString(),
     };
     console.log(userData)
     if (this.state.modalmode === "Post") {
@@ -283,15 +284,15 @@ class Walkins extends Component {
   };
   handleBlur = e => {
     console.log("handleBlur")
-   const { name, value } = e.target;
-   const error = { ...Validate(name, value) };
-   this.setState({
-       errors: { ...this.state.errors, ...error } 
-     });
+    const { name, value } = e.target;
+    const error = { ...Validate(name, value) };
+    this.setState({
+      errors: { ...this.state.errors, ...error }
+    });
 
-   console.log(this.state.errors)
-  
-};
+    console.log(this.state.errors)
+
+  };
 
   editbusiness = (business) => {
     this.setState({
@@ -300,11 +301,11 @@ class Walkins extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
-      specialEvent:business.specialEvent,
-      gender:business.gender,
-      visitingAs:business.visitingAs,
-      know:business.know,
-      dob:business.dob,
+      specialEvent: business.specialEvent,
+      gender: business.gender,
+      visitingAs: business.visitingAs,
+      know: business.know,
+      dob: business.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Edit",
@@ -320,11 +321,11 @@ class Walkins extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
-      specialEvent:business.specialEvent,
-      gender:business.gender,
-      visitingAs:business.visitingAs,
-      know:business.know,
-      dob:business.dob,
+      specialEvent: business.specialEvent,
+      gender: business.gender,
+      visitingAs: business.visitingAs,
+      know: business.know,
+      dob: business.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Open",
@@ -346,66 +347,66 @@ class Walkins extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.walkins.map((walkin, index) =>
-        walkin.walkIn !== undefined && walkin.walkOut === undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Name - {walkin.name}{" "}
-                  <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
-                  <div> Mobile No. - {walkin.mobno}</div>{" "}
-                  <div> Email - {walkin.email}</div>{" "}
-                
-                  <br className={classes.breaker} />
-                  <div>
-                    {" "}
+        this.props.data.staff.walkins.map((walkin, index) =>
+          walkin.walkIn !== undefined && walkin.walkOut === undefined ? (
+            <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+              <Card className={classes.bodycard}>
+                <CardContent>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Name - {walkin.name}{" "}
+                    <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+                    <div> Mobile No. - {walkin.mobno}</div>{" "}
+                    <div> Email - {walkin.email}</div>{" "}
+
+                    <br className={classes.breaker} />
+                    <div>
+                      {" "}
                     Walkin Time - {new Date(walkin.walkIn).toLocaleString()}
-                  </div>
-                </Typography>
+                    </div>
+                  </Typography>
 
-                <br className={classes.breaker} />
-               
+                  <br className={classes.breaker} />
 
-                <div className="text-center">
-                <Button
-                   style={{color:"#616161"}} 
-                    onClick={() => this.openbusiness(walkin)}
-                    variant="contained"
-                     size="small"
-                           >
-                     Details
+
+                  <div className="text-center">
+                    <Button
+                      style={{ color: "#616161" }}
+                      onClick={() => this.openbusiness(walkin)}
+                      variant="contained"
+                      size="small"
+                    >
+                      Details
                         </Button>
-                  <Button
-                   className={classes.details}
-                   style={{ color: "#616161" }}
-                    onClick={() => walkout(walkin._id)}
-                    variant="contained"
-                    size="small"
-                  >
-                    WalkOut
+                    <Button
+                      className={classes.details}
+                      style={{ color: "#616161" }}
+                      onClick={() => walkout(walkin._id)}
+                      variant="contained"
+                      size="small"
+                    >
+                      WalkOut
                   </Button>
-                </div>
-              </CardContent>
-              <Button
-               variant="contained"
-                onClick={() => this.editbusiness(walkin)}
-                className={classes.edit}
-              >
-                Edit
+                  </div>
+                </CardContent>
+                <Button
+                  variant="contained"
+                  onClick={() => this.editbusiness(walkin)}
+                  className={classes.edit}
+                >
+                  Edit
               </Button>
-              <Button
-               variant="contained"
-                onClick={() => deletewalkin(walkin._id)}
-                className={classes.delete}
-              >
-                Delete
+                <Button
+                  variant="contained"
+                  onClick={() => deletewalkin(walkin._id)}
+                  className={classes.delete}
+                >
+                  Delete
               </Button>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+              </Card>
+            </div>
+          ) : null
+        )
+      );
 
     // Tab 2
     const markup2 = loading ? (
@@ -413,79 +414,79 @@ class Walkins extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.walkins.map((walkin, index) =>
-        walkin.walkIn !== undefined && walkin.walkOut !== undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Name - {walkin.name}{" "}
-                  <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
-                  <br className={classes.breaker} />
-                  <div> Mobile No. - {walkin.mobno}</div>{" "}
-                  <div> Email - {walkin.email}</div>{" "}
-                  <br className={classes.breaker} />
-                  <div>
-                    {" "}
+        this.props.data.staff.walkins.map((walkin, index) =>
+          walkin.walkIn !== undefined && walkin.walkOut !== undefined ? (
+            <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+              <Card className={classes.bodycard}>
+                <CardContent>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Name - {walkin.name}{" "}
+                    <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+                    <br className={classes.breaker} />
+                    <div> Mobile No. - {walkin.mobno}</div>{" "}
+                    <div> Email - {walkin.email}</div>{" "}
+                    <br className={classes.breaker} />
+                    <div>
+                      {" "}
                     Walkin Time - {new Date(walkin.walkIn).toLocaleString()}
-                  </div>
-                  <div>
-                    {" "}
+                    </div>
+                    <div>
+                      {" "}
                     Walkout Time - {new Date(walkin.walkOut).toLocaleString()}
-                  </div>
-                </Typography>
+                    </div>
+                  </Typography>
 
-                <div className="text-center mt-2 ">
-                  <Button
-              style={{color:"#616161"}} 
-              onClick={() => this.openbusiness(walkin)}
-              variant="contained"
-              size="small"
-            >
-              Details
+                  <div className="text-center mt-2 ">
+                    <Button
+                      style={{ color: "#616161" }}
+                      onClick={() => this.openbusiness(walkin)}
+                      variant="contained"
+                      size="small"
+                    >
+                      Details
             </Button>
-                </div>
-              </CardContent>
-              <Button
-               variant="contained"
-                onClick={() => this.editbusiness(walkin)}
-                className={classes.edit}
-              >
-                Edit
+                  </div>
+                </CardContent>
+                <Button
+                  variant="contained"
+                  onClick={() => this.editbusiness(walkin)}
+                  className={classes.edit}
+                >
+                  Edit
               </Button>
-              <Button
-               variant="contained"
-                onClick={() => deletewalkin(walkin._id)}
-                className={classes.delete}
-              >
-                Delete
+                <Button
+                  variant="contained"
+                  onClick={() => deletewalkin(walkin._id)}
+                  className={classes.delete}
+                >
+                  Delete
               </Button>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+              </Card>
+            </div>
+          ) : null
+        )
+      );
 
     console.log(this.props.data);
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-       
 
- {/* ADD */}
- <div className="row mt-4">
+
+        {/* ADD */}
+        <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
               <span>
-               <span style={{ fontSize: "2rem" }} className="text-center mt-4">
-               Walkins
+                <span style={{ fontSize: "2rem" }} className="text-center mt-4">
+                  Walkins
              </span>
-              <Button
-                className="mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Walkin
+                <Button
+                  className="mb-4 float-right"
+                  variant="contained"
+                  onClick={this.handlePost}
+                >
+                  Add Walkin
               </Button>
               </span>
             )}
@@ -520,7 +521,7 @@ class Walkins extends Component {
           </div>
         </div>
 
-       
+
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>
@@ -540,25 +541,25 @@ class Walkins extends Component {
           <div className={classes.modlebox}>
             <div
               className="container"
-              style={{ padding: "20px 25px"}}
+              style={{ padding: "20px 25px" }}
             >
               {modalmode === "Post" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Add a New Walkin
                 </Typography>
               ) : modalmode === "Edit" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Edit a Walkin
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Your Walkin
@@ -582,188 +583,188 @@ class Walkins extends Component {
                     Seats - {this.state.seats}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                  gender - {this.state.gender || "?"}
+                    gender - {this.state.gender || "?"}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                  Date of Birth - {this.state.dob || "?"}
+                    Date of Birth - {this.state.dob || "?"}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                  Special Event - {this.state.specialEvent || "?"}
+                    Special Event - {this.state.specialEvent || "?"}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                  How did you get to know about us? - {this.state.know || "?"}
+                    How did you get to know about us? - {this.state.know || "?"}
                   </Typography>
                   <Typography variant="h6" className="mt-2 ">
-                  Visiting As - {this.state.visitingAs || "?"}
+                    Visiting As - {this.state.visitingAs || "?"}
                   </Typography>
-       
+
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onBlur={this.handleBlur}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />   
-                  {this.state.errors.errors !== undefined ? 
-                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.name}</div>
-                  :null}
-                  <TextField
-                    name="mobno"
-                    type="number"
-                    label="Mobile Number.."
-                    className={classes.TextField}
-                    value={this.state.mobno}
-                    onBlur={this.handleBlur}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                   {this.state.errors.errors !== undefined ? 
-                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.mobno}</div>
-                  :null}
-                  <TextField
-                    name="address"
-                    type="text"
-                    label="Pincode.."
-                    className={classes.TextField}
-                    value={this.state.address}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  <TextField
-                    name="email"
-                    type="email"
-                    label="Email.."
-                    className={classes.TextField}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                 
-                  <TextField
-                    name="seats"
-                    type="number"
-                    label="No. of Seats.."
-                    className={classes.TextField}
-                    value={this.state.seats}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                 
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onBlur={this.handleBlur}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    {this.state.errors.errors !== undefined ?
+                      <div style={{ color: "red", textAlign: "center" }}>{this.state.errors.errors.name}</div>
+                      : null}
+                    <TextField
+                      name="mobno"
+                      type="number"
+                      label="Mobile Number.."
+                      className={classes.TextField}
+                      value={this.state.mobno}
+                      onBlur={this.handleBlur}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    {this.state.errors.errors !== undefined ?
+                      <div style={{ color: "red", textAlign: "center" }}>{this.state.errors.errors.mobno}</div>
+                      : null}
+                    <TextField
+                      name="address"
+                      type="text"
+                      label="Pincode.."
+                      className={classes.TextField}
+                      value={this.state.address}
+                      onChange={this.handleChange}
+                      fullWidth
+                    />
+                    <TextField
+                      name="email"
+                      type="email"
+                      label="Email.."
+                      className={classes.TextField}
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+
+                    <TextField
+                      name="seats"
+                      type="number"
+                      label="No. of Seats.."
+                      className={classes.TextField}
+                      value={this.state.seats}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
 
-                  <div style = {{marginLeft:"10px"}} className={classes.gender} >
-                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px"}} component="legend">Gender</FormLabel>
-                   <RadioGroup  name="gender" value={this.state.gender} onChange={this.handleChange}>
-                     <FormControlLabel value="female" control={<Radio />} label="Female" />
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                 </RadioGroup>
-                 </div>
 
-                 <TextField
-                    name="specialEvent"
-                    type="text"
-                    label="Special Event.."
-                    className={classes.TextField}
-                    value={this.state.specialEvent}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-        <br></br>     
-        <br></br>     
+                    <div style={{ marginLeft: "10px" }} className={classes.gender} >
+                      <FormLabel style={{ fontSize: "1rem", marginTop: "10px" }} component="legend">Gender</FormLabel>
+                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange}>
+                        <FormControlLabel value="female" control={<Radio />} label="Female" />
+                        <FormControlLabel value="male" control={<Radio />} label="Male" />
+                        <FormControlLabel value="other" control={<Radio />} label="Other" />
+                      </RadioGroup>
+                    </div>
 
-        <div className={classes.gender} >
-                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">How did you get to know about us ?</FormLabel>
-                  <br></br>
-                   <RadioGroup name="know" value={this.state.know} onChange={this.handleChange}>
-                     <FormControlLabel value="Newspaper" control={<Radio />} label="Newspaper" />
-                      <FormControlLabel value="Friends" control={<Radio />} label="Friends" />
-                      <FormControlLabel value="Online Promotion" control={<Radio />} label="Online Promotion" />
-                      <FormControlLabel value = {""} control={<Radio />} label="Others" />
-                    {this.state.know !== "Online Promotion" && this.state.know !== "Newspaper"  && this.state.know !== "Friends"
-                    ? <TextField
-                    id={"know"}
-                    type = "text"
-                    label="Please specify"
-                    onChange={this.handleChange}
-                    name={"know"}
-                    value={this.state.know}
-                  /> 
-                  :
-                  null
-                    }
-                 </RadioGroup>
-                 </div>
-                 <br></br>     
-  
-        <br></br>
+                    <TextField
+                      name="specialEvent"
+                      type="text"
+                      label="Special Event.."
+                      className={classes.TextField}
+                      value={this.state.specialEvent}
+                      onChange={this.handleChange}
+                      fullWidth
+                    />
+                    <br></br>
+                    <br></br>
 
+                    <div className={classes.gender} >
+                      <FormLabel style={{ fontSize: "1rem", marginTop: "10px", width: "fitContent" }} component="legend">How did you get to know about us ?</FormLabel>
+                      <br></br>
+                      <RadioGroup name="know" value={this.state.know} onChange={this.handleChange}>
+                        <FormControlLabel value="Newspaper" control={<Radio />} label="Newspaper" />
+                        <FormControlLabel value="Friends" control={<Radio />} label="Friends" />
+                        <FormControlLabel value="Online Promotion" control={<Radio />} label="Online Promotion" />
+                        <FormControlLabel value={""} control={<Radio />} label="Others" />
+                        {this.state.know !== "Online Promotion" && this.state.know !== "Newspaper" && this.state.know !== "Friends"
+                          ? <TextField
+                            id={"know"}
+                            type="text"
+                            label="Please specify"
+                            onChange={this.handleChange}
+                            name={"know"}
+                            value={this.state.know}
+                          />
+                          :
+                          null
+                        }
+                      </RadioGroup>
+                    </div>
+                    <br></br>
 
-                  
-                <TextField
-                 style = {{float:"left"}}
-                 name="dob"
-                 id="date"
-                 label="Date of Birth"
-                 type="date"
-                 defaultValue={this.state.dob}
-                 onChange={this.handleChange}
-                 
-                 className={classes.TextField}
-                  InputLabelProps={{
-                  shrink: true,
-                  }}
-                   />
+                    <br></br>
 
 
-                 <br></br>
-                 <br></br>     
-        <br></br>     
 
-        <br></br>    
-                  
-        <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          name="visitingAs"
-          type="text"
-          id="demo-simple-select"
-          value={this.state.visitingAs}
-          onChange={this.handleChange}
-          fullWidth
-        >
-          <MenuItem value={"Family"}>Family</MenuItem>
-          <MenuItem value={"Friend"}>Friend</MenuItem>
-          <MenuItem value={"Couples"}>Couples</MenuItem>
-        </Select>
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    <TextField
+                      style={{ float: "left" }}
+                      name="dob"
+                      id="date"
+                      label="Date of Birth"
+                      type="date"
+                      defaultValue={this.state.dob}
+                      onChange={this.handleChange}
+
+                      className={classes.TextField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+
+
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                    <br></br>
+
+                    <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      name="visitingAs"
+                      type="text"
+                      id="demo-simple-select"
+                      value={this.state.visitingAs}
+                      onChange={this.handleChange}
+                      fullWidth
+                    >
+                      <MenuItem value={"Family"}>Family</MenuItem>
+                      <MenuItem value={"Friend"}>Friend</MenuItem>
+                      <MenuItem value={"Couples"}>Couples</MenuItem>
+                    </Select>
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

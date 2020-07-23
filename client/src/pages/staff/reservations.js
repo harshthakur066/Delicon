@@ -69,11 +69,11 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginRight:"5px",
-    marginBottom:"1rem",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   fr: {
@@ -90,10 +90,10 @@ const styles = {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
 
@@ -140,18 +140,18 @@ const styles = {
     overflowY: "scroll",
   },
 
-  gender:{
-    marginTop:".4rem",  
+  gender: {
+    marginTop: ".4rem",
   },
 
-details:{
-  color: "#616161",
-  marginLeft:"15px",
-  marginTop:"15px",
-  "@media (min-width: 320px) and (max-width: 480px)": {
-    marginLeft:"5px",
+  details: {
+    color: "#616161",
+    marginLeft: "15px",
+    marginTop: "15px",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      marginLeft: "5px",
     },
-}
+  }
 }; // Styles here
 
 function TabPanel(props) {
@@ -190,18 +190,18 @@ class Reservations extends Component {
     mobno: "",
     address: "",
     seats: "",
-    specialEvent:"",
-    dateOfBirth:"",
-    gender:"",
-    modeOfBooking:"",
-    visitingAs:"",
+    specialEvent: "",
+    dateOfBirth: "",
+    gender: "",
+    modeOfBooking: "",
+    visitingAs: "",
     checkIn: "",
     checkOut: "",
     loading: true,
     btnload: false,
     postmodal: false,
     value: 0,
-    errors:{}
+    errors: {}
   };
 
   componentDidMount() {
@@ -228,18 +228,18 @@ class Reservations extends Component {
       modalmode: "Post",
       postmodal: true,
       name: "",
-    email: "",
-    mobno: "",
-    address: "",
-    seats: "",
-    specialEvent:"",
-    dateOfBirth:"",
-    gender:"",
-    modeOfBooking:"",
-    visitingAs:"",
+      email: "",
+      mobno: "",
+      address: "",
+      seats: "",
+      specialEvent: "",
+      dateOfBirth: "",
+      gender: "",
+      modeOfBooking: "",
+      visitingAs: "",
       ownerId: "",
       businessId: "",
-      other:false
+      other: false
     });
   };
 
@@ -261,16 +261,16 @@ class Reservations extends Component {
       mobno: this.state.mobno,
       seats: this.state.seats,
       address: this.state.address,
-      specialEvent:this.state.specialEvent,
-      dateOfBirth:this.state.dateOfBirth,
-      gender:this.state.gender,
-      modeOfBooking:this.state.modeOfBooking,
-      visitingAs:this.state.visitingAs,
+      specialEvent: this.state.specialEvent,
+      dateOfBirth: this.state.dateOfBirth,
+      gender: this.state.gender,
+      modeOfBooking: this.state.modeOfBooking,
+      visitingAs: this.state.visitingAs,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       checkIn: this.state.checkIn,
       checkOut: this.state.checkOut,
-  
+      createdAt: new Date().toISOString(),
     };
 
     if (this.state.modalmode === "Post") {
@@ -304,10 +304,10 @@ class Reservations extends Component {
       mobno: business.mobno,
       seats: business.seats,
       specialEvent: business.specialEvent,
-      dateOfBirth:business.dateOfBirth,
-      gender:business.gender,
-      modeOfBooking:business.modeOfBooking,
-      visitingAs:business.visitingAs,
+      dateOfBirth: business.dateOfBirth,
+      gender: business.gender,
+      modeOfBooking: business.modeOfBooking,
+      visitingAs: business.visitingAs,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
       modalmode: "Edit",
@@ -328,12 +328,12 @@ class Reservations extends Component {
       address: business.address,
       mobno: business.mobno,
       seats: business.seats,
-      
+
       specialEvent: business.specialEvent,
-      dateOfBirth:business.dateOfBirth,
-      gender:business.gender,
-      modeOfBooking:business.modeOfBooking,
-      visitingAs:business.visitingAs,
+      dateOfBirth: business.dateOfBirth,
+      gender: business.gender,
+      modeOfBooking: business.modeOfBooking,
+      visitingAs: business.visitingAs,
 
       checkIn: business.checkIn,
       checkOut: business.checkOut,
@@ -346,17 +346,17 @@ class Reservations extends Component {
   };
 
 
-   handleBlur = e => {
-     console.log("handleBlur")
+  handleBlur = e => {
+    console.log("handleBlur")
     const { name, value } = e.target;
     const error = { ...Validate(name, value) };
     this.setState({
-        errors: { ...this.state.errors, ...error } 
-      });
+      errors: { ...this.state.errors, ...error }
+    });
 
     console.log(this.state.errors)
-   
- };
+
+  };
 
   render() {
 
@@ -377,65 +377,65 @@ class Reservations extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.reservations.map((reservation, index) =>
-        reservation.checkIn !== undefined ? null : (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem",marginTop:"5px" }}>
-                  Name - {reservation.name}{" "}
-                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Email - {reservation.email}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Mobile No. - {reservation.mobno}
-                </Typography>
-                
-                <div className="text-center">
-              <Button
-              style={{color:"#616161",marginTop:"15px"}} 
-              onClick={() => this.openbusiness(reservation)}
-               variant="contained"
-               size="small"
-              >
-              Details
+        this.props.data.staff.reservations.map((reservation, index) =>
+          reservation.checkIn !== undefined ? null : (
+            <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+              <Card className={classes.bodycard}>
+                <CardContent>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    Name - {reservation.name}{" "}
+                    <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    Email - {reservation.email}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    Mobile No. - {reservation.mobno}
+                  </Typography>
+
+                  <div className="text-center">
+                    <Button
+                      style={{ color: "#616161", marginTop: "15px" }}
+                      onClick={() => this.openbusiness(reservation)}
+                      variant="contained"
+                      size="small"
+                    >
+                      Details
              </Button>
 
-                           
-              <Button
-             className={classes.details}
-             onClick={() => checkInReservation(reservation._id)}
-                    variant="contained"
-                    size="small"
-                  >
-                    CheckIn
-                  </Button>
-          </div>
-       
-                
-              </CardContent>
 
-              <Button
-              variant="contained"
-                onClick={() => this.editbusiness(reservation)}
-                className={classes.edit}
-              >
-                Edit
+                    <Button
+                      className={classes.details}
+                      onClick={() => checkInReservation(reservation._id)}
+                      variant="contained"
+                      size="small"
+                    >
+                      CheckIn
+                  </Button>
+                  </div>
+
+
+                </CardContent>
+
+                <Button
+                  variant="contained"
+                  onClick={() => this.editbusiness(reservation)}
+                  className={classes.edit}
+                >
+                  Edit
               </Button>
-              <Button
-              variant="contained"
-                onClick={() => deletereservation(reservation._id)}
-                className={classes.delete}
-              >
-                Delete
+                <Button
+                  variant="contained"
+                  onClick={() => deletereservation(reservation._id)}
+                  className={classes.delete}
+                >
+                  Delete
               </Button>
-            </Card>
-          </div>
+              </Card>
+            </div>
+          )
         )
-      )
-    );
+      );
 
     // Tab2
     const markup2 = loading ? (
@@ -443,165 +443,165 @@ class Reservations extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.reservations.map((reservation, index) =>
-        reservation.checkOut === undefined &&
-        reservation.checkIn !== undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Name - {reservation.name}{" "}
-                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Email - {reservation.email}{" "}
-                </Typography>
+        this.props.data.staff.reservations.map((reservation, index) =>
+          reservation.checkOut === undefined &&
+            reservation.checkIn !== undefined ? (
+              <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+                <Card className={classes.bodycard}>
+                  <CardContent>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Name - {reservation.name}{" "}
+                      <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                    </Typography>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Email - {reservation.email}{" "}
+                    </Typography>
 
-                <Typography style={{ fontSize: "1.05rem",marginTop:"5px" }}>
-                  Mobile No. - {reservation.mobno}
-                </Typography>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Mobile No. - {reservation.mobno}
+                    </Typography>
 
 
-                
 
-                <br className={classes.breaker} />
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  <div>
-                    CheckIn at -{" "}
-                    {new Date(reservation.checkIn).toLocaleString()}
-                  </div>
-                </Typography>
 
-                <div className="text-center">
-              <Button
-              style={{color:"#616161",marginTop:"15px"}} 
-              onClick={() => this.openbusiness(reservation)}
-               variant="contained"
-               size="small"
-              >
-              Details
+                    <br className={classes.breaker} />
+                    <Typography style={{ fontSize: "1.05rem" }}>
+                      <div>
+                        CheckIn at -{" "}
+                        {new Date(reservation.checkIn).toLocaleString()}
+                      </div>
+                    </Typography>
+
+                    <div className="text-center">
+                      <Button
+                        style={{ color: "#616161", marginTop: "15px" }}
+                        onClick={() => this.openbusiness(reservation)}
+                        variant="contained"
+                        size="small"
+                      >
+                        Details
              </Button>
-             <Button
-             className={classes.details}
-                    onClick={() => checkOutReservation(reservation._id)}
-                    variant="contained"
-                    size="small"
-                  >
-                    CheckOut
+                      <Button
+                        className={classes.details}
+                        onClick={() => checkOutReservation(reservation._id)}
+                        variant="contained"
+                        size="small"
+                      >
+                        CheckOut
                   </Button>
-          </div>
-             
+                    </div>
 
-               
-              </CardContent>
 
-              <Button
-              variant="contained"
-                onClick={() => this.editbusiness(reservation)}
-                className={classes.edit}
-              >
-                Edit
+
+                  </CardContent>
+
+                  <Button
+                    variant="contained"
+                    onClick={() => this.editbusiness(reservation)}
+                    className={classes.edit}
+                  >
+                    Edit
               </Button>
-              <Button
-              variant="contained"
-                onClick={() => deletereservation(reservation._id)}
-                className={classes.delete}
-              >
-                Delete
+                  <Button
+                    variant="contained"
+                    onClick={() => deletereservation(reservation._id)}
+                    className={classes.delete}
+                  >
+                    Delete
               </Button>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+                </Card>
+              </div>
+            ) : null
+        )
+      );
     // Tab 3
     const markup3 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.reservations.map((reservation, index) =>
-        reservation.checkOut !== undefined &&
-        reservation.checkIn !== undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Name - {reservation.name}{" "}
-                  <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Email - {reservation.email}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"5px"}}>
-                  Mobile No. - {reservation.mobno}
-                </Typography>
+        this.props.data.staff.reservations.map((reservation, index) =>
+          reservation.checkOut !== undefined &&
+            reservation.checkIn !== undefined ? (
+              <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+                <Card className={classes.bodycard}>
+                  <CardContent>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Name - {reservation.name}{" "}
+                      <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
+                    </Typography>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Email - {reservation.email}{" "}
+                    </Typography>
+                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                      Mobile No. - {reservation.mobno}
+                    </Typography>
 
 
 
-           
 
-                <br className={classes.breaker} />
 
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  <div>
-                    CheckIn at -{" "}
-                    {new Date(reservation.checkIn).toLocaleString()}
-                  </div>
-                  <div>
-                    CheckOut at -{" "}
-                    {new Date(reservation.checkOut).toLocaleString()}
-                  </div>
-                </Typography>
-                <br></br>
-                <div className="text-center mt-1 ">
-              <Button
-              style={{color:"#616161"}} 
-              onClick={() => this.openbusiness(reservation)}
-               variant="contained"
-               size="small"
-              >
-              Details
+                    <br className={classes.breaker} />
+
+                    <Typography style={{ fontSize: "1.05rem" }}>
+                      <div>
+                        CheckIn at -{" "}
+                        {new Date(reservation.checkIn).toLocaleString()}
+                      </div>
+                      <div>
+                        CheckOut at -{" "}
+                        {new Date(reservation.checkOut).toLocaleString()}
+                      </div>
+                    </Typography>
+                    <br></br>
+                    <div className="text-center mt-1 ">
+                      <Button
+                        style={{ color: "#616161" }}
+                        onClick={() => this.openbusiness(reservation)}
+                        variant="contained"
+                        size="small"
+                      >
+                        Details
              </Button>
-          </div>
-              </CardContent>
-              <Button
-              variant="contained"
-                onClick={() => deletereservation(reservation._id)}
-                className={classes.delete}
-              >
-                Delete
+                    </div>
+                  </CardContent>
+                  <Button
+                    variant="contained"
+                    onClick={() => deletereservation(reservation._id)}
+                    className={classes.delete}
+                  >
+                    Delete
               </Button>
-              <Button
-              variant="contained"
-                onClick={() => this.editbusiness(reservation)}
-                className={classes.edit}
-              >
-                Edit
+                  <Button
+                    variant="contained"
+                    onClick={() => this.editbusiness(reservation)}
+                    className={classes.edit}
+                  >
+                    Edit
               </Button>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+                </Card>
+              </div>
+            ) : null
+        )
+      );
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-          {/* add */}
-          <div className="row mt-4">
+        {/* add */}
+        <div className="row mt-4">
           <div className="col-12">
-          
+
             {loading ? null : (
               <span>
-              <span style={{ fontSize: "2rem" }} className="text-left mt-4">
-              Reservations
+                <span style={{ fontSize: "2rem" }} className="text-left mt-4">
+                  Reservations
             </span>
-              <Button
-                className=" mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Reservation
+                <Button
+                  className=" mb-4 float-right"
+                  variant="contained"
+                  onClick={this.handlePost}
+                >
+                  Add Reservation
               </Button>
               </span>
             )}
@@ -642,7 +642,7 @@ class Reservations extends Component {
           </div>
         </div>
 
-      
+
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>
@@ -665,11 +665,11 @@ class Reservations extends Component {
           <div className={classes.modlebox}>
             <div
               className="container"
-              style={{ padding: "20px 25px"}}
+              style={{ padding: "20px 25px" }}
             >
               {modalmode === "Post" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem" , textAlign: "center" }}
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Add a Reservation
@@ -683,7 +683,7 @@ class Reservations extends Component {
                 </Typography>
               ) : modalmode === "Open" ? (
                 <Typography
-                  style={{ fontSize: "1.5rem",textAlign: "center"  }}
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
                   className={classes.pageTitle}
                 >
                   Your Reservation
@@ -691,203 +691,203 @@ class Reservations extends Component {
               ) : null}
               {modalmode === "Open" ? (
                 <>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
                     Name - {this.state.name}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
                     Mobile No. - {this.state.mobno}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
                     Email - {this.state.email}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
                     Pincode - {this.state.address}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
                     Seats - {this.state.seats}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
-                  Gender - {this.state.gender || "?"}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
-                  Date of Birth - {this.state.dateOfBirth || "?"}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem",marginTop:"10px" }}>
-                  Special Event - {this.state.specialEvent || "?"}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem",marginTop:"10px" }}>
-                  Mode of Booking - {this.state.modeOfBooking || "?"}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" ,marginTop:"10px"}}>
-                  Visiting As - {this.state.visitingAs || "?"}{" "}
-                </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
+                    Gender - {this.state.gender || "?"}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
+                    Date of Birth - {this.state.dateOfBirth || "?"}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
+                    Special Event - {this.state.specialEvent || "?"}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
+                    Mode of Booking - {this.state.modeOfBooking || "?"}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem", marginTop: "10px" }}>
+                    Visiting As - {this.state.visitingAs || "?"}{" "}
+                  </Typography>
 
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onBlur={this.handleBlur}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  {this.state.errors.errors !== undefined ? 
-                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.name}</div>
-                  :null}
-                  <TextField
-                    name="mobno"
-                    type="number"
-                    label="Mobile Number.."
-                    className={classes.TextField}
-                    value={this.state.mobno}
-                    onBlur={this.handleBlur}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-    
-                  />
-                  {this.state.errors.errors !== undefined ? 
-                  <div style = {{color:"red",textAlign:"center"}}>{this.state.errors.errors.mobno}</div>
-                  :null}
-                  <TextField
-                    name="address"
-                    type="text"
-                    label="Pincode.."
-                    className={classes.TextField}
-                    value={this.state.address}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  <TextField
-                    name="email"
-                    type="email"
-                    label="Email.."
-                    className={classes.TextField}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                   <div>
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onBlur={this.handleBlur}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    {this.state.errors.errors !== undefined ?
+                      <div style={{ color: "red", textAlign: "center" }}>{this.state.errors.errors.name}</div>
+                      : null}
+                    <TextField
+                      name="mobno"
+                      type="number"
+                      label="Mobile Number.."
+                      className={classes.TextField}
+                      value={this.state.mobno}
+                      onBlur={this.handleBlur}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
 
-                  <div className={classes.gender} >
-                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px",width:"fitContent"}} component="legend">Mode of Booking</FormLabel>
+                    />
+                    {this.state.errors.errors !== undefined ?
+                      <div style={{ color: "red", textAlign: "center" }}>{this.state.errors.errors.mobno}</div>
+                      : null}
+                    <TextField
+                      name="address"
+                      type="text"
+                      label="Pincode.."
+                      className={classes.TextField}
+                      value={this.state.address}
+                      onChange={this.handleChange}
+                      fullWidth
+                    />
+                    <TextField
+                      name="email"
+                      type="email"
+                      label="Email.."
+                      className={classes.TextField}
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <div>
 
-             
-                  <br></br>
-                   <RadioGroup name="modeOfBooking" value={this.state.modeOfBooking} onChange={this.handleChange}>
-                     <FormControlLabel value="online" control={<Radio />} label="Online" />
-                      <FormControlLabel value="phone" control={<Radio />} label="Phone" />
-                      <FormControlLabel value = {""} control={<Radio />} label="Others" />
-                    {this.state.modeOfBooking !== "online" && this.state.modeOfBooking !== "phone" 
-                    ? <TextField
-                    id={"modeOfBooking"}
-                    type = "text"
-                    label="Please specify"
-                    onChange={this.handleChange}
-                    name={"modeOfBooking"}
-                    value={this.state.modeOfBooking}
-                  /> 
-                  :
-                  null
-                    }
-                 </RadioGroup>
-                 </div>
-                 </div>
-
-                  <TextField
-                    name="seats"
-                    type="number"
-                    label="No. of Seats.."
-                    className={classes.TextField}
-                    value={this.state.seats}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                 
+                      <div className={classes.gender} >
+                        <FormLabel style={{ fontSize: "1rem", marginTop: "10px", width: "fitContent" }} component="legend">Mode of Booking</FormLabel>
 
 
-                  <div style = {{marginLeft:"10px"}} className={classes.gender} >
-                  <FormLabel style = {{fontSize: "1rem",marginTop:"10px"}} component="legend">Gender</FormLabel>
+                        <br></br>
+                        <RadioGroup name="modeOfBooking" value={this.state.modeOfBooking} onChange={this.handleChange}>
+                          <FormControlLabel value="online" control={<Radio />} label="Online" />
+                          <FormControlLabel value="phone" control={<Radio />} label="Phone" />
+                          <FormControlLabel value={""} control={<Radio />} label="Others" />
+                          {this.state.modeOfBooking !== "online" && this.state.modeOfBooking !== "phone"
+                            ? <TextField
+                              id={"modeOfBooking"}
+                              type="text"
+                              label="Please specify"
+                              onChange={this.handleChange}
+                              name={"modeOfBooking"}
+                              value={this.state.modeOfBooking}
+                            />
+                            :
+                            null
+                          }
+                        </RadioGroup>
+                      </div>
+                    </div>
 
-                   <RadioGroup  name="gender" value={this.state.gender} onChange={this.handleChange}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                 </RadioGroup>
-                 </div>
-
-                 <TextField
-                    name="specialEvent"
-                    type="text"
-                    label="Special Event.."
-                    className={classes.TextField}
-                    value={this.state.specialEvent}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  
-                <TextField
-                 style = {{float:"left"}}
-                 name="dateOfBirth"
-                 id="date"
-                 label="Date of Birth"
-                 type="date"
-                 defaultValue={this.state.dateOfBirth}
-                 onChange={this.handleChange}
-                 
-                 className={classes.TextField}
-                  InputLabelProps={{
-                  shrink: true,
-                  }}
-                   />
+                    <TextField
+                      name="seats"
+                      type="number"
+                      label="No. of Seats.."
+                      className={classes.TextField}
+                      value={this.state.seats}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
 
-                 <br></br>
-                 <br></br>
-                 <br></br>     
-        <br></br>     
 
-        <br></br>   
-                
-                  <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          name="visitingAs"
-          type="text"
-          id="demo-simple-select"
-          value={this.state.visitingAs}
-          onChange={this.handleChange}
-          fullWidth
-        >
-          <MenuItem value={"Family"}>Family</MenuItem>
-          <MenuItem value={"Friend"}>Friend</MenuItem>
-          <MenuItem value={"Couples"}>Couples</MenuItem>
-        </Select>
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    <div style={{ marginLeft: "10px" }} className={classes.gender} >
+                      <FormLabel style={{ fontSize: "1rem", marginTop: "10px" }} component="legend">Gender</FormLabel>
+
+                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange}>
+                        <FormControlLabel value="female" control={<Radio />} label="Female" />
+                        <FormControlLabel value="male" control={<Radio />} label="Male" />
+                        <FormControlLabel value="other" control={<Radio />} label="Other" />
+                      </RadioGroup>
+                    </div>
+
+                    <TextField
+                      name="specialEvent"
+                      type="text"
+                      label="Special Event.."
+                      className={classes.TextField}
+                      value={this.state.specialEvent}
+                      onChange={this.handleChange}
+                      fullWidth
+                    />
+
+                    <TextField
+                      style={{ float: "left" }}
+                      name="dateOfBirth"
+                      id="date"
+                      label="Date of Birth"
+                      type="date"
+                      defaultValue={this.state.dateOfBirth}
+                      onChange={this.handleChange}
+
+                      className={classes.TextField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+
+
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                    <br></br>
+
+                    <InputLabel id="demo-simple-select-label">Visiting As?</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      name="visitingAs"
+                      type="text"
+                      id="demo-simple-select"
+                      value={this.state.visitingAs}
+                      onChange={this.handleChange}
+                      fullWidth
+                    >
+                      <MenuItem value={"Family"}>Family</MenuItem>
+                      <MenuItem value={"Friend"}>Friend</MenuItem>
+                      <MenuItem value={"Couples"}>Couples</MenuItem>
+                    </Select>
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

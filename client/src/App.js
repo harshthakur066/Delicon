@@ -33,6 +33,8 @@ import feedBackForm from "./pages/staff/feedBackForm"
 // import feedBack from "./pages/owner/feedBack";
 import feedbackList from "./pages/owner/feedbackslist";
 import resAnalytics from './pages/owner/reservationAnalytics';
+import valetAnalytics from './pages/owner/valetAnalytics';
+
 
 import {
   getUserOwnerData,
@@ -161,6 +163,8 @@ function App() {
                   component={feedbackList}
                 />
                 <Route exact path="/analytics/reservations/:busiId" component={resAnalytics} />
+                <Route exact path="/analytics/valets/:busiId" component={valetAnalytics} />
+
               </Switch>
             </div>
           </ErrorBoundry>

@@ -46,21 +46,21 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginRight:"5px",
-    marginBottom:"1rem",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -177,6 +177,7 @@ class menuItems extends Component {
       name: this.state.name,
       details: this.state.details,
       price: this.state.price,
+      createdAt: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postMenuItem(
@@ -233,23 +234,23 @@ class menuItems extends Component {
 
     console.log(this.props.data.owner.item);
 
-     const markup = loading || this.props.data.owner.item === undefined ? (
+    const markup = loading || this.props.data.owner.item === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.owner.item.map((food, index) => (
-        <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
-          <Card className={classes.bodycard}>
-            <CardContent>
-              <Typography style={{ fontSize: "1.05rem" }}>
-                {food.name} <br></br>
-                {food.details}
-                <br></br>
-                {food.price}
-              </Typography>
+        this.props.data.owner.item.map((food, index) => (
+          <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
+            <Card className={classes.bodycard}>
+              <CardContent>
+                <Typography style={{ fontSize: "1.05rem" }}>
+                  {food.name} <br></br>
+                  {food.details}
+                  <br></br>
+                  {food.price}
+                </Typography>
 
-              {/* <div className = "float-left mb-2">
+                {/* <div className = "float-left mb-2">
                   {<Button
                    style={{color:"#616161"}} 
                     onClick={() => this.openbusiness(food)}
@@ -261,28 +262,28 @@ class menuItems extends Component {
                
                  </div> */}
 
-              <br className={classes.breaker} />
-            </CardContent>
-            <Button  
-                   variant="contained"
-                  onClick={() => this.editbusiness(food)}
-                  className={classes.edit}
-                >
-                  Edit
+                <br className={classes.breaker} />
+              </CardContent>
+              <Button
+                variant="contained"
+                onClick={() => this.editbusiness(food)}
+                className={classes.edit}
+              >
+                Edit
                 </Button>
-                <Button
-                  onClick={() =>
-                    deleteMenuItem(this.props.match.params.id, food._id)
-                  }
-                  variant="contained"
-                  className={classes.delete}
-                >
-                  Delete
+              <Button
+                onClick={() =>
+                  deleteMenuItem(this.props.match.params.id, food._id)
+                }
+                variant="contained"
+                className={classes.delete}
+              >
+                Delete
                 </Button>
-          </Card>
-        </div>
-      ))
-    );
+            </Card>
+          </div>
+        ))
+      );
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
@@ -351,56 +352,56 @@ class menuItems extends Component {
                   </Typography>
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="details"
-                    type="details"
-                    label="Details.."
-                    className={classes.TextField}
-                    value={this.state.details}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="price"
-                    type="price"
-                    label="Price.."
-                    className={classes.TextField}
-                    value={this.state.price}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="details"
+                      type="details"
+                      label="Details.."
+                      className={classes.TextField}
+                      value={this.state.details}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="price"
+                      type="price"
+                      label="Price.."
+                      className={classes.TextField}
+                      value={this.state.price}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

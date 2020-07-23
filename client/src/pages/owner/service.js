@@ -46,9 +46,9 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
+    backgroundColor: "#2196F3",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   delete: {
@@ -56,9 +56,9 @@ const styles = {
     color: "white",
     cursor: "pointer",
     marginBottom: "1.05rem",
-    backgroundColor:"#f44336",
+    backgroundColor: "#f44336",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -180,6 +180,7 @@ class service extends Component {
     const userData = {
       name: this.state.name,
       details: this.state.details,
+      createdAt: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postServiceCategory(
@@ -234,11 +235,11 @@ class service extends Component {
 
     console.log(this.props.data.owner.service);
 
-     const markup = loading || this.props.data.owner.service === undefined ? (
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
+    const markup = loading || this.props.data.owner.service === undefined ? (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
         this.props.data.owner.service.map((food, index) => (
           <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
             <Card className={classes.bodycard}>
@@ -278,7 +279,7 @@ class service extends Component {
                 Edit
               </Button>
               <Button
-              variant="contained"
+                variant="contained"
                 onClick={() => deleteServiceCategory(food._id)}
                 className={classes.delete}
               >
@@ -352,46 +353,46 @@ class service extends Component {
                   </Typography>
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="details"
-                    type="details"
-                    label="Details.."
-                    className={classes.TextField}
-                    value={this.state.details}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="details"
+                      type="details"
+                      label="Details.."
+                      className={classes.TextField}
+                      value={this.state.details}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

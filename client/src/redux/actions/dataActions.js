@@ -911,7 +911,7 @@ export const editvalets = (formdata, setloading, ID) => (dispatch) => {
 export const valetstimeout = (ID) => (dispatch) => {
   dispatch(clearErrors());
   axios
-    .put(`/api/v1/valets/${ID}/timeout`)
+    .put(`/api/v1/valets/${ID}/timeout`, { timeOut: new Date().toISOString() })
     .then((res) => {
       dispatch({
         type: ActionTypes.VALET_TIMEOUT,
@@ -1008,7 +1008,7 @@ export const editwalkin = (formdata, setloading, ID) => (dispatch) => {
 export const walkout = (ID) => (dispatch) => {
   dispatch(clearErrors());
   axios
-    .put(`/api/v1/walkin/${ID}/walkout`)
+    .put(`/api/v1/walkin/${ID}/walkout`, { timeOut: new Date().toISOString() })
     .then((res) => {
       dispatch({
         type: ActionTypes.WALK_OUT,

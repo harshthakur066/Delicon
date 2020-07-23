@@ -129,7 +129,7 @@ class BusinessDetails extends Component {
         id: 1,
         name: "Valets",
         image: valet,
-        setting: "",
+        analytics:`/analytics/valets/${this.props.match.params.busiId}`,
       },
       {
         id: 2,

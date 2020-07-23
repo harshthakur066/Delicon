@@ -46,20 +46,20 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginBottom:"1rem",
+    backgroundColor: "#2196F3",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   delete: {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -175,6 +175,7 @@ class serviceItem extends Component {
       name: this.state.name,
       details: this.state.details,
       price: this.state.price,
+      createdAt: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postServiceItem(
@@ -230,10 +231,10 @@ class serviceItem extends Component {
     const { classes, deleteServiceItem } = this.props;
 
     const markup = loading || this.props.data.owner.serviceItem === undefined ? (
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    ) : (
         this.props.data.owner.serviceItem.map((food, index) => (
           <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
             <Card className={classes.bodycard}>
@@ -257,14 +258,14 @@ class serviceItem extends Component {
                 <br className={classes.breaker} />
               </CardContent>
               <Button
-              variant="contained"
+                variant="contained"
                 onClick={() => this.editbusiness(food)}
                 className={classes.edit}
               >
                 Edit
               </Button>
               <Button
-              variant="contained"
+                variant="contained"
                 onClick={() =>
                   deleteServiceItem(this.props.match.params.serviceid, food._id)
                 }
@@ -276,7 +277,7 @@ class serviceItem extends Component {
           </div>
         ))
       );
-    
+
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <p style={{ fontSize: "2rem" }} className="text-center mt-4">
@@ -340,56 +341,56 @@ class serviceItem extends Component {
                   </Typography>
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="name"
-                    type="name"
-                    label="Name.."
-                    className={classes.TextField}
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="details"
-                    type="details"
-                    label="Details.."
-                    className={classes.TextField}
-                    value={this.state.details}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="price"
-                    type="price"
-                    label="Price.."
-                    className={classes.TextField}
-                    value={this.state.price}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="name"
+                      type="name"
+                      label="Name.."
+                      className={classes.TextField}
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="details"
+                      type="details"
+                      label="Details.."
+                      className={classes.TextField}
+                      value={this.state.details}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="price"
+                      type="price"
+                      label="Price.."
+                      className={classes.TextField}
+                      value={this.state.price}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
 
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

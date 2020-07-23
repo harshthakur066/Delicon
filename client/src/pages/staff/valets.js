@@ -42,12 +42,12 @@ const styles = {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginRight:"5px",
-    marginBottom:"1rem",
-    marginTop:".6rem",
+    backgroundColor: "#2196F3",
+    marginRight: "5px",
+    marginBottom: "1rem",
+    marginTop: ".6rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
   },
   fr: {
@@ -61,11 +61,11 @@ const styles = {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:"1rem",
-    marginTop:".6rem",
+    backgroundColor: "#f44336",
+    marginBottom: "1rem",
+    marginTop: ".6rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
   },
   root: {
@@ -224,6 +224,7 @@ class Valets extends Component {
       driverName: this.state.driverName,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
+      timeIn: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postvalets(userData, this.handleDone);
@@ -283,26 +284,26 @@ class Valets extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.valets.map((vallet, index) =>
-        vallet.timeIn !== undefined && vallet.timeOut === undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Name - {vallet.ownerName}{" "}
-                  <div>Car No - {vallet.carNumber}</div>{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Driver Name - {vallet.driverName}{" "}
-                </Typography>
-                <br className={classes.breaker} />
+        this.props.data.staff.valets.map((vallet, index) =>
+          vallet.timeIn !== undefined && vallet.timeOut === undefined ? (
+            <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+              <Card className={classes.bodycard}>
+                <CardContent>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Name - {vallet.ownerName}{" "}
+                    <div>Car No - {vallet.carNumber}</div>{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Driver Name - {vallet.driverName}{" "}
+                  </Typography>
+                  <br className={classes.breaker} />
 
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
-                </Typography>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
+                  </Typography>
 
-                <div className="text-center mt-2 ">
-                  {/* <Button
+                  <div className="text-center mt-2 ">
+                    {/* <Button
                 style = {{color:"#616161"}}
                 onClick={() => this.openbusiness(vallet)}
                 variant="contained"
@@ -310,65 +311,65 @@ class Valets extends Component {
               >
                 Details
               </Button> */}
-                </div>
-                <div className="text-center mt-2 ">
-                  <Button
-                    style={{ color: "#616161" }}
-                    onClick={() => valetstimeout(vallet._id)}
-                    variant="contained"
-                    size="small"
-                  >
-                    TimeOut
+                  </div>
+                  <div className="text-center mt-2 ">
+                    <Button
+                      style={{ color: "#616161" }}
+                      onClick={() => valetstimeout(vallet._id)}
+                      variant="contained"
+                      size="small"
+                    >
+                      TimeOut
                   </Button>
-                </div>
-                <Button
-                 variant="contained"
-                  onClick={() => this.editbusiness(vallet)}
-                  className={classes.edit}
-                >
-                  Edit
+                  </div>
+                  <Button
+                    variant="contained"
+                    onClick={() => this.editbusiness(vallet)}
+                    className={classes.edit}
+                  >
+                    Edit
                 </Button>
-                <Button
-                 variant="contained"
-                  onClick={() => deletevalet(vallet._id)}
-                  className={classes.delete}
-                >
-                  Delete
+                  <Button
+                    variant="contained"
+                    onClick={() => deletevalet(vallet._id)}
+                    className={classes.delete}
+                  >
+                    Delete
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+                </CardContent>
+              </Card>
+            </div>
+          ) : null
+        )
+      );
     const markup2 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.valets.map((vallet, index) =>
-        vallet.timeIn !== undefined && vallet.timeOut !== undefined ? (
-          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
-            <Card className={classes.bodycard}>
-              <CardContent>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Name - {vallet.ownerName}{" "}
-                  <div>Car No - {vallet.carNumber}</div>{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Driver Name - {vallet.driverName}{" "}
-                </Typography>
-                <br className={classes.breaker} />
+        this.props.data.staff.valets.map((vallet, index) =>
+          vallet.timeIn !== undefined && vallet.timeOut !== undefined ? (
+            <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
+              <Card className={classes.bodycard}>
+                <CardContent>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Name - {vallet.ownerName}{" "}
+                    <div>Car No - {vallet.carNumber}</div>{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Driver Name - {vallet.driverName}{" "}
+                  </Typography>
+                  <br className={classes.breaker} />
 
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
-                </Typography>
-                <Typography style={{ fontSize: "1.05rem" }}>
-                  Time Out - {new Date(vallet.timeOut).toLocaleString()}{" "}
-                </Typography>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
+                  </Typography>
+                  <Typography style={{ fontSize: "1.05rem" }}>
+                    Time Out - {new Date(vallet.timeOut).toLocaleString()}{" "}
+                  </Typography>
 
-                <div className="text-center ">
-                  {/* <Button
+                  <div className="text-center ">
+                    {/* <Button
                 style = {{color:"#616161"}}
                 onClick={() => this.openbusiness(vallet)}
                 variant="contained"
@@ -376,47 +377,47 @@ class Valets extends Component {
               >
                 Details
               </Button> */}
-                </div>
-                <Button
-                 variant="contained"
-                  onClick={() => this.editbusiness(vallet)}
-                  className={classes.edit}
-                >
-                  Edit
+                  </div>
+                  <Button
+                    variant="contained"
+                    onClick={() => this.editbusiness(vallet)}
+                    className={classes.edit}
+                  >
+                    Edit
                 </Button>
-                <Button
-                 variant="contained"
-                  onClick={() => deletevalet(vallet._id)}
-                  className={classes.delete}
-                >
-                  Delete
+                  <Button
+                    variant="contained"
+                    onClick={() => deletevalet(vallet._id)}
+                    className={classes.delete}
+                  >
+                    Delete
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
-        ) : null
-      )
-    );
+                </CardContent>
+              </Card>
+            </div>
+          ) : null
+        )
+      );
 
     console.log(this.props.data);
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-      
-        
+
+
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
               <span>
                 <span style={{ fontSize: "2rem" }} className="text-center mt-4">
-                Valets
+                  Valets
               </span>
-              <Button
-                className=" mb-4 float-right"
-                variant="contained"
-                onClick={this.handlePost}
-              >
-                Add Valet
+                <Button
+                  className=" mb-4 float-right"
+                  variant="contained"
+                  onClick={this.handlePost}
+                >
+                  Add Valet
               </Button>
               </span>
             )}
@@ -507,55 +508,55 @@ class Valets extends Component {
                   </Typography>
                 </>
               ) : (
-                <form onSubmit={this.handleSubmit}>
-                  <TextField
-                    name="carNumber"
-                    type="carNumber"
-                    label="Car Licence Number"
-                    className={classes.TextField}
-                    value={this.state.carNumber}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="ownerName"
-                    type="ownerName"
-                    label="Name of the owner"
-                    className={classes.TextField}
-                    value={this.state.ownerName}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  <TextField
-                    name="driverName"
-                    type="driverName"
-                    label="Name of the driver"
-                    className={classes.TextField}
-                    value={this.state.driverName}
-                    onChange={this.handleChange}
-                    fullWidth
-                    required={true}
-                  />
-                  {this.state.errors ? <p>{this.state.errors.error}</p> : null}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={btnload}
-                    className={classes.button}
-                  >
-                    Submit
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      name="carNumber"
+                      type="carNumber"
+                      label="Car Licence Number"
+                      className={classes.TextField}
+                      value={this.state.carNumber}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="ownerName"
+                      type="ownerName"
+                      label="Name of the owner"
+                      className={classes.TextField}
+                      value={this.state.ownerName}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    <TextField
+                      name="driverName"
+                      type="driverName"
+                      label="Name of the driver"
+                      className={classes.TextField}
+                      value={this.state.driverName}
+                      onChange={this.handleChange}
+                      fullWidth
+                      required={true}
+                    />
+                    {this.state.errors ? <p>{this.state.errors.error}</p> : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={btnload}
+                      className={classes.button}
+                    >
+                      Submit
                     {btnload && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                </form>
-              )}
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                        />
+                      )}
+                    </Button>
+                  </form>
+                )}
             </div>
           </div>
         </Modal>

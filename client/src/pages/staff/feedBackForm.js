@@ -25,10 +25,10 @@ const styles = {
     paddingRight: 10,
     backgroundColor: "#FFFFFF",
     boxShadow: "1px 1px 1px 1px grey",
-    width:"50%",
-    margin:"auto",
+    width: "50%",
+    margin: "auto",
     "@media (min-width: 320px) and (max-width: 480px)": {
-      width:"90%",
+      width: "90%",
     },
   },
   fr: {
@@ -71,10 +71,10 @@ const styles = {
   },
   TextField: {
     margin: "10px auto 10px auto",
-    border:"none",
-    borderBottom:"2px solid #616161",
+    border: "none",
+    borderBottom: "2px solid #616161",
     outline: "none",
-    width:"100%"
+    width: "100%"
   },
   button: {
     marginTop: 20,
@@ -97,19 +97,19 @@ const styles = {
     overflowY: "scroll",
   },
   split: {
-    height:" 100%",
+    height: " 100%",
     width: "100%",
     position: "fixed",
     zIndex: 1,
     top: 0,
     overflowX: "hidden",
     paddingTop: "20px",
-    backgroundColor:"#2a2b33",
+    backgroundColor: "#2a2b33",
 
   },
 
-  
-  centered :{
+
+  centered: {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -135,7 +135,7 @@ class feedBackForm extends Component {
     errors: {},
     btnload: false,
     loading: true,
-    submitted:false,
+    submitted: false,
   };
 
   handleDone = () => {
@@ -184,6 +184,7 @@ class feedBackForm extends Component {
       businessId: this.props.match.params.businessId,
       orderId: this.props.match.params.orderId,
       feedback: feedback,
+      createdAt: new Date().toISOString(),
     };
     this.props.postFeedBack(userData, this.handleDone);
   };
@@ -217,180 +218,180 @@ class feedBackForm extends Component {
 
     const { classes } = this.props;
 
-    if(this.state.submitted === true)
-    return (
-      <div className = {`${classes.split} `}>
-      <div className= {classes.centered}>
+    if (this.state.submitted === true)
+      return (
+        <div className={`${classes.split} `}>
+          <div className={classes.centered}>
 
-  <Typography variant="h3" style={{fontSize: "2.05rem",color:"#9C27B0"}}>
-   Thanks for the Feedback
+            <Typography variant="h3" style={{ fontSize: "2.05rem", color: "#9C27B0" }}>
+              Thanks for the Feedback
  </Typography>
- <br></br>
+            <br></br>
 
-        <img
-         src={logo}
-         style={{ height: 70, width: 170 }}
-         alt="Delicon"
-       />
-       <br></br>
-       
-   </div>
-   </div>
+            <img
+              src={logo}
+              style={{ height: 70, width: 170 }}
+              alt="Delicon"
+            />
+            <br></br>
 
-    )
+          </div>
+        </div>
+
+      )
 
     const markup = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      <Card className={classes.bodycard} variant="outlined">
-      <CardContent>
-       
-      <form className="m-3" onSubmit={this.handleSubmit}>
-        {this.props.data.staff.feedbackform.map((food, i) => (
-          <div key={food._id}>
-            {food.type === "text" ? (
-              <>
-                <span>
-                  {
-                    (Number(i) + Number(1)) +
-                    ".)  " +
-                    food.question}{" "}
-                </span>
-                <br></br>
-                <input
-                  type="text"
-                  className={classes.TextField + " inputclass"}
-                  required={true}
-                />
-              </>
-            ) : null}
-            {food.type === "boolean" ? (
-              <span>
-                <span>
-                  {
-                    (Number(i) + Number(1)) +
-                    ".)  " +
-                    food.question}{" "}
-                </span>
-                <br></br>
-                <span  className="boolscontain">
-                  <label style={{ marginLeft:"20px",marginTop:"5px" }}>
-                    
-                    <input
-                      name={`feedback+${i}`}
-                      onChange={this.handleBool}
-                      type="radio"
-                      value="Yes"
-                      className="bool"
-                      required={true}
-                    />
-                    <span> YES</span>
-                  </label>
+        <Card className={classes.bodycard} variant="outlined">
+          <CardContent>
+
+            <form className="m-3" onSubmit={this.handleSubmit}>
+              {this.props.data.staff.feedbackform.map((food, i) => (
+                <div key={food._id}>
+                  {food.type === "text" ? (
+                    <>
+                      <span>
+                        {
+                          (Number(i) + Number(1)) +
+                          ".)  " +
+                          food.question}{" "}
+                      </span>
+                      <br></br>
+                      <input
+                        type="text"
+                        className={classes.TextField + " inputclass"}
+                        required={true}
+                      />
+                    </>
+                  ) : null}
+                  {food.type === "boolean" ? (
+                    <span>
+                      <span>
+                        {
+                          (Number(i) + Number(1)) +
+                          ".)  " +
+                          food.question}{" "}
+                      </span>
+                      <br></br>
+                      <span className="boolscontain">
+                        <label style={{ marginLeft: "20px", marginTop: "5px" }}>
+
+                          <input
+                            name={`feedback+${i}`}
+                            onChange={this.handleBool}
+                            type="radio"
+                            value="Yes"
+                            className="bool"
+                            required={true}
+                          />
+                          <span> YES</span>
+                        </label>
+                        <br></br>
+                        <label style={{ marginLeft: "20px" }}>
+                          <input
+                            name={`feedback+${i}`}
+                            onChange={this.handleBool}
+                            type="radio"
+                            value="No"
+                            className="bool"
+                            required={true}
+                          />
+                          <span> NO</span>
+                        </label>
+                      </span>
+                    </span>
+                  ) : null}
                   <br></br>
-                  <label style={{ marginLeft:"20px" }}>
-                    <input
-                      name={`feedback+${i}`}
-                      onChange={this.handleBool}
-                      type="radio"
-                      value="No"
-                      className="bool"
-                      required={true}
-                    />
-                    <span> NO</span>
-                  </label>
-                </span>
-              </span>
-            ) : null}
-            <br></br>
-            {food.type === "rating" ? (
-              <span className="rateparent">
-                <span>
-                  {
-                    (Number(i) + Number(1)) +
-                    ".)  " +
-                    food.question}{" "}
-                </span>
-                <br></br>
-                <div style={{ marginLeft:"20px",marginTop:"5px" }} className="rating">
-                  <label>
-                    <input
-                      onChange={this.handleStar}
-                      type="radio"
-                      value="1"
-                      className="star"
-                    />
-                    <span className="icon">★</span>
-                  </label>
-                  <label>
-                    <input
-                      onChange={this.handleStar}
-                      type="radio"
-                      value="2"
-                      className="star"
-                    />
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                  </label>
-                  <label>
-                    <input
-                      onChange={this.handleStar}
-                      type="radio"
-                      value="3"
-                      className="star"
-                    />
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                  </label>
-                  <label>
-                    <input
-                      onChange={this.handleStar}
-                      type="radio"
-                      value="4"
-                      className="star"
-                    />
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                  </label>
-                  <label>
-                    <input
-                      onChange={this.handleStar}
-                      type="radio"
-                      value="5"
-                      className="star"
-                    />
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                    <span className="icon">★</span>
-                  </label>
+                  {food.type === "rating" ? (
+                    <span className="rateparent">
+                      <span>
+                        {
+                          (Number(i) + Number(1)) +
+                          ".)  " +
+                          food.question}{" "}
+                      </span>
+                      <br></br>
+                      <div style={{ marginLeft: "20px", marginTop: "5px" }} className="rating">
+                        <label>
+                          <input
+                            onChange={this.handleStar}
+                            type="radio"
+                            value="1"
+                            className="star"
+                          />
+                          <span className="icon">★</span>
+                        </label>
+                        <label>
+                          <input
+                            onChange={this.handleStar}
+                            type="radio"
+                            value="2"
+                            className="star"
+                          />
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                        </label>
+                        <label>
+                          <input
+                            onChange={this.handleStar}
+                            type="radio"
+                            value="3"
+                            className="star"
+                          />
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                        </label>
+                        <label>
+                          <input
+                            onChange={this.handleStar}
+                            type="radio"
+                            value="4"
+                            className="star"
+                          />
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                        </label>
+                        <label>
+                          <input
+                            onChange={this.handleStar}
+                            type="radio"
+                            value="5"
+                            className="star"
+                          />
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                          <span className="icon">★</span>
+                        </label>
+                      </div>
+                    </span>
+                  ) : null}
                 </div>
-              </span>
-            ) : null}
-          </div>
-        ))}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={btnload}
-          className={classes.button}
-        >
-          Submit
+              ))}
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={btnload}
+                className={classes.button}
+              >
+                Submit
           {btnload && (
-            <CircularProgress size={30} className={classes.progress} />
-          )}
-        </Button>
-      </form>
-      </CardContent>
-    </Card>
-     
-    );
+                  <CircularProgress size={30} className={classes.progress} />
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+      );
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

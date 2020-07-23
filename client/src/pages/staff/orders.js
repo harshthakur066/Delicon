@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getorders, deleteOrder,orderDelivered } from "../../redux/actions/dataActions";
+import { getorders, deleteOrder, orderDelivered } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -69,33 +69,33 @@ const styles = {
     float: "right",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#f44336",
-    marginBottom:".6rem",
-    width:"5rem",
+    backgroundColor: "#f44336",
+    marginBottom: ".6rem",
+    width: "5rem",
     "&:hover": {
-      backgroundColor:"#f44336",
+      backgroundColor: "#f44336",
     },
     "@media (min-width: 320px) and (max-width: 330px)": {
 
     },
-    
+
   },
   edit: {
     float: "left",
     color: "white",
     cursor: "pointer",
-    backgroundColor:"#2196F3",
-    marginBottom:".6rem",
-    width:"5rem",
+    backgroundColor: "#2196F3",
+    marginBottom: ".6rem",
+    width: "5rem",
     "&:hover": {
-      backgroundColor:"#2196F3",
+      backgroundColor: "#2196F3",
     },
-    
+
   },
   detail: {
-    color: "#616161",marginBottom:".6rem",width:"5rem",
+    color: "#616161", marginBottom: ".6rem", width: "5rem",
     "@media (min-width: 320px) and (max-width: 330px)": {
-      float:"right"
+      float: "right"
     },
   },
   pageTitle: {
@@ -222,6 +222,7 @@ class Orders extends Component {
       owner: this.state.owner,
       address: this.state.address,
       details: this.state.details,
+      createdAt: new Date().toISOString(),
     };
     if (this.state.modalmode === "Post") {
       this.props.postbusiness(userData, this.doneLoading);
@@ -270,7 +271,7 @@ class Orders extends Component {
   };
 
   render() {
-    const { classes, deleteOrder,orderDelivered } = this.props;
+    const { classes, deleteOrder, orderDelivered } = this.props;
 
     const loading = this.state.loading;
     // const btnload = this.state.btnload;
@@ -283,135 +284,135 @@ class Orders extends Component {
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.orders.map((order, index) => (
-        order.delivered === true ? null : 
-        <div
-          key={index}
-          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4"
-        >
-          <Card className={classes.cardStyle} variant="outlined">
-            <CardContent>
-              {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+        this.props.data.staff.orders.map((order, index) => (
+          order.delivered === true ? null :
+            <div
+              key={index}
+              className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4"
+            >
+              <Card className={classes.cardStyle} variant="outlined">
+                <CardContent>
+                  {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                 Order Id :- {order._id}
               </Typography> */}
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                Customer Name :- {order.custName}
-              </Typography>
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                Staff Name :- {order.staffName}
-              </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                Items Count :- {order.itemCount}
-              </Typography>
-              <br></br>
-              <div className="text-center">
-              <Button
-                variant="contained"
-                onClick={() =>
-                  orderDelivered(this.props.user.businessId, order._id)
-                }
-                className={classes.edit}
-              >
-                Deliver
+                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                    Customer Name :- {order.custName}
+                  </Typography>
+                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                    Staff Name :- {order.staffName}
+                  </Typography>
+                  <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                    Items Count :- {order.itemCount}
+                  </Typography>
+                  <br></br>
+                  <div className="text-center">
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        orderDelivered(this.props.user.businessId, order._id)
+                      }
+                      className={classes.edit}
+                    >
+                      Deliver
                 </Button>
-                <span >
-              <Button
-                size="small"
-                variant="contained"
-                onClick={() => this.openbusiness(order)}
-                className={classes.detail}
-              >
-                Details
+                    <span >
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => this.openbusiness(order)}
+                        className={classes.detail}
+                      >
+                        Details
               </Button>
-              </span>
+                    </span>
 
-              <Button
-                variant="contained"
-                onClick={() =>
-                  deleteOrder(this.props.user.businessId, order._id)
-                }
-                className={classes.delete}
-              >
-                Delete
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        deleteOrder(this.props.user.businessId, order._id)
+                      }
+                      className={classes.delete}
+                    >
+                      Delete
               </Button>
-              </div>
-             
-              
-            </CardContent>
-          </Card>
-        </div>
-        
-      ))
-    );
+                  </div>
+
+
+                </CardContent>
+              </Card>
+            </div>
+
+        ))
+      );
 
     const markup2 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
-      this.props.data.staff.orders.map((order, index) => (
-        order.delivered === false ? null : 
+        this.props.data.staff.orders.map((order, index) => (
+          order.delivered === false ? null :
 
-        <div
-          key={index}
-          className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
-        >
-          <Card className={classes.cardStyle} variant="outlined">
-            <CardContent>
-              {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+            <div
+              key={index}
+              className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4"
+            >
+              <Card className={classes.cardStyle} variant="outlined">
+                <CardContent>
+                  {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                 Order Id :- {order._id}
               </Typography> */}
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                Customer Name :- {order.custName}
-              </Typography>
-              <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                Staff Name :- {order.staffName}
-              </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
-                Items Count :- {order.itemCount}
-              </Typography>
-              <Button
-                style={{ color: "#616161", marginTop: "0.5rem" }}
-                size="small"
-                variant="contained"
-                onClick={() => this.openbusiness(order)}
-              >
-                Details
+                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                    Customer Name :- {order.custName}
+                  </Typography>
+                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                    Staff Name :- {order.staffName}
+                  </Typography>
+                  <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                    Items Count :- {order.itemCount}
+                  </Typography>
+                  <Button
+                    style={{ color: "#616161", marginTop: "0.5rem" }}
+                    size="small"
+                    variant="contained"
+                    onClick={() => this.openbusiness(order)}
+                  >
+                    Details
               </Button>
 
-              <Button
-              style={{marginBottom:"0px",marginTop:"6px"}}
-                onClick={() =>
-                  deleteOrder(this.props.user.businessId, order._id)
-                }
-                className={classes.delete}
-              >
-                Delete
+                  <Button
+                    style={{ marginBottom: "0px", marginTop: "6px" }}
+                    onClick={() =>
+                      deleteOrder(this.props.user.businessId, order._id)
+                    }
+                    className={classes.delete}
+                  >
+                    Delete
               </Button>
-            </CardContent>
-          </Card>
-        </div>
-      ))
-    );
+                </CardContent>
+              </Card>
+            </div>
+        ))
+      );
 
     return (
       <div className="container" style={{ marginTop: 90 }}>
-      
-         {/* ADD */}
-         <div className="row mt-4">
+
+        {/* ADD */}
+        <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (
               <span>
                 <span style={{ fontSize: "2rem" }} className="text-center mt-4">
-                Orders
+                  Orders
               </span>
-              <Button
-                component={Link}
-                className="mb-4 float-right"
-                variant="contained"
-                to="/order/customers"
-              >
-                Add Order
+                <Button
+                  component={Link}
+                  className="mb-4 float-right"
+                  variant="contained"
+                  to="/order/customers"
+                >
+                  Add Order
               </Button>
               </span>
             )}
@@ -445,7 +446,7 @@ class Orders extends Component {
           </div>
         </div>
 
-       
+
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>
@@ -484,26 +485,26 @@ class Orders extends Component {
                     {this.state.menu.length === 0 ? (
                       <h5>No items</h5>
                     ) : (
-                      this.state.menu.map((m, index) => (
-                        <div
-                          style={{ marginBottom: "2rem", textAlign: "left" }}
-                          key={index}
-                        >
-                          <Typography variant="h6" className="mt-2 ">
-                            Name - {m.name}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Details - {m.details}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Price - {m.price}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Quantity - {m.quantity}
-                          </Typography>
-                        </div>
-                      ))
-                    )}
+                        this.state.menu.map((m, index) => (
+                          <div
+                            style={{ marginBottom: "2rem", textAlign: "left" }}
+                            key={index}
+                          >
+                            <Typography variant="h6" className="mt-2 ">
+                              Name - {m.name}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Details - {m.details}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Price - {m.price}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Quantity - {m.quantity}
+                            </Typography>
+                          </div>
+                        ))
+                      )}
                   </div>
                   <div className="  ">
                     <Typography
@@ -515,26 +516,26 @@ class Orders extends Component {
                     {this.state.service.length === 0 ? (
                       <h5>No items</h5>
                     ) : (
-                      this.state.service.map((s, index) => (
-                        <div
-                          style={{ marginBottom: "2rem", textAlign: "left" }}
-                          key={index}
-                        >
-                          <Typography variant="h6" className="mt-2 ">
-                            Name - {s.name}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Details - {s.details}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Price - {s.price}
-                          </Typography>
-                          <Typography variant="h6" className="mt-2 ">
-                            Quantity - {s.quantity}
-                          </Typography>
-                        </div>
-                      ))
-                    )}
+                        this.state.service.map((s, index) => (
+                          <div
+                            style={{ marginBottom: "2rem", textAlign: "left" }}
+                            key={index}
+                          >
+                            <Typography variant="h6" className="mt-2 ">
+                              Name - {s.name}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Details - {s.details}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Price - {s.price}
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 ">
+                              Quantity - {s.quantity}
+                            </Typography>
+                          </div>
+                        ))
+                      )}
                   </div>
                 </>
               </div>
