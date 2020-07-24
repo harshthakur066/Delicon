@@ -247,6 +247,7 @@ class Walkins extends Component {
       btnload: true,
       errors: {},
     });
+    const datenow = new Date().toISOString();
     const userData = {
       name: this.state.name,
       email: this.state.email,
@@ -260,9 +261,8 @@ class Walkins extends Component {
       dob: this.state.dob,
       ownerId: this.props.user.profile.ownerId,
       businessId: this.props.user.businessId,
-      walkIn: new Date().toISOString(),
+      walkIn: datenow
     };
-    console.log(userData)
     if (this.state.modalmode === "Post") {
       this.props.postwalkins(userData, this.handleDone);
     } else {
@@ -283,15 +283,11 @@ class Walkins extends Component {
     });
   };
   handleBlur = e => {
-    console.log("handleBlur")
     const { name, value } = e.target;
     const error = { ...Validate(name, value) };
     this.setState({
       errors: { ...this.state.errors, ...error }
     });
-
-    console.log(this.state.errors)
-
   };
 
   editbusiness = (business) => {
@@ -338,6 +334,8 @@ class Walkins extends Component {
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
+
+    console.log(this.props.data.staff.walkins)
 
     const { classes, deletewalkin, walkout } = this.props; //WithStyles Material Thing
 
@@ -467,7 +465,6 @@ class Walkins extends Component {
         )
       );
 
-    console.log(this.props.data);
 
     return (
       <div className="container" style={{ marginTop: 90 }}>

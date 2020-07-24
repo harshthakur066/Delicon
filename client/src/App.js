@@ -34,7 +34,10 @@ import feedBackForm from "./pages/staff/feedBackForm"
 import feedbackList from "./pages/owner/feedbackslist";
 import resAnalytics from './pages/owner/reservationAnalytics';
 import valetAnalytics from './pages/owner/valetAnalytics';
-
+import walkinAnalytics from './pages/owner/walkinAnalytics';
+import menuAnalytics from "./pages/owner/menuAnalytics"
+import serviceAnalytics from "./pages/owner/serviceAnalytics"
+import ordersAnalytics from "./pages/owner/ordersAnalytics"
 
 import {
   getUserOwnerData,
@@ -164,6 +167,11 @@ function App() {
                 />
                 <Route exact path="/analytics/reservations/:busiId" component={resAnalytics} />
                 <Route exact path="/analytics/valets/:busiId" component={valetAnalytics} />
+                <Route exact path="/analytics/walkins/:busiId" component={walkinAnalytics} />
+                <Route exact path="/analytics/menu/:busiId" component={menuAnalytics} />
+                <Route exact path="/analytics/service/:busiId" component={serviceAnalytics} />
+                <Route exact path="/analytics/orders/:busiId" component={ordersAnalytics} />
+
 
               </Switch>
             </div>

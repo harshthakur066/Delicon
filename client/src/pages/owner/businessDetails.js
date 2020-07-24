@@ -136,27 +136,38 @@ class BusinessDetails extends Component {
         name: "Walkin",
         image: walkin,
         setting: "",
+        analytics: `/analytics/walkins/${this.props.match.params.busiId}`,
+
       },
       {
         id: 3,
         name: "Menu",
         image: menu,
         setting: `/menu/${busiId}`,
+        analytics: `/analytics/menu/${this.props.match.params.busiId}`,
+
       },
       {
         id: 4,
         name: "Service",
         image: service,
         setting: `/service/${busiId}`,
+        analytics: `/analytics/service/${this.props.match.params.busiId}`,
       },
       {
         id: 5,
+        name: "Orders",
+        image: reservation,
+        analytics: `/analytics/orders/${this.props.match.params.busiId}`,
+      },
+      {
+        id: 6,
         name: "Billing",
         image: billing,
         setting: "",
       },
       {
-        id: 6,
+        id: 7,
         name: "Feedback",
         image: feedback,
         setting: `/feedBack/${busiId}`,

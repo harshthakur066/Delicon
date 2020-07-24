@@ -113,9 +113,11 @@ class OrderSummery extends Component {
     this.setState({
       btnload: true,
     });
+    const data = this.props.data.staff.order;
+    data.createdAt = new Date().toISOString();
     this.props.postOrder(
       this.props.user.businessId,
-      this.props.data.staff.order,
+      data,
       this.handleDone
     );
   };

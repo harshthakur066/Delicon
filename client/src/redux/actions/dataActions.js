@@ -1008,7 +1008,7 @@ export const editwalkin = (formdata, setloading, ID) => (dispatch) => {
 export const walkout = (ID) => (dispatch) => {
   dispatch(clearErrors());
   axios
-    .put(`/api/v1/walkin/${ID}/walkout`, { timeOut: new Date().toISOString() })
+    .put(`/api/v1/walkin/${ID}/walkout`, { walkOut: new Date().toISOString() })
     .then((res) => {
       dispatch({
         type: ActionTypes.WALK_OUT,
