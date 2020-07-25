@@ -20,6 +20,17 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
   } = req.body;
   const staffId = req.staff._id;
   const businessId = req.params.businessId;
+  var amount = 0;
+  await MenuItems.forEach((itm) => {
+    var prc = Number(itm.price);
+    var qt = Number(itm.quantity);
+    amount += prc * qt;
+  })
+  await services.forEach((itm) => {
+    var pac = Number(itm.price);
+    var qaut = Number(itm.quantity);
+    amount += pac * qaut;
+  })
   try {
     const newOrder = new Order({
       custId,
@@ -33,6 +44,7 @@ router.post("/api/v1/orders/:businessId", isStaff, async (req, res) => {
       email,
       itemCount,
       staffName,
+      amount,
     });
     await newOrder.save();
     res.status(200).json(newOrder);

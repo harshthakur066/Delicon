@@ -16,6 +16,7 @@ const OrderSchema = new Schema({
   createdAt: Date,
   delivered: { type: Boolean, default: false },
   paid: { type: Boolean, default: false },
+  amount: Number,
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
