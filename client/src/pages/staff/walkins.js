@@ -108,8 +108,8 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "15%",
-    left: "10%",
-    right: "10%",
+    left: "18%",
+    right: "18%",
     bottom: "5%",
     backgroundColor: "white",
     borderRadius: "20px",
@@ -122,7 +122,8 @@ const styles = {
     marginTop: ".4rem",
   },
   details: {
-    color: "#616161",
+    color:"#37474F",
+    backgroundColor: "#BDBDBD",
     marginLeft: "15px",
     "@media (min-width: 320px) and (max-width: 480px)": {
       marginLeft: "5px",
@@ -351,8 +352,13 @@ class Walkins extends Component {
               <Card className={classes.bodycard}>
                 <CardContent>
                   <Typography style={{ fontSize: "1.05rem" }}>
+
                     Name - {walkin.name}{" "}
                     <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+
+                    </Typography>
+                    <Typography style={{ fontSize: "0.75rem" }}>
+
                     <div> Mobile No. - {walkin.mobno}</div>{" "}
                     <div> Email - {walkin.email}</div>{" "}
 
@@ -368,7 +374,7 @@ class Walkins extends Component {
 
                   <div className="text-center">
                     <Button
-                      style={{ color: "#616161" }}
+                      className={classes.details}
                       onClick={() => this.openbusiness(walkin)}
                       variant="contained"
                       size="small"
@@ -377,7 +383,6 @@ class Walkins extends Component {
                         </Button>
                     <Button
                       className={classes.details}
-                      style={{ color: "#616161" }}
                       onClick={() => walkout(walkin._id)}
                       variant="contained"
                       size="small"
@@ -386,14 +391,14 @@ class Walkins extends Component {
                   </Button>
                   </div>
                 </CardContent>
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => this.editbusiness(walkin)}
                   className={classes.edit}
                 >
                   Edit
               </Button>
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => deletewalkin(walkin._id)}
                   className={classes.delete}
@@ -417,9 +422,14 @@ class Walkins extends Component {
             <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4">
               <Card className={classes.bodycard}>
                 <CardContent>
+                  
                   <Typography style={{ fontSize: "1.05rem" }}>
                     Name - {walkin.name}{" "}
                     <div className={classes.fr}>Seats -{" " + walkin.seats}</div>{" "}
+
+                    </Typography>
+
+                    <Typography style={{ fontSize: "0.85rem" }}>
                     <br className={classes.breaker} />
                     <div> Mobile No. - {walkin.mobno}</div>{" "}
                     <div> Email - {walkin.email}</div>{" "}
@@ -436,7 +446,7 @@ class Walkins extends Component {
 
                   <div className="text-center mt-2 ">
                     <Button
-                      style={{ color: "#616161" }}
+                    className={classes.details}
                       onClick={() => this.openbusiness(walkin)}
                       variant="contained"
                       size="small"
@@ -445,14 +455,14 @@ class Walkins extends Component {
             </Button>
                   </div>
                 </CardContent>
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => this.editbusiness(walkin)}
                   className={classes.edit}
                 >
                   Edit
               </Button>
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => deletewalkin(walkin._id)}
                   className={classes.delete}
@@ -661,7 +671,7 @@ class Walkins extends Component {
 
                     <div style={{ marginLeft: "10px" }} className={classes.gender} >
                       <FormLabel style={{ fontSize: "1rem", marginTop: "10px" }} component="legend">Gender</FormLabel>
-                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange}>
+                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange}  style ={{display:"block"}}>
                         <FormControlLabel value="female" control={<Radio />} label="Female" />
                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                         <FormControlLabel value="other" control={<Radio />} label="Other" />
@@ -683,7 +693,7 @@ class Walkins extends Component {
                     <div className={classes.gender} >
                       <FormLabel style={{ fontSize: "1rem", marginTop: "10px", width: "fitContent" }} component="legend">How did you get to know about us ?</FormLabel>
                       <br></br>
-                      <RadioGroup name="know" value={this.state.know} onChange={this.handleChange}>
+                      <RadioGroup name="know" value={this.state.know} onChange={this.handleChange} style ={{display:"block"}}>
                         <FormControlLabel value="Newspaper" control={<Radio />} label="Newspaper" />
                         <FormControlLabel value="Friends" control={<Radio />} label="Friends" />
                         <FormControlLabel value="Online Promotion" control={<Radio />} label="Online Promotion" />

@@ -96,7 +96,6 @@ const styles = {
       backgroundColor: "#f44336",
     },
   },
-
   root: {
     margin: "auto",
     textAlign: "center",
@@ -129,8 +128,8 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "13%",
-    left: "10%",
-    right: "10%",
+    left: "18%",
+    right: "18%",
     bottom: "5%",
     backgroundColor: "white",
     borderRadius: "30px",
@@ -145,7 +144,8 @@ const styles = {
   },
 
   details: {
-    color: "#616161",
+    color:"#37474F",
+    backgroundColor: "#BDBDBD",
     marginLeft: "15px",
     marginTop: "15px",
     "@media (min-width: 320px) and (max-width: 480px)": {
@@ -386,16 +386,17 @@ class Reservations extends Component {
                     Name - {reservation.name}{" "}
                     <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                  <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                     Email - {reservation.email}{" "}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                  <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                     Mobile No. - {reservation.mobno}
                   </Typography>
 
                   <div className="text-center">
                     <Button
-                      style={{ color: "#616161", marginTop: "15px" }}
+                      className={classes.details}
+                      style={{ marginTop: "15px" }}
                       onClick={() => this.openbusiness(reservation)}
                       variant="contained"
                       size="small"
@@ -417,14 +418,14 @@ class Reservations extends Component {
 
                 </CardContent>
 
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => this.editbusiness(reservation)}
                   className={classes.edit}
                 >
                   Edit
               </Button>
-                <Button
+                <Button style = {{width:"70px"}}
                   variant="contained"
                   onClick={() => deletereservation(reservation._id)}
                   className={classes.delete}
@@ -453,11 +454,11 @@ class Reservations extends Component {
                       Name - {reservation.name}{" "}
                       <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                     </Typography>
-                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                       Email - {reservation.email}{" "}
                     </Typography>
 
-                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                       Mobile No. - {reservation.mobno}
                     </Typography>
 
@@ -474,7 +475,8 @@ class Reservations extends Component {
 
                     <div className="text-center">
                       <Button
-                        style={{ color: "#616161", marginTop: "15px" }}
+                      className={classes.details}
+                        style={{ marginTop: "15px" }}
                         onClick={() => this.openbusiness(reservation)}
                         variant="contained"
                         size="small"
@@ -495,14 +497,14 @@ class Reservations extends Component {
 
                   </CardContent>
 
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => this.editbusiness(reservation)}
                     className={classes.edit}
                   >
                     Edit
               </Button>
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => deletereservation(reservation._id)}
                     className={classes.delete}
@@ -530,10 +532,10 @@ class Reservations extends Component {
                       Name - {reservation.name}{" "}
                       <div className={classes.fr}>Seats - {reservation.seats}</div>{" "}
                     </Typography>
-                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                       Email - {reservation.email}{" "}
                     </Typography>
-                    <Typography style={{ fontSize: "1.05rem", marginTop: "5px" }}>
+                    <Typography style={{ fontSize: "0.75rem", marginTop: "5px" }}>
                       Mobile No. - {reservation.mobno}
                     </Typography>
 
@@ -556,7 +558,7 @@ class Reservations extends Component {
                     <br></br>
                     <div className="text-center mt-1 ">
                       <Button
-                        style={{ color: "#616161" }}
+                      className={classes.details}
                         onClick={() => this.openbusiness(reservation)}
                         variant="contained"
                         size="small"
@@ -565,14 +567,14 @@ class Reservations extends Component {
              </Button>
                     </div>
                   </CardContent>
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => deletereservation(reservation._id)}
                     className={classes.delete}
                   >
                     Delete
               </Button>
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => this.editbusiness(reservation)}
                     className={classes.edit}
@@ -780,7 +782,7 @@ class Reservations extends Component {
 
 
                         <br></br>
-                        <RadioGroup name="modeOfBooking" value={this.state.modeOfBooking} onChange={this.handleChange}>
+                        <RadioGroup name="modeOfBooking" value={this.state.modeOfBooking} onChange={this.handleChange} style ={{display:"block"}}>
                           <FormControlLabel value="online" control={<Radio />} label="Online" />
                           <FormControlLabel value="phone" control={<Radio />} label="Phone" />
                           <FormControlLabel value={""} control={<Radio />} label="Others" />
@@ -816,7 +818,7 @@ class Reservations extends Component {
                     <div style={{ marginLeft: "10px" }} className={classes.gender} >
                       <FormLabel style={{ fontSize: "1rem", marginTop: "10px" }} component="legend">Gender</FormLabel>
 
-                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange}>
+                      <RadioGroup name="gender" value={this.state.gender} onChange={this.handleChange} style ={{display:"block"}}>
                         <FormControlLabel value="female" control={<Radio />} label="Female" />
                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                         <FormControlLabel value="other" control={<Radio />} label="Other" />

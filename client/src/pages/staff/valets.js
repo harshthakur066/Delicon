@@ -100,8 +100,8 @@ const styles = {
   modlebox: {
     position: "fixed",
     top: "15%",
-    left: "10%",
-    right: "10%",
+    left: "20%",
+    right: "20%",
     bottom: "15%",
     backgroundColor: "white",
     borderRadius: "30px",
@@ -322,14 +322,14 @@ class Valets extends Component {
                       TimeOut
                   </Button>
                   </div>
-                  <Button
-                    variant="contained"
+                  <Button  style = {{width:"70px"}}
+                    variant="contained" 
                     onClick={() => this.editbusiness(vallet)}
                     className={classes.edit}
                   >
                     Edit
                 </Button>
-                  <Button
+                  <Button  style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => deletevalet(vallet._id)}
                     className={classes.delete}
@@ -378,14 +378,14 @@ class Valets extends Component {
                 Details
               </Button> */}
                   </div>
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => this.editbusiness(vallet)}
                     className={classes.edit}
                   >
                     Edit
                 </Button>
-                  <Button
+                  <Button style = {{width:"70px"}}
                     variant="contained"
                     onClick={() => deletevalet(vallet._id)}
                     className={classes.delete}
