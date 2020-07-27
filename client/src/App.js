@@ -38,6 +38,8 @@ import walkinAnalytics from './pages/owner/walkinAnalytics';
 import menuAnalytics from "./pages/owner/menuAnalytics"
 import serviceAnalytics from "./pages/owner/serviceAnalytics"
 import ordersAnalytics from "./pages/owner/ordersAnalytics"
+import billAnalytics from "./pages/owner/billAnalytics"
+
 
 import {
   getUserOwnerData,
@@ -171,8 +173,7 @@ function App() {
                 <Route exact path="/analytics/menu/:busiId" component={menuAnalytics} />
                 <Route exact path="/analytics/service/:busiId" component={serviceAnalytics} />
                 <Route exact path="/analytics/orders/:busiId" component={ordersAnalytics} />
-
-
+                <Route exact path="/analytics/bill/:busiId" component={billAnalytics} />
               </Switch>
             </div>
           </ErrorBoundry>

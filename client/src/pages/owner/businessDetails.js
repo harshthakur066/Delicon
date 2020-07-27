@@ -129,7 +129,7 @@ class BusinessDetails extends Component {
         id: 1,
         name: "Valets",
         image: valet,
-        analytics:`/analytics/valets/${this.props.match.params.busiId}`,
+        analytics: `/analytics/valets/${this.props.match.params.busiId}`,
       },
       {
         id: 2,
@@ -137,7 +137,6 @@ class BusinessDetails extends Component {
         image: walkin,
         setting: "",
         analytics: `/analytics/walkins/${this.props.match.params.busiId}`,
-
       },
       {
         id: 3,
@@ -145,7 +144,6 @@ class BusinessDetails extends Component {
         image: menu,
         setting: `/menu/${busiId}`,
         analytics: `/analytics/menu/${this.props.match.params.busiId}`,
-
       },
       {
         id: 4,
@@ -165,6 +163,7 @@ class BusinessDetails extends Component {
         name: "Billing",
         image: billing,
         setting: "",
+        analytics: `/analytics/bill/${this.props.match.params.busiId}`,
       },
       {
         id: 7,
@@ -206,15 +205,17 @@ class BusinessDetails extends Component {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button
-                  className={classes.settings}
-                  component={Link}
-                  variant="contained"
-                  color="inherit"
-                  to={mod.analytics}
-                >
-                  Analytics
-                </Button>
+                {mod.analytics ? (
+                  <Button
+                    className={classes.settings}
+                    component={Link}
+                    variant="contained"
+                    color="inherit"
+                    to={mod.analytics}
+                  >
+                    Analytics
+                  </Button>
+                ) : null}
                 {mod.setting ? (
                   <Button
                     className={classes.settings}
