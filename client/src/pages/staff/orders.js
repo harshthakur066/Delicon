@@ -298,10 +298,10 @@ class Orders extends Component {
                   <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                     Customer Name :- {order.custName}
                   </Typography>
-                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                  <Typography style={{ color: "#070707", fontSize: "0.8rem" }}>
                     Staff Name :- {order.staffName}
                   </Typography>
-                  <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                  <Typography style={{ color: "#455A64", fontSize: "0.85rem" }}>
                     Items Count :- {order.itemCount}
                   </Typography>
                   <br></br>
@@ -317,6 +317,8 @@ class Orders extends Component {
                 </Button>
                     <span >
                       <Button
+                      style={{ color:"#37474F",
+                      backgroundColor: "#BDBDBD"}}
                         size="small"
                         variant="contained"
                         onClick={() => this.openbusiness(order)}
@@ -365,14 +367,15 @@ class Orders extends Component {
                   <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                     Customer Name :- {order.custName}
                   </Typography>
-                  <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                  <Typography style={{ color: "#070707", fontSize: "0.8rem" }}>
                     Staff Name :- {order.staffName}
                   </Typography>
-                  <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                  <Typography style={{ color: "#455A64", fontSize: "0.8rem" }}>
                     Items Count :- {order.itemCount}
                   </Typography>
                   <Button
-                    style={{ color: "#616161", marginTop: "0.5rem" }}
+                    style={{ color:"#37474F",
+                    backgroundColor: "#BDBDBD", marginTop: "0.5rem" }}
                     size="small"
                     variant="contained"
                     onClick={() => this.openbusiness(order)}

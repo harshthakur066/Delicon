@@ -291,14 +291,18 @@ class Valets extends Component {
                 <CardContent>
                   <Typography style={{ fontSize: "1.05rem" }}>
                     Name - {vallet.ownerName}{" "}
+                    </Typography>
+
+                    <Typography style={{ fontSize: "0.8rem" }}>
+
                     <div>Car No - {vallet.carNumber}</div>{" "}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" }}>
+                  <Typography style={{ fontSize: "0.8rem" }}>
                     Driver Name - {vallet.driverName}{" "}
                   </Typography>
                   <br className={classes.breaker} />
 
-                  <Typography style={{ fontSize: "1.05rem" }}>
+                  <Typography style={{ fontSize: "0.8rem" }}>
                     Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
                   </Typography>
 
@@ -314,7 +318,9 @@ class Valets extends Component {
                   </div>
                   <div className="text-center mt-2 ">
                     <Button
-                      style={{ color: "#616161" }}
+                    
+                      style={{ color:"#37474F",
+                      backgroundColor: "#BDBDBD", }}
                       onClick={() => valetstimeout(vallet._id)}
                       variant="contained"
                       size="small"
@@ -354,29 +360,24 @@ class Valets extends Component {
                 <CardContent>
                   <Typography style={{ fontSize: "1.05rem" }}>
                     Name - {vallet.ownerName}{" "}
+                    </Typography>
+                    <Typography style={{ fontSize: "0.8rem" }}>
+
                     <div>Car No - {vallet.carNumber}</div>{" "}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" }}>
+                  <Typography style={{ fontSize: "0.8rem" }}>
                     Driver Name - {vallet.driverName}{" "}
                   </Typography>
                   <br className={classes.breaker} />
 
-                  <Typography style={{ fontSize: "1.05rem" }}>
+                  <Typography style={{ fontSize: "0.8rem" }}>
                     Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
                   </Typography>
-                  <Typography style={{ fontSize: "1.05rem" }}>
+                  <Typography style={{ fontSize: "0.8rem" }}>
                     Time Out - {new Date(vallet.timeOut).toLocaleString()}{" "}
                   </Typography>
 
                   <div className="text-center ">
-                    {/* <Button
-                style = {{color:"#616161"}}
-                onClick={() => this.openbusiness(vallet)}
-                variant="contained"
-                size="small"
-              >
-                Details
-              </Button> */}
                   </div>
                   <Button style = {{width:"70px"}}
                     variant="contained"

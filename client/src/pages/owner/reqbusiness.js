@@ -4,6 +4,7 @@ import {
   getreqbusinesses,
   postbusiness,
   deletereqbusiness,
+  editreqbusiness
 } from "../../redux/actions/dataActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -26,6 +27,7 @@ const mapDispatchtoProps = {
   postbusiness,
   deletereqbusiness,
   getreqbusinesses,
+  editreqbusiness
 };
 
 const styles = {
@@ -68,6 +70,7 @@ const styles = {
     marginBottom: 12,
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -81,6 +84,7 @@ const styles = {
     color: "white",
     cursor: "pointer",
     backgroundColor:"#2196F3",
+    padding:"5px",
     "&:hover": {
       backgroundColor:"#2196F3",
     },
@@ -100,19 +104,27 @@ const styles = {
   },
   modlebox: {
     position: "fixed",
-    top: "5%",
+    top: "8%",
     left: "15%",
     right: "15%",
-    bottom: "5%",
+    bottom: "15%",
     backgroundColor: "white",
     borderRadius: "20px",
     border: "0px",
     width: "auto",
     outline: "none",
-    height: "90%",
-    padding: "20px 20px",
+    padding: "10px 10px",
   },
+  details: {
+    padding:"5px",
+    color:"#37474F",
+    backgroundColor: "#BDBDBD",
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      marginLeft: "5px",
+    },
+  }
 };
+
 
 class Businesses extends Component {
   state = {
@@ -175,7 +187,12 @@ class Businesses extends Component {
       address: this.state.address,
       details: this.state.details,
     };
-    this.props.postbusiness(userData, this.doneLoading);
+    if (this.state.modalmode === "Post") {
+      this.props.postbusiness(userData, this.doneLoading);
+    } else {
+      this.props.editreqbusiness(userData, this.state._id);
+      this.doneLoading();
+    }
   };
 
   handleChange = (event) => {
@@ -228,31 +245,42 @@ class Businesses extends Component {
       </Backdrop>
     ) : (
       this.props.data.owner.reqbusinesses.map((business, index) => (
-        <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4 text-center">
+        <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4 text-left">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <Typography
-                style={{ color: "#070707", fontSize: "1.25rem" }}
+                style={{ color: "#070707", fontSize: "1.00rem" }}
                 gutterBottom
               >
                 {business.name}
               </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+              <Typography style={{ color: "#455A64", fontSize: "0.8rem" }}>
                 {business.details}
               </Typography>
-              <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+              <Typography style={{ color: "#455A64", fontSize: "0.8rem" }}>
                 Status - {business.status}
               </Typography>
-              <div className="text-center pb-4">
+
+              
+              <div className="text-center mt-2">
+              <Button style = {{width:"70px"}}
+                  variant="contained"
+                  className={classes.edit}
+                  onClick={() => this.editbusiness(business)}
+                  >
+                  Edit
+              </Button>
                 <Button
+                style = {{width:"70px"}}
                   onClick={() => this.openbusiness(business)}
                   variant="contained"
                   size="small"
-                  className={classes.edit}
+                  className={classes.details}
                 >
                   Details
                 </Button>
                 <Button
+                style = {{width:"70px"}}
                      onClick={() => deletereqbusiness(business._id)}
                      className={classes.delete}
                 >
@@ -367,12 +395,12 @@ class Businesses extends Component {
                   <TextField
                     name="details"
                     type="details"
-                    label="Detailed description of the business"
+                    label="Description"
                     className={classes.TextField}
                     value={this.state.details}
                     onChange={this.handleChange}
                     multiline
-                    rows={3}
+                    rows={1}
                     fullWidth
                     required={true}
                   />

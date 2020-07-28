@@ -68,6 +68,8 @@ const styles = {
     },
   },
   delete: {
+    padding:"5px",
+    fontSize: ".8rem",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -78,6 +80,8 @@ const styles = {
     },
   },
   edit: {
+    padding:"5px",
+    fontSize: ".8rem",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -88,6 +92,8 @@ const styles = {
     },
   },
   analytics: {
+    padding:"5px",
+    fontSize: ".8rem",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -250,7 +256,7 @@ class Businesses extends Component {
             <Card className={classes.cardStyle} variant="outlined">
               <CardContent>
                 <Typography>
-                  <span style={{ fontSize: "1.25rem" }}> {business.name} </span>
+                  <span style={{ fontSize: "1rem" }}> {business.name} </span>
                   <span style={{ float: "right" }}>
                     <Button
                       component={Link}
@@ -260,7 +266,7 @@ class Businesses extends Component {
                       to={`/staffs/${business._id}`}
                       className={classes.side}
                     >
-                      <span style={{ width: "90px", textAlign: "center" }}>
+                      <span style={{ width: "90px", textAlign: "center", fontSize: ".8rem", padding:"0px"}}>
                         Staff
                       </span>
                     </Button>
@@ -280,18 +286,16 @@ class Businesses extends Component {
                     </Button>
                   </span> */}
                 </Typography>
-                <br></br>
-                <Typography style={{ fontSize: "1rem" }}>
+                <Typography style={{ fontSize: ".8rem",marginTop:"2px" }}>
                   {business.details}
                   
                 </Typography>
-                <br></br>
-                <Typography style={{ fontSize: "1rem" }}>
+                <Typography style={{ fontSize: ".8rem",marginTop:"2px" }}>
                   {business.address}
                 </Typography>
                 <br></br>
 
-                <Typography style={{ fontSize: "1rem" }}>
+                <Typography style={{ fontSize: ".8rem" }}>
                   <div className={classes.btnView}>
                     <Button
                       variant="contained"

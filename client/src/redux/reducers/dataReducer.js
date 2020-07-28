@@ -206,6 +206,15 @@ export default function (state = initialState, action) {
         ...state,
         owner: newOwner10,
       };
+      case ActionTypes.EDIT_REQBUSINESS:
+        var reqbus = state.owner;
+        reqbus.reqbusinesses = state.owner.reqbusinesses.map((busi) =>
+          busi._id === action.payload._id ? action.payload : busi
+        );
+        return {
+          ...state,
+          owner: reqbus,
+        };
     case ActionTypes.RESERVATION_CHECKIN:
       var checkin = state.staff;
       checkin.reservations = state.staff.reservations.map((busi) =>

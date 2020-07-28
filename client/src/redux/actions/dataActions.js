@@ -135,6 +135,33 @@ export const deletereqbusiness = (businessId) => (dispatch) => {
       dispatch(setErrors(err.response.data));
     });
 };
+export const editreqbusiness = (formdata, ID) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .put(`/api/v1/businesses/request/${ID}`, formdata)
+    .then(() => {
+      axios
+        .put(`/api/v1/businesses/request/${ID}`, formdata)
+        .then((res) => {
+          console.log(res)
+          dispatch({
+            type: ActionTypes.EDIT_REQBUSINESS,
+            payload: res.data,
+          });
+          alert("Edited Successfully");
+        })
+        .catch((err) => {
+          if (err.response !== undefined) {
+            dispatch(setErrors(err.response.data));
+          }
+        });
+    })
+    .catch((err) => {
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
+    });
+};
 
 //Staff Actions .................................................................
 
