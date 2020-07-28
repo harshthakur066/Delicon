@@ -64,7 +64,8 @@ router.put("/api/v1/businesses/request/:id", isBusinessOwner, async (req, res) =
       address: address,
       details: details,
     };
-    await RequestedBusiness.findByIdAndUpdate(req.params.id, update);
+    const newdata = await RequestedBusiness.findByIdAndUpdate(req.params.id, update);
+    res.send(newdata);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
