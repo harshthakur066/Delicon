@@ -52,6 +52,25 @@ router.post("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   }
 });
 
+// Edit business 
+
+
+router.put("/api/v1/businesses/request/:id", isBusinessOwner, async (req, res) => {
+  const { name, owner, address, details } = req.body;
+  try {
+    const update = {
+      name: name,
+      owner: owner,
+      address: address,
+      details: details,
+    };
+    await RequestedBusiness.findByIdAndUpdate(req.params.id, update);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+
 // To get all owner reqested businesses of Owner Access to Business Owner
 router.get("/api/v1/businesses/request", isBusinessOwner, async (req, res) => {
   try {
