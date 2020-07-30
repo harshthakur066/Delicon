@@ -1191,7 +1191,10 @@ export const postOrder = (businessId, orderData, handleDone) => (dispatch) => {
       handleDone();
     })
     .catch((err) => {
-      dispatch(setErrors(err.response.data));
+      console.log(err)
+      if (err.response !== undefined) {
+        dispatch(setErrors(err.response.data));
+      }
     });
 };
 
@@ -1388,6 +1391,8 @@ export const postFeedBack = (formdata, handledone) => (dispatch) => {
     });
 };
 
+// MAIL
+
 export const sendbillmail = (mailoptions) => (dispatch) => {
   dispatch(clearErrors());
   axios
@@ -1402,6 +1407,8 @@ export const sendbillmail = (mailoptions) => (dispatch) => {
       }
     });
 };
+
+// SMS
 
 export const sendbillsms = (smsOptions) => (dispatch) => {
   dispatch(clearErrors());

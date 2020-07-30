@@ -66,6 +66,7 @@ const styles = {
     marginBottom: 12,
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -81,6 +82,7 @@ const styles = {
 
   },
   edit: {
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -93,6 +95,7 @@ const styles = {
 
   },
   detail: {
+    padding:"5px",
     color: "#616161", marginBottom: ".6rem", width: "5rem",
     "@media (min-width: 320px) and (max-width: 330px)": {
       float: "right"
@@ -274,10 +277,6 @@ class Orders extends Component {
     const { classes, deleteOrder, orderDelivered } = this.props;
 
     const loading = this.state.loading;
-    // const btnload = this.state.btnload;
-    // const modlemode = this.state.modalmode;
-
-    console.log(this.props.data.staff.orders)
 
     const markup1 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
@@ -292,9 +291,6 @@ class Orders extends Component {
             >
               <Card className={classes.cardStyle} variant="outlined">
                 <CardContent>
-                  {/* <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
-                Order Id :- {order._id}
-              </Typography> */}
                   <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
                     Customer Name :- {order.custName}
                   </Typography>
@@ -347,6 +343,7 @@ class Orders extends Component {
         ))
       );
 
+
     const markup2 = loading ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
@@ -379,6 +376,7 @@ class Orders extends Component {
                     size="small"
                     variant="contained"
                     onClick={() => this.openbusiness(order)}
+                    className={classes.details}
                   >
                     Details
               </Button>
@@ -448,8 +446,6 @@ class Orders extends Component {
             </AppBar>
           </div>
         </div>
-
-
 
         <TabPanel value={this.state.value} index={0}>
           <div className="row mt-4">{markup1}</div>

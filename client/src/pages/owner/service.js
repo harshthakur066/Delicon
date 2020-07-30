@@ -19,6 +19,8 @@ import {
   getServiceCategories,
 } from "../../redux/actions/dataActions";
 
+// Service  page for business Owner
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -232,9 +234,6 @@ class service extends Component {
     const modalmode = this.state.modalmode;
 
     const { classes, deleteServiceCategory } = this.props;
-
-    console.log(this.props.data.owner.service);
-
     const markup = loading || this.props.data.owner.service === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />

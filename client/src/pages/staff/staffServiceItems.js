@@ -4,9 +4,6 @@ import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   withStyles,
-  // Card,
-  // CardContent,
-  // Typography,
   Button,
   CircularProgress,
   Backdrop,
@@ -18,6 +15,8 @@ import {
 } from "../../redux/actions/dataActions";
 
 import Itemcard from "../../components/ItemCard";
+
+// Selection of Service item by customers
 
 const styles = {};
 
@@ -76,7 +75,6 @@ class staffServiceItems extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.serviceId);
     this.props.getStaffServiceItems(this.props.match.params.serviceId);
     document.body.style.backgroundColor = "#F0F2FE";
   }

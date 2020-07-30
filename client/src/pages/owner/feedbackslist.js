@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import { getallfeedbacks } from "../../redux/actions/dataActions";
 
+// List of feedback for owners
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -161,8 +163,6 @@ class feedbackList extends Component {
   render() {
     const loading = this.state.loading;
     const { classes } = this.props;
-
-    console.log(this.props.data.owner.feedbacks);
 
     const markup =
       loading || this.props.data.owner.feedbacks === undefined ? (

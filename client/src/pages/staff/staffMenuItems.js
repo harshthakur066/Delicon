@@ -16,6 +16,8 @@ import {
 
 import Itemcard from "../../components/ItemCard";
 
+// Selection of menu item by customers
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -150,7 +152,6 @@ class staffMenuItems extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.menuId);
     this.props.getStaffMenuItems(this.props.match.params.menuId);
     document.body.style.backgroundColor = "#F0F2FE";
   }

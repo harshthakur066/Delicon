@@ -1,5 +1,5 @@
-const NUM = "[1-9][0-9]{9,14}";
-const NAME = "([a-zA-Z]){0,30}";
+const NUM = "[1-9][0-9]{9,14}"; // number b/w 10 -15
+const NAME = "([a-zA-Z]){0,30}"; // name of letterss 1-30
 
 const Validate = (name, value) => {
    let errors = {};

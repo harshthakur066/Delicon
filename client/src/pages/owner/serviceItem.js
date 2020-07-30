@@ -19,6 +19,8 @@ import {
   deleteServiceItem,
 } from "../../redux/actions/dataActions";
 
+// Service Item page for business Owner
+
 const styles = {
   bodycard: {
     margin: 5,

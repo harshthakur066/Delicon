@@ -20,6 +20,8 @@ import billing from "../../assets/img/billing.jpg";
 import feedback from "../../assets/img/feedback.jpg";
 import { Link } from "react-router-dom";
 
+// This page contains all modules owned by business owner
+
 const mapStateToProps = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -43,6 +45,7 @@ const styles = {
     },
   },
   analytics: {
+    padding:"6px",
     color: "white",
     cursor: "pointer",
     backgroundColor: "#66BB6A",
@@ -53,6 +56,7 @@ const styles = {
     },
   },
   settings: {
+    padding:"6px",
     color: "white",
     cursor: "pointer",
     backgroundColor: "#2196F3",
@@ -62,6 +66,7 @@ const styles = {
     },
   },
   feedBack: {
+    padding:"6px",
     color: "white",
     cursor: "pointer",
     backgroundColor: "#2196F3",
@@ -114,7 +119,6 @@ class BusinessDetails extends Component {
   render() {
     const { classes } = this.props;
     const { loading } = this.state;
-    console.log(this.props.match.params);
 
     const busiId = this.props.match.params.busiId;
     const modules = [

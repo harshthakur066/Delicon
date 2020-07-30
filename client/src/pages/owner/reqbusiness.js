@@ -18,6 +18,8 @@ import {
   Backdrop,
 } from "@material-ui/core";
 
+// Request Business Page for owner to request new Business from super Admin
+
 const mapStatetoprops = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -263,7 +265,7 @@ class Businesses extends Component {
 
               
               <div className="text-center mt-2">
-              <Button style = {{width:"70px"}}
+              <Button
                   variant="contained"
                   className={classes.edit}
                   onClick={() => this.editbusiness(business)}
@@ -271,7 +273,6 @@ class Businesses extends Component {
                   Edit
               </Button>
                 <Button
-                style = {{width:"70px"}}
                   onClick={() => this.openbusiness(business)}
                   variant="contained"
                   size="small"
@@ -280,7 +281,6 @@ class Businesses extends Component {
                   Details
                 </Button>
                 <Button
-                style = {{width:"70px"}}
                      onClick={() => deletereqbusiness(business._id)}
                      className={classes.delete}
                 >

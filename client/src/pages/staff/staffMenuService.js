@@ -16,6 +16,8 @@ import {
 } from "../../redux/actions/dataActions";
 import { Link } from "react-router-dom";
 
+// page to display menues and services to customer to order
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -104,7 +106,6 @@ class staffMenuService extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.user);
     this.props.getStaffMenuCategories(this.props.user.businessId);
     this.props.getStaffServiceCategories(this.props.user.businessId);
     document.body.style.backgroundColor = "#F0F2FE";

@@ -9,6 +9,8 @@ import {
 import { IoMdAdd } from "react-icons/io";
 import { FiMinus } from "react-icons/fi";
 
+// This component is used in service and menu add pages inside staff.
+
 const styles = {
   count: {
     display: "flex",
@@ -116,7 +118,6 @@ class ItemCard extends Component {
     const { classes } = this.props;
     const { count } = this.state;
     const { increment, decrement } = this;
-    console.log(count, this.props.food);
     return (
       <div
         key={this.props.index}

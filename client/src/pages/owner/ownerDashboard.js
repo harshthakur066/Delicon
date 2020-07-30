@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 
 class ownerDashboard extends Component {
+  componentDidMount() {
+    document.body.style.backgroundColor = "#F0F2FE";
+  }
 
   render() {
     return (

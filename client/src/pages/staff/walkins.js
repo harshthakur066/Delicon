@@ -336,8 +336,6 @@ class Walkins extends Component {
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
 
-    console.log(this.props.data.staff.walkins)
-
     const { classes, deletewalkin, walkout } = this.props; //WithStyles Material Thing
 
     //Tab 1

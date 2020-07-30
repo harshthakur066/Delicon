@@ -16,6 +16,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    //Owner business
     case ActionTypes.SET_BUSINESSES:
       return {
         ...state,
@@ -397,9 +398,10 @@ export default function (state = initialState, action) {
         ...state,
         staff: { service: action.payload, ...state.staff },
       };
+
+      //Order functions Reducers
     case ActionTypes.SELECT_CUSTOMER:
       var ord1 = state.staff;
-      console.log(action.payload);
       ord1.order.custId = action.payload.customerId;
       ord1.order.custName = action.payload.name;
       ord1.order.staffName = action.payload.staff;
@@ -445,10 +447,11 @@ export default function (state = initialState, action) {
         ...state,
         staff: rem2,
       };
+
+      // order reducers
     case ActionTypes.GET_ORDERS:
       var ord4 = state.staff;
       ord4.orders = action.payload;
-      console.log(ord4.orders);
       return {
         ...state,
         staff: ord4,
@@ -457,7 +460,6 @@ export default function (state = initialState, action) {
     case ActionTypes.POST_ORDER:
       var ord10 = state.staff;
       ord10.orders.push(action.payload);
-      console.log(ord10.orders);
       return {
         ...state,
         staff: ord10,
@@ -492,7 +494,6 @@ export default function (state = initialState, action) {
     case ActionTypes.GET_STAFFMENUITEMS:
       var item = state.staff;
       item.staffMenuItems = action.payload;
-      console.log(item.staffMenuItems);
       return {
         ...state,
         staff: item,
@@ -501,12 +502,11 @@ export default function (state = initialState, action) {
     case ActionTypes.GET_STAFFSERVICEITEMS:
       var item_service = state.staff;
       item_service.staffServiceItems = action.payload;
-      console.log(item_service.staffItems);
       return {
         ...state,
         staff: item_service,
       };
-
+// Bill related reducers
     case ActionTypes.GET_BILL:
       var bill1 = state.staff;
       bill1.bill = action.payload;

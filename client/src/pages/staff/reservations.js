@@ -66,6 +66,7 @@ const styles = {
     },
   },
   edit: {
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -87,6 +88,7 @@ const styles = {
     marginBottom: 1,
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -347,15 +349,11 @@ class Reservations extends Component {
 
 
   handleBlur = e => {
-    console.log("handleBlur")
     const { name, value } = e.target;
     const error = { ...Validate(name, value) };
     this.setState({
       errors: { ...this.state.errors, ...error }
     });
-
-    console.log(this.state.errors)
-
   };
 
   render() {
@@ -462,11 +460,8 @@ class Reservations extends Component {
                       Mobile No. - {reservation.mobno}
                     </Typography>
 
-
-
-
                     <br className={classes.breaker} />
-                    <Typography style={{ fontSize: "1.05rem" }}>
+                    <Typography style={{ fontSize: "0.8rem" }}>
                       <div>
                         CheckIn at -{" "}
                         {new Date(reservation.checkIn).toLocaleString()}
@@ -539,13 +534,9 @@ class Reservations extends Component {
                       Mobile No. - {reservation.mobno}
                     </Typography>
 
-
-
-
-
                     <br className={classes.breaker} />
 
-                    <Typography style={{ fontSize: "1.05rem" }}>
+                    <Typography style={{ fontSize: "0.8rem" }}>
                       <div>
                         CheckIn at -{" "}
                         {new Date(reservation.checkIn).toLocaleString()}
@@ -555,7 +546,6 @@ class Reservations extends Component {
                         {new Date(reservation.checkOut).toLocaleString()}
                       </div>
                     </Typography>
-                    <br></br>
                     <div className="text-center mt-1 ">
                       <Button
                       className={classes.details}

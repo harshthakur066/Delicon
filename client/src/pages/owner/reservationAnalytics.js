@@ -8,6 +8,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
+// Analytics for Reservations
+
 const mapStatetoprops = (state) => ({
   UI: state.UI,
 });
@@ -145,8 +147,6 @@ class reservationAnalytics extends Component {
   render() {
     const { classes } = this.props;
 
-    // console.log(this.state);
-//className ={`${classes.graph} col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4`}
     const month =(
       <div className={classes.display}>
         <div className={classes.graph} id="sb-month"></div>

@@ -13,6 +13,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
+// Bill List Component
+
 const mapStatetoprops = (state) => ({
   UI: state.UI,
   data: state.data,
@@ -35,6 +37,9 @@ const styles = {
       transition: "(0.4s)",
       boxShadow: "1px 4px 6px 2px grey",
     },
+  }, 
+  edit: {
+    padding:"5px",
   },
 
   actions: {
@@ -155,13 +160,13 @@ class ListBill extends Component {
           >
             <Card className={classes.cardStyle} variant="outlined">
               <CardContent>
-                <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#070707", fontSize: "0.95rem" }}>
                   Customer Name :- {order.custName}
                 </Typography>
-                <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#070707", fontSize: "0.95rem" }}>
                   Staff Name :- {order.staffName}
                 </Typography>
-                <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#455A64", fontSize: "0.95rem" }}>
                   Items Count :- {order.itemCount}
                 </Typography>
                 <br></br>
@@ -195,13 +200,13 @@ class ListBill extends Component {
           >
             <Card className={classes.cardStyle} variant="outlined">
               <CardContent>
-                <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#070707", fontSize: "0.95rem" }}>
                   Customer Name :- {order.custName}
                 </Typography>
-                <Typography style={{ color: "#070707", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#070707", fontSize: "0.95rem" }}>
                   Staff Name :- {order.staffName}
                 </Typography>
-                <Typography style={{ color: "#455A64", fontSize: "1.05rem" }}>
+                <Typography style={{ color: "#455A64", fontSize: "0.95rem" }}>
                   Items Count :- {order.itemCount}
                 </Typography>
                 <br></br>
@@ -221,7 +226,6 @@ class ListBill extends Component {
         )
       )
     );
-    // console.log("state", this.state);
     return (
       <div className="container" style={{ marginTop: 90 }}>
         <div className="row mt-4">
@@ -229,7 +233,7 @@ class ListBill extends Component {
             {loading ? null : (
               <span>
                 <span style={{ fontSize: "2rem" }} className="text-center mt-4">
-                  Orders
+                  Bills
                 </span>
                 <Button
                   component={Link}
@@ -272,10 +276,11 @@ class ListBill extends Component {
         </div>
 
         <TabPanel value={this.state.value} index={0}>
-          <div className="row mt-4">{markup1}</div>
+           <div className="row mt-4">{markup1}
+          </div>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <div className="row mt-4">{markup2}</div>
+          <div className="row mt-4">{ markup2}</div>
         </TabPanel>
       </div>
     );

@@ -12,6 +12,8 @@ const mapStatetoprops = (state) => ({
   UI: state.UI,
 });
 
+// Analytics for Order
+
 const styles = {
   root: {
     margin: "auto",
@@ -139,9 +141,7 @@ class ordersAnalytics extends Component {
 
   render() {
     const { classes } = this.props;
-
-    // console.log(this.state);
-//className ={`${classes.graph} col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 mb-4`}
+    
     const month =(
       <div className={classes.display}>
         <div className={classes.graph} id="sb-month"></div>

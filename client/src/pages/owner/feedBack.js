@@ -30,6 +30,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
+// This page is to add new feedback questions 
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -186,7 +188,6 @@ class feedBack extends Component {
     };
 
   componentDidMount() {
-      console.log(this.props.match.params.businessId)
       this.props.getallfeedbacks(this.props.match.params.businessId);
     this.props.getFeedBackQuestions(this.props.match.params.businessId);
     document.body.style.backgroundColor = "#F0F2FE";
@@ -276,7 +277,6 @@ class feedBack extends Component {
   };
 
   openbusiness = (business) => {
-    console.log(business)
     
     this.setState({
       custName: business.custName,
@@ -295,12 +295,8 @@ class feedBack extends Component {
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
-  
 
     const { classes, deleteFeedBackQuestion } = this.props;
-
-    console.log(this.props.data.owner.feedbackquestions);
-
 
     //tab1
      const markup1 = loading || this.props.data.owner.feedbackquestions === undefined ? (

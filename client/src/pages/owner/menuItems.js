@@ -19,6 +19,8 @@ import {
   getMenuItems,
 } from "../../redux/actions/dataActions";
 
+// Menu Item page for business Owner
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -43,6 +45,7 @@ const styles = {
     marginBottom: 5,
   },
   edit: {
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -54,6 +57,7 @@ const styles = {
     },
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -231,16 +235,13 @@ class menuItems extends Component {
     const modalmode = this.state.modalmode;
 
     const { classes, deleteMenuItem } = this.props;
-
-    console.log(this.props.data.owner.item);
-
     const markup = loading || this.props.data.owner.item === undefined ? (
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     ) : (
         this.props.data.owner.item.map((food, index) => (
-          <div key={index} className="col-6 sm-12 xs-12 mb-4 text-center">
+          <div key={index} className="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4 text-center">
             <Card className={classes.bodycard}>
               <CardContent>
                 <Typography style={{ fontSize: "1.05rem" }}>

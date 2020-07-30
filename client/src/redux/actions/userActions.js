@@ -58,7 +58,7 @@ export const getUserStaffData = () => (dispatch) => {
     });
 };
 
-export const getUserOwnerData = () => (dispatch) => {
+export const getUserOwnerData = () => (dispatch) => {   // ISSUE in backend here
   dispatch(clearErrors);
   axios
     .get("/api/v1/businessowner/profile")

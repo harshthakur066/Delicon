@@ -20,6 +20,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+// This page is to display bill to customers and staff
+
 const styles = {
   table: {
     minWidth: 700,
@@ -118,7 +120,6 @@ class billMain extends Component {
   };
 
   sendSMS = () => {
-    console.log(this.props.data.staff.bill);
     const msgOptions = {
       from: "The Delicon Group",
       to: this.props.data.staff.bill.mobno,
@@ -281,10 +282,6 @@ class billMain extends Component {
         </div>
       </>
     );
-
-    if (!this.state.loading) {
-      console.log(this.props.data.staff.bill);
-    }
 
     return (
       <div style={{ marginTop: "100px" }}>

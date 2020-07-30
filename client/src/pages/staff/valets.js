@@ -39,6 +39,7 @@ const styles = {
     },
   },
   edit: {
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -58,6 +59,7 @@ const styles = {
     marginBottom: 5,
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -300,22 +302,12 @@ class Valets extends Component {
                   <Typography style={{ fontSize: "0.8rem" }}>
                     Driver Name - {vallet.driverName}{" "}
                   </Typography>
-                  <br className={classes.breaker} />
+                  <br/>
 
                   <Typography style={{ fontSize: "0.8rem" }}>
                     Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
                   </Typography>
 
-                  <div className="text-center mt-2 ">
-                    {/* <Button
-                style = {{color:"#616161"}}
-                onClick={() => this.openbusiness(vallet)}
-                variant="contained"
-                size="small"
-              >
-                Details
-              </Button> */}
-                  </div>
                   <div className="text-center mt-2 ">
                     <Button
                     
@@ -368,8 +360,7 @@ class Valets extends Component {
                   <Typography style={{ fontSize: "0.8rem" }}>
                     Driver Name - {vallet.driverName}{" "}
                   </Typography>
-                  <br className={classes.breaker} />
-
+                  <br/>
                   <Typography style={{ fontSize: "0.8rem" }}>
                     Time In - {new Date(vallet.timeIn).toLocaleString()}{" "}
                   </Typography>
@@ -399,13 +390,8 @@ class Valets extends Component {
           ) : null
         )
       );
-
-    console.log(this.props.data);
-
     return (
       <div className="container" style={{ marginTop: 90 }}>
-
-
         <div className="row mt-4">
           <div className="col-12">
             {loading ? null : (

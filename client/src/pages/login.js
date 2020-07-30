@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-// import div from "@material-ui/core/div";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-// import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";

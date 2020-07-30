@@ -27,6 +27,8 @@ import clsx from "clsx";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RiParkingBoxLine } from "react-icons/ri";
 
+// Side and Top Navigation bar
+
 const drawerWidth = 240;
 
 const styles = {

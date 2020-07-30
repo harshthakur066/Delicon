@@ -130,7 +130,6 @@ class orderCustomer extends Component {
         mobno,
         staff: this.props.user.profile.name,
       };
-      console.log(obj);
       selectcustomer(obj);
       history.push("/order/categories");
     } catch (error) {

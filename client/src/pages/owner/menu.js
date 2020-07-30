@@ -20,6 +20,8 @@ import {
 } from "../../redux/actions/dataActions";
 import { Link } from "react-router-dom";
 
+// Menu page for business Owner
+
 const styles = {
   bodycard: {
     margin: 5,
@@ -44,6 +46,7 @@ const styles = {
     marginBottom: 5,
   },
   edit: {
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -55,6 +58,7 @@ const styles = {
     },
   },
   delete: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -227,11 +231,7 @@ class menu extends Component {
     const loading = this.state.loading;
     const btnload = this.state.btnload;
     const modalmode = this.state.modalmode;
-
     const { classes, deleteMenuCategory } = this.props;
-
-    console.log(this.props.data.owner);
-
     const markup = loading || this.props.data.owner.menu === undefined ? (
 
       <Backdrop className={classes.backdrop} open={loading}>

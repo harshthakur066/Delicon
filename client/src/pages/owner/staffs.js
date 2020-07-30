@@ -64,6 +64,8 @@ const styles = {
     marginBottom: 5,
   },
   edit: {
+    marginLeft:"2px",
+    padding:"5px",
     float: "left",
     color: "white",
     cursor: "pointer",
@@ -73,6 +75,7 @@ const styles = {
     },
   },
   fire: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -83,6 +86,7 @@ const styles = {
     },
   },
   hire: {
+    padding:"5px",
     float: "right",
     color: "white",
     cursor: "pointer",
@@ -168,7 +172,6 @@ class Staffs extends Component {
         loading: false,
         btnload: false,
       });
-      console.log("HERE", newProps.UI.errors);
     }
     if (newProps.data.owner.staffs !== undefined) {
       this.setState({
@@ -209,7 +212,6 @@ class Staffs extends Component {
       errors: {},
     });
     const { businessid } = this.props.match.params;
-    console.log(businessid);
     const busi = this.props.data.owner.businesses.find(
       (busi) => busi._id === businessid
     );

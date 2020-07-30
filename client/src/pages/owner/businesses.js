@@ -18,6 +18,8 @@ import {
   Backdrop,
 } from "@material-ui/core";
 
+// This page is to display all businesses of owner
+
 //Store se Jo chije chahiye (data, user, UI) wo lele isme se
 const mapStatetoprops = (state) => ({
   UI: state.UI,
@@ -240,7 +242,6 @@ class Businesses extends Component {
     const btnload = this.state.btnload;
     const modlemode = this.state.modalmode;
 
-    console.log(this.props.data.owner.businesses);
 
     const markup =
       loading || this.props.data.owner.businesses === undefined ? (
@@ -271,20 +272,6 @@ class Businesses extends Component {
                       </span>
                     </Button>
                   </span>
-                  {/* <span style={{ float: "right" }}>
-                    <Button
-                      component={Link}
-                      variant="contained"
-                      color="inherit"
-                      size="small"
-                      to={`/feedBack/${business._id}`}
-                      className={classes.side}
-                    >               
-                      <span style={{ width: "80px", textAlign: "center" }}>
-                      FeedBack
-                      </span>
-                    </Button>
-                  </span> */}
                 </Typography>
                 <Typography style={{ fontSize: ".8rem",marginTop:"2px" }}>
                   {business.details}

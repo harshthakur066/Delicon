@@ -7,7 +7,6 @@ import jwtDecode from "jwt-decode";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import * as ActionTypes from "./redux/types";
-// import { getUserData } from "./redux/actions/userActions";
 
 import login from "./pages/login";
 import businesses from "./pages/owner/businesses";
@@ -28,18 +27,16 @@ import orders from "./pages/staff/orders";
 import orderSummery from "./pages/staff/orderSummery";
 import billMain from "./pages/staff/billMain";
 import billList from "./pages/staff/billList";
-import feedBack from "./pages/owner/feedBack"
-import feedBackForm from "./pages/staff/feedBackForm"
-// import feedBack from "./pages/owner/feedBack";
+import feedBack from "./pages/owner/feedBack";
+import feedBackForm from "./pages/staff/feedBackForm";
 import feedbackList from "./pages/owner/feedbackslist";
-import resAnalytics from './pages/owner/reservationAnalytics';
-import valetAnalytics from './pages/owner/valetAnalytics';
-import walkinAnalytics from './pages/owner/walkinAnalytics';
-import menuAnalytics from "./pages/owner/menuAnalytics"
-import serviceAnalytics from "./pages/owner/serviceAnalytics"
-import ordersAnalytics from "./pages/owner/ordersAnalytics"
-import billAnalytics from "./pages/owner/billAnalytics"
-
+import resAnalytics from "./pages/owner/reservationAnalytics";
+import valetAnalytics from "./pages/owner/valetAnalytics";
+import walkinAnalytics from "./pages/owner/walkinAnalytics";
+import menuAnalytics from "./pages/owner/menuAnalytics";
+import serviceAnalytics from "./pages/owner/serviceAnalytics";
+import ordersAnalytics from "./pages/owner/ordersAnalytics";
+import billAnalytics from "./pages/owner/billAnalytics";
 
 import {
   getUserOwnerData,
@@ -55,8 +52,10 @@ import orderCustomer from "./pages/staff/orderCustomer";
 import staffMenuItems from "./pages/staff/staffMenuItems";
 import staffServiceItems from "./pages/staff/staffServiceItems";
 
+// Main backend to frontend url
 axios.defaults.baseURL = "https://deliconreservation.herokuapp.com";
 
+// For JWT to store in localstorage
 const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
@@ -72,6 +71,7 @@ if (token) {
   }
 }
 
+// Added redux and react-router-dom
 function App() {
   const theme = createMuiTheme();
   var decodedToken = "";
@@ -99,10 +99,10 @@ function App() {
                     <Redirect to="/staffDash" />
                   </Route>
                 ) : (
-                      <Route path="/" exact>
-                        <Redirect to="/login" />
-                      </Route>
-                    )}
+                  <Route path="/" exact>
+                    <Redirect to="/login" />
+                  </Route>
+                )}
 
                 <Route exact path="/login" component={login} />
                 <Route exact path="/businesses" component={businesses} />
@@ -154,8 +154,11 @@ function App() {
                 />
                 <Route exact path="/bills" component={billList} />
                 <Route exact path="/bill/:orderId" component={billMain} />
-                {/* <Route exact path="/feedback/:businessId" component={feedBack} /> */}
-                <Route exact path="/feedbackform/:businessId/:orderId" component={feedBackForm} />
+                <Route
+                  exact
+                  path="/feedbackform/:businessId/:orderId"
+                  component={feedBackForm}
+                />
 
                 <Route
                   exact
@@ -167,13 +170,41 @@ function App() {
                   path="/feedbacklist/:businessId"
                   component={feedbackList}
                 />
-                <Route exact path="/analytics/reservations/:busiId" component={resAnalytics} />
-                <Route exact path="/analytics/valets/:busiId" component={valetAnalytics} />
-                <Route exact path="/analytics/walkins/:busiId" component={walkinAnalytics} />
-                <Route exact path="/analytics/menu/:busiId" component={menuAnalytics} />
-                <Route exact path="/analytics/service/:busiId" component={serviceAnalytics} />
-                <Route exact path="/analytics/orders/:busiId" component={ordersAnalytics} />
-                <Route exact path="/analytics/bill/:busiId" component={billAnalytics} />
+                <Route
+                  exact
+                  path="/analytics/reservations/:busiId"
+                  component={resAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/valets/:busiId"
+                  component={valetAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/walkins/:busiId"
+                  component={walkinAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/menu/:busiId"
+                  component={menuAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/service/:busiId"
+                  component={serviceAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/orders/:busiId"
+                  component={ordersAnalytics}
+                />
+                <Route
+                  exact
+                  path="/analytics/bill/:busiId"
+                  component={billAnalytics}
+                />
               </Switch>
             </div>
           </ErrorBoundry>
