@@ -29,7 +29,7 @@ Business Owner:
 
 Staff:
 
-1. Email: pg123@gmail.
+1. Email: pg123@gmail.com
 2. Password: 123456
 
 ## Deployment
@@ -63,5 +63,6 @@ which doesn’t have redux dev tools extension mainly mobiles and clients.
 It is bit overwork to copy and paste files from one repo to other every time for deployment
 but if any developer finds a solution to the problem of redux dev tool extension work
 depending on the environment it would be nice.
+Please update the readme too if problem solved in future.
 
 **Please add issues to the repository if necessary.**
